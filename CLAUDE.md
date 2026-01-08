@@ -168,6 +168,7 @@ border-gray-200 dark:border-gray-700
 - 커밋 메시지는 한글로 작성
 - 본문에 주요 변경사항 bullet point로 기술
 - **자동 커밋 금지**: 사용자가 명시적으로 요청할 때만 커밋 수행
+- **Claude 정보 제외**: 커밋 메시지에 "Generated with Claude Code", "Co-Authored-By" 등 AI 관련 정보 포함하지 않음
 
 ## 인터렉티브 기능 패턴
 - 슬라이더/토글: `oninput` 또는 `onchange` 이벤트
