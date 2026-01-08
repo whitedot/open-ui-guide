@@ -163,7 +163,7 @@
 
         <!-- Main Content -->
         <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
-            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+            <div id="typography-content" class="max-w-5xl mx-auto p-6 lg:p-8">
                 <!-- Page Header -->
                 <div class="mb-8">
                     <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
@@ -182,7 +182,7 @@
                 </div>
 
                 <!-- Font Family -->
-                <section class="mb-12">
+                <section id="font-family-section" class="mb-12">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Font Family</h2>
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
                         <div class="flex flex-col lg:flex-row lg:items-start gap-6">
@@ -233,7 +233,7 @@
                 </section>
 
                 <!-- Type Scale -->
-                <section class="mb-12">
+                <section id="font-preview-section" class="mb-12">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Type Scale</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">시각적 계층을 위한 텍스트 크기 스케일입니다. Tailwind CSS 클래스를 사용합니다.</p>
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
@@ -309,7 +309,7 @@
                 </section>
 
                 <!-- Font Weight -->
-                <section class="mb-12">
+                <section id="font-weight-section" class="mb-12">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Font Weight</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">텍스트의 시각적 강조를 위한 굵기 설정입니다.</p>
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -444,8 +444,57 @@
         </main>
     </div>
 
+    <!-- Font-Face 테스터 플로팅 버튼 -->
+    <button id="fontTesterBtn" onclick="toggleFontPanel()"
+        class="fixed bottom-6 right-6 z-50 w-14 h-14 bg-violet-600 hover:bg-violet-700 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-105">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+        </svg>
+    </button>
+
+    <!-- Font-Face 테스터 패널 -->
+    <div id="fontPanel" class="hidden fixed bottom-24 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+        <div class="p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+                </svg>
+                <h3 class="font-semibold text-gray-900 dark:text-white">Font-Face 테스터</h3>
+            </div>
+            <button onclick="toggleFontPanel()" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        </div>
+        <div class="p-4">
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">@font-face 코드를 입력하면 페이지에 적용됩니다.</p>
+            <textarea id="fontFaceInput" rows="8"
+                class="w-full px-3 py-2 text-sm font-mono bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400 resize-none"
+                placeholder="@font-face {
+    font-family: 'FontName';
+    src: url('...') format('woff2');
+    font-weight: 400;
+}"></textarea>
+            <div id="fontStatus" class="hidden mt-2 text-sm text-emerald-600 dark:text-emerald-400"></div>
+            <div class="flex gap-2 mt-3">
+                <button onclick="applyCustomFont()"
+                    class="flex-1 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors">
+                    적용
+                </button>
+                <button onclick="resetFont()"
+                    class="px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg transition-colors">
+                    초기화
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script src="../js/menu.js"></script>
     <script>
+        // 기본 폰트 스택
+        const DEFAULT_FONT = "'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif";
+
         function toggleDarkMode() {
             const isDark = document.documentElement.classList.toggle('dark');
             localStorage.setItem('darkMode', isDark);
@@ -457,6 +506,72 @@
 
         function closeMobileSidebar() {
             document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        function toggleFontPanel() {
+            const panel = document.getElementById('fontPanel');
+            panel.classList.toggle('hidden');
+        }
+
+        function extractFontFamily(css) {
+            const match = css.match(/font-family:\s*['"]?([^'";\n\}]+)['"]?/);
+            return match ? match[1].trim() : null;
+        }
+
+        function applyCustomFont() {
+            const css = document.getElementById('fontFaceInput').value.trim();
+            if (!css) return;
+
+            const fontFamily = extractFontFamily(css);
+            if (!fontFamily) {
+                alert('font-family를 찾을 수 없습니다. @font-face 코드를 확인해주세요.');
+                return;
+            }
+
+            // 기존 커스텀 폰트 스타일 제거
+            let styleEl = document.getElementById('custom-font-style');
+            if (!styleEl) {
+                styleEl = document.createElement('style');
+                styleEl.id = 'custom-font-style';
+                document.head.appendChild(styleEl);
+            }
+            styleEl.textContent = css;
+
+            // 메인 콘텐츠 영역에 폰트 적용
+            const contentArea = document.getElementById('typography-content');
+            const customFont = `'${fontFamily}', ${DEFAULT_FONT}`;
+
+            if (contentArea) contentArea.style.fontFamily = customFont;
+
+            // 상태 표시
+            const statusEl = document.getElementById('fontStatus');
+            statusEl.textContent = `✓ "${fontFamily}" 폰트가 미리보기 섹션에 적용되었습니다.`;
+            statusEl.classList.remove('hidden');
+
+            // 버튼 색상 변경 (적용됨 표시)
+            const btn = document.getElementById('fontTesterBtn');
+            btn.classList.remove('bg-violet-600', 'hover:bg-violet-700');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-700');
+        }
+
+        function resetFont() {
+            // 커스텀 스타일 제거
+            const styleEl = document.getElementById('custom-font-style');
+            if (styleEl) {
+                styleEl.remove();
+            }
+
+            // 메인 콘텐츠 영역 폰트 초기화
+            const contentArea = document.getElementById('typography-content');
+            if (contentArea) contentArea.style.fontFamily = '';
+
+            // 상태 숨기기
+            document.getElementById('fontStatus').classList.add('hidden');
+
+            // 버튼 색상 복원
+            const btn = document.getElementById('fontTesterBtn');
+            btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-700');
+            btn.classList.add('bg-violet-600', 'hover:bg-violet-700');
         }
     </script>
 </body>
