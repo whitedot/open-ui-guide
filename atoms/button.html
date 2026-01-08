@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Button - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Atoms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Button</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Button</h1>
+                    <p class="text-gray-600 dark:text-gray-400">사용자 액션을 유도하는 인터랙티브 요소입니다. 다양한 변형과 상태를 제공합니다.</p>
+                </div>
+
+                <!-- Color Usage Guide -->
+                <section class="mb-12">
+                    <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl p-6">
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0">
+                                <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <h3 class="font-semibold text-amber-900 dark:text-amber-100 mb-2">색상 사용 원칙</h3>
+                                <p class="text-amber-800 dark:text-amber-200 text-sm mb-3">
+                                    기본적으로 <strong>Base(Gray)</strong>를 사용하고, 주요 CTA(Call-to-Action)에만 <strong>Primary</strong>를 사용하세요.
+                                </p>
+                                <ul class="text-sm text-amber-700 dark:text-amber-300 space-y-1">
+                                    <li>• <strong>Base (Gray)</strong>: 대부분의 일반 버튼에 사용 (권장 기본값)</li>
+                                    <li>• <strong>Primary (Violet)</strong>: 화면당 1개의 주요 액션에만 사용</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Button Variants -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Variants</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">버튼의 시각적 스타일 변형입니다. Base와 Primary 각각 5가지 스타일을 제공합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <!-- Base Variants -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Base (권장 기본값)</h3>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <!-- Base Primary -->
+                                <button class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                    Primary
+                                </button>
+                                <!-- Base Secondary -->
+                                <button class="h-10 px-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-medium rounded-lg transition-colors">
+                                    Secondary
+                                </button>
+                                <!-- Base Tertiary -->
+                                <button class="h-10 px-4 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+                                    Tertiary
+                                </button>
+                                <!-- Base Outline -->
+                                <button class="h-10 px-4 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+                                    Outline
+                                </button>
+                                <!-- Base Ghost -->
+                                <button class="h-10 px-4 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white font-medium rounded-lg transition-colors">
+                                    Ghost
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Primary Variants -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Primary (주요 CTA에만 사용)</h3>
+                            <div class="flex flex-wrap items-center gap-4">
+                                <!-- Primary Primary -->
+                                <button class="h-10 px-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                    Primary
+                                </button>
+                                <!-- Primary Secondary -->
+                                <button class="h-10 px-4 bg-violet-100 hover:bg-violet-200 dark:bg-violet-900/30 dark:hover:bg-violet-900/50 text-violet-700 dark:text-violet-300 font-medium rounded-lg transition-colors">
+                                    Secondary
+                                </button>
+                                <!-- Primary Tertiary -->
+                                <button class="h-10 px-4 hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400 font-medium rounded-lg transition-colors">
+                                    Tertiary
+                                </button>
+                                <!-- Primary Outline -->
+                                <button class="h-10 px-4 border border-violet-300 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400 font-medium rounded-lg transition-colors">
+                                    Outline
+                                </button>
+                                <!-- Primary Ghost -->
+                                <button class="h-10 px-4 text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300 font-medium rounded-lg transition-colors">
+                                    Ghost
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Base Variants --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 bg-gray-600 hover:bg-gray-700 text-white ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Primary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 bg-gray-200 hover:bg-gray-300 text-gray-900 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Secondary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 hover:bg-gray-100 text-gray-700 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Tertiary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 border border-gray-300 hover:bg-gray-50 text-gray-700 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Outline<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 text-gray-600 hover:text-gray-900 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Ghost<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Primary Variants --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 bg-violet-600 hover:bg-violet-700 text-white ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Primary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 bg-violet-100 hover:bg-violet-200 text-violet-700 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Secondary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 hover:bg-violet-50 text-violet-600 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Tertiary<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 border border-violet-300 hover:bg-violet-50 text-violet-600 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Outline<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-10 px-4 text-violet-600 hover:text-violet-700 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Ghost<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Button Sizes -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sizes</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">버튼의 크기 변형입니다. 고정 높이를 사용하여 아이콘, 아이콘+텍스트, 텍스트만 있는 버튼 모두 동일한 높이를 유지합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex flex-wrap items-end gap-4 mb-6">
+                            <!-- XS -->
+                            <button class="h-7 px-2.5 text-xs bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded transition-colors">
+                                Extra Small
+                            </button>
+                            <!-- SM -->
+                            <button class="h-8 px-3 text-sm bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-md transition-colors">
+                                Small
+                            </button>
+                            <!-- MD (default) -->
+                            <button class="h-10 px-4 text-sm bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                Medium
+                            </button>
+                            <!-- LG -->
+                            <button class="h-11 px-5 text-base bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                Large
+                            </button>
+                            <!-- XL -->
+                            <button class="h-12 px-6 text-lg bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-xl transition-colors">
+                                Extra Large
+                            </button>
+                        </div>
+                        <!-- Size Specs Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Size</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Height</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Padding X</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Font Size</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Border Radius</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">xs</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-7 (28px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-2.5</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-xs (12px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded (4px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">sm</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-8 (32px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-3</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-sm (14px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-md (6px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">md</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-10 (40px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-4</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-sm (14px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-lg (8px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">lg</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-11 (44px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-5</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-base (16px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-lg (8px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">xl</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-12 (48px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-6</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-lg (18px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-xl (12px)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Button States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">버튼의 상호작용 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                            <!-- Default -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-600 dark:bg-gray-500 text-white font-medium rounded-lg transition-colors">
+                                    Default
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">기본 상태</p>
+                            </div>
+                            <!-- Hover -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-700 dark:bg-gray-400 text-white font-medium rounded-lg">
+                                    Hover
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">호버 상태</p>
+                            </div>
+                            <!-- Focus -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-600 dark:bg-gray-500 text-white font-medium rounded-lg ring-2 ring-gray-400 dark:ring-gray-300 ring-offset-2 dark:ring-offset-gray-800">
+                                    Focus
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">포커스 상태</p>
+                            </div>
+                            <!-- Disabled -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-600/50 dark:bg-gray-500/50 text-white/50 font-medium rounded-lg cursor-not-allowed" disabled>
+                                    Disabled
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">비활성화</p>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">CSS Classes</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Hover */</span>
+<span class="text-violet-600 dark:text-violet-400">hover:bg-gray-700 dark:hover:bg-gray-400</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Focus */</span>
+<span class="text-violet-600 dark:text-violet-400">focus:ring-2 focus:ring-gray-400 focus:ring-offset-2</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Disabled */</span>
+<span class="text-violet-600 dark:text-violet-400">disabled:opacity-50 disabled:cursor-not-allowed</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Button Colors -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Colors</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">의미에 따른 버튼 색상 변형입니다. 기본은 Base를 사용하고 특별한 의미가 필요한 경우에만 사용하세요.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            <!-- Base -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                    Base
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">기본 (권장)</p>
+                            </div>
+                            <!-- Primary -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                    Primary
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">주요 CTA</p>
+                            </div>
+                            <!-- Success -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg transition-colors">
+                                    Success
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">성공/확인</p>
+                            </div>
+                            <!-- Danger -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors">
+                                    Danger
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">위험/삭제</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Buttons with Icons -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Icons</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">아이콘과 함께 사용하는 버튼입니다. 고정 높이(h-10)를 사용하여 아이콘만, 아이콘+텍스트, 텍스트만 있는 버튼 모두 동일한 높이를 유지합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex flex-wrap items-center gap-4 mb-6">
+                            <!-- Text Only -->
+                            <button class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                Text Only
+                            </button>
+                            <!-- Icon Left -->
+                            <button class="h-10 inline-flex items-center gap-2 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                                Add Item
+                            </button>
+                            <!-- Icon Right -->
+                            <button class="h-10 inline-flex items-center gap-2 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                Continue
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </button>
+                            <!-- Icon Only Square -->
+                            <button class="h-10 w-10 inline-flex items-center justify-center bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white rounded-lg transition-colors" title="Settings">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                </svg>
+                            </button>
+                            <!-- Icon Only Circle -->
+                            <button class="h-10 w-10 inline-flex items-center justify-center bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white rounded-full transition-colors" title="Add">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Height Consistency Demo -->
+                        <div class="mb-6 p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">높이 일관성 (h-10 = 40px)</p>
+                            <div class="flex items-center gap-2 border-t border-b border-dashed border-gray-300 dark:border-gray-600 py-0">
+                                <button class="h-10 px-4 bg-gray-600 text-white font-medium rounded-lg">Text</button>
+                                <button class="h-10 inline-flex items-center gap-2 px-4 bg-gray-600 text-white font-medium rounded-lg">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                    Icon+Text
+                                </button>
+                                <button class="h-10 w-10 inline-flex items-center justify-center bg-gray-600 text-white rounded-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Text Only (h-10으로 높이 고정) --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">h-10</span> px-4 bg-gray-600 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Text<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Icon + Text --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">h-10</span> inline-flex items-center gap-2 px-4 bg-gray-600 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-4 h-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  Text
+<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Icon Only (정사각형: h-10 w-10) --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">h-10 w-10</span> inline-flex items-center justify-center bg-gray-600 rounded-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-5 h-5"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Loading State -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Loading State</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">로딩 중 상태를 나타내는 버튼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex flex-wrap items-center gap-4 mb-6">
+                            <!-- Loading with Spinner -->
+                            <button class="h-10 inline-flex items-center gap-2 px-4 bg-gray-600/70 dark:bg-gray-500/70 text-white font-medium rounded-lg cursor-wait" disabled>
+                                <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                                Loading...
+                            </button>
+                            <!-- Loading without text -->
+                            <button class="h-10 w-10 inline-flex items-center justify-center bg-gray-600/70 dark:bg-gray-500/70 text-white font-medium rounded-lg cursor-wait" disabled>
+                                <svg class="animate-spin w-5 h-5" fill="none" viewBox="0 0 24 24">
+                                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center gap-2 ..."</span> <span class="text-violet-600 dark:text-violet-400">disabled</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"animate-spin w-4 h-4"</span> <span class="text-violet-600 dark:text-violet-400">fill</span>=<span class="text-emerald-600 dark:text-emerald-400">"none"</span> <span class="text-violet-600 dark:text-violet-400">viewBox</span>=<span class="text-emerald-600 dark:text-emerald-400">"0 0 24 24"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;circle</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"opacity-25"</span> <span class="text-violet-600 dark:text-violet-400">cx</span>=<span class="text-emerald-600 dark:text-emerald-400">"12"</span> <span class="text-violet-600 dark:text-violet-400">cy</span>=<span class="text-emerald-600 dark:text-emerald-400">"12"</span> <span class="text-violet-600 dark:text-violet-400">r</span>=<span class="text-emerald-600 dark:text-emerald-400">"10"</span> <span class="text-violet-600 dark:text-violet-400">stroke</span>=<span class="text-emerald-600 dark:text-emerald-400">"currentColor"</span> <span class="text-violet-600 dark:text-violet-400">stroke-width</span>=<span class="text-emerald-600 dark:text-emerald-400">"4"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/circle&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;path</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"opacity-75"</span> <span class="text-violet-600 dark:text-violet-400">fill</span>=<span class="text-emerald-600 dark:text-emerald-400">"currentColor"</span> <span class="text-violet-600 dark:text-violet-400">d</span>=<span class="text-emerald-600 dark:text-emerald-400">"M4 12a8 8 0 018-8V0..."</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/path&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  Loading...
+<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Button Group -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Button Group</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">관련된 버튼들을 그룹으로 묶어 표시합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6">
+                            <!-- Horizontal Group -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Horizontal</p>
+                                <div class="inline-flex h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                                    <button class="px-4 bg-gray-600 dark:bg-gray-500 text-white font-medium border-r border-gray-500 dark:border-gray-400">
+                                        Left
+                                    </button>
+                                    <button class="px-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium border-r border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        Center
+                                    </button>
+                                    <button class="px-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        Right
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Icon Button Group -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Icon Group</p>
+                                <div class="inline-flex h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+                                    <button class="w-10 inline-flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                        </svg>
+                                    </button>
+                                    <button class="w-10 inline-flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-r border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                        </svg>
+                                    </button>
+                                    <button class="w-10 inline-flex items-center justify-center bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Text Links (a tag) -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Text Links</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">페이지 이동이 필요한 경우 <code class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-sm">&lt;a&gt;</code> 태그를 사용합니다. 패딩이나 마진 없이 텍스트에만 스타일을 적용합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Link Examples in Context -->
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <p class="text-gray-700 dark:text-gray-300 leading-relaxed">
+                                    자세한 내용은 <a href="#" class="text-violet-600 dark:text-violet-400 hover:underline">도움말 센터</a>를 참고하세요.
+                                    또는 <a href="#" class="text-violet-600 dark:text-violet-400 hover:underline">고객 지원팀</a>에 문의할 수 있습니다.
+                                </p>
+                            </div>
+                            <!-- Link Variants -->
+                            <div class="flex flex-wrap items-center gap-6">
+                                <!-- Default Link -->
+                                <a href="#" class="text-violet-600 dark:text-violet-400 hover:underline">
+                                    Default Link
+                                </a>
+                                <!-- Link with Arrow -->
+                                <a href="#" class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400 hover:underline">
+                                    Learn More
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                                <!-- External Link -->
+                                <a href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-violet-600 dark:text-violet-400 hover:underline">
+                                    External Link
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                                    </svg>
+                                </a>
+                                <!-- Muted Link -->
+                                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline">
+                                    Muted Link
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Default Link --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/page"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-violet-600 hover:underline"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Link Text<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Link with Arrow --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/page"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center gap-1 text-violet-600 hover:underline"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  Learn More
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-4 h-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- External Link --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"https://example.com"</span> <span class="text-violet-600 dark:text-violet-400">target</span>=<span class="text-emerald-600 dark:text-emerald-400">"_blank"</span> <span class="text-violet-600 dark:text-violet-400">rel</span>=<span class="text-emerald-600 dark:text-emerald-400">"noopener noreferrer"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center gap-1 text-violet-600 hover:underline"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  External Link
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-3.5 h-3.5"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span> <span class="text-gray-500 dark:text-gray-400">&lt;!-- External link icon --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Muted Link --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/page"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-500 hover:text-gray-700 hover:underline"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Muted Link<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Full Width -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Full Width</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">컨테이너 전체 너비를 차지하는 버튼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="max-w-md space-y-3">
+                            <button class="w-full h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-colors">
+                                Full Width Button
+                            </button>
+                            <button class="w-full h-10 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 font-medium rounded-lg transition-colors">
+                                Full Width Outline
+                            </button>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">w-full</span> h-10 px-4 bg-gray-600 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  Full Width Button
+<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Interactive Playground -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Interactive Playground</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">버튼 스타일을 실시간으로 커스터마이징해보세요.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Preview -->
+                            <div class="flex items-center justify-center min-h-[200px] bg-gray-50 dark:bg-gray-900 rounded-xl p-8">
+                                <button id="previewButton" class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-lg transition-all">
+                                    Preview Button
+                                </button>
+                            </div>
+                            <!-- Controls -->
+                            <div class="space-y-4">
+                                <!-- Variant -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Variant</label>
+                                    <select id="variantSelect" onchange="updatePreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                        <option value="base" selected>Base</option>
+                                        <option value="primary">Primary</option>
+                                    </select>
+                                </div>
+                                <!-- Size -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Size</label>
+                                    <select id="sizeSelect" onchange="updatePreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                        <option value="xs">Extra Small</option>
+                                        <option value="sm">Small</option>
+                                        <option value="md" selected>Medium</option>
+                                        <option value="lg">Large</option>
+                                        <option value="xl">Extra Large</option>
+                                    </select>
+                                </div>
+                                <!-- Color -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Color (Primary only)</label>
+                                    <select id="colorSelect" onchange="updatePreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                        <option value="violet" selected>Violet</option>
+                                        <option value="emerald">Emerald</option>
+                                        <option value="red">Red</option>
+                                        <option value="blue">Blue</option>
+                                    </select>
+                                </div>
+                                <!-- Options -->
+                                <div class="flex flex-wrap gap-4">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="disabledCheck" onchange="updatePreview()" class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Disabled</span>
+                                    </label>
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="fullWidthCheck" onchange="updatePreview()" class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Full Width</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Generated Code -->
+                        <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Generated Code</span>
+                                <button onclick="copyCode()" class="text-xs px-2 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                            <pre id="generatedCode" class="p-4 overflow-x-auto text-sm font-mono leading-relaxed text-gray-800 dark:text-gray-200"></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• <strong>Base(Gray)</strong>를 기본 버튼으로 사용하세요</li>
+                                    <li>• Primary 버튼은 화면당 <strong>하나의 주요 CTA</strong>에만 사용하세요</li>
+                                    <li>• 페이지 이동에는 <code class="px-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">&lt;a&gt;</code> 태그를 사용하세요</li>
+                                    <li>• 버튼 텍스트는 명확한 액션 동사로 작성하세요</li>
+                                    <li>• 충분한 터치 영역(44px 이상)을 확보하세요</li>
+                                    <li>• 로딩 상태에서는 버튼을 비활성화하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 모든 버튼에 Primary 색상을 사용하지 마세요</li>
+                                    <li>• 한 화면에 여러 개의 Primary 버튼을 두지 마세요</li>
+                                    <li>• 페이지 이동에 <code class="px-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">&lt;button&gt;</code>을 사용하지 마세요</li>
+                                    <li>• 위험한 액션에 Primary 색상을 사용하지 마세요</li>
+                                    <li>• 아이콘만 있는 버튼에 툴팁을 빠뜨리지 마세요</li>
+                                    <li>• disabled 상태에서 호버 효과를 주지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="copyToast" class="fixed bottom-4 right-4 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+        Copied to clipboard!
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Button Playground
+        const variants = {
+            base: {
+                base: 'bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white',
+                disabled: 'bg-gray-600/50 dark:bg-gray-500/50 text-white/50'
+            },
+            primary: {
+                base: 'bg-{color}-600 hover:bg-{color}-700 text-white',
+                disabled: 'bg-{color}-600/50 text-white/70'
+            }
+        };
+
+        const sizes = {
+            xs: 'h-7 px-2.5 text-xs rounded',
+            sm: 'h-8 px-3 text-sm rounded-md',
+            md: 'h-10 px-4 text-sm rounded-lg',
+            lg: 'h-11 px-5 text-base rounded-lg',
+            xl: 'h-12 px-6 text-lg rounded-xl'
+        };
+
+        function updatePreview() {
+            const variant = document.getElementById('variantSelect').value;
+            const size = document.getElementById('sizeSelect').value;
+            const color = document.getElementById('colorSelect').value;
+            const disabled = document.getElementById('disabledCheck').checked;
+            const fullWidth = document.getElementById('fullWidthCheck').checked;
+
+            const button = document.getElementById('previewButton');
+            const variantClasses = disabled ? variants[variant].disabled : variants[variant].base;
+            const sizeClasses = sizes[size];
+
+            let classes = variantClasses.replace(/{color}/g, color) + ' ' + sizeClasses + ' font-medium transition-all';
+            if (fullWidth) classes += ' w-full';
+            if (disabled) classes += ' cursor-not-allowed';
+
+            button.className = classes;
+            button.disabled = disabled;
+
+            // Update generated code
+            updateGeneratedCode(classes, disabled);
+        }
+
+        function updateGeneratedCode(classes, disabled) {
+            const disabledAttr = disabled ? ' disabled' : '';
+            const code = `<button class="${classes}"${disabledAttr}>\n  Button Text\n</button>`;
+            document.getElementById('generatedCode').textContent = code;
+        }
+
+        function copyCode() {
+            const code = document.getElementById('generatedCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('copyToast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-full', 'opacity-0');
+            }, 2000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updatePreview();
+        });
+    </script>
+</body>
+</html>
