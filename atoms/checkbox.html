@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkbox + Radio - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+        /* Custom Checkbox */
+        input[type="checkbox"]:not(.sr-only) {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 0.25rem;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease-in-out;
+        }
+        input[type="checkbox"]:not(.sr-only):checked {
+            background-color: #7c3aed;
+            border-color: #7c3aed;
+        }
+        input[type="checkbox"]:not(.sr-only):checked::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 1px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        input[type="checkbox"]:not(.sr-only):focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+        }
+        input[type="checkbox"]:not(.sr-only):disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        input[type="checkbox"]:not(.sr-only):indeterminate {
+            background-color: #7c3aed;
+            border-color: #7c3aed;
+        }
+        input[type="checkbox"]:not(.sr-only):indeterminate::after {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 7px;
+            width: 10px;
+            height: 2px;
+            background-color: white;
+        }
+        /* Custom Radio */
+        input[type="radio"]:not(.sr-only) {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #d1d5db;
+            border-radius: 50%;
+            background-color: white;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.15s ease-in-out;
+        }
+        input[type="radio"]:not(.sr-only):checked {
+            border-color: #7c3aed;
+        }
+        input[type="radio"]:not(.sr-only):checked::after {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 4px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #7c3aed;
+        }
+        input[type="radio"]:not(.sr-only):focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3);
+        }
+        input[type="radio"]:not(.sr-only):disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* Dark mode */
+        .dark input[type="checkbox"]:not(.sr-only),
+        .dark input[type="radio"]:not(.sr-only) {
+            background-color: #374151;
+            border-color: #4b5563;
+        }
+        .dark input[type="checkbox"]:not(.sr-only):checked {
+            background-color: #8b5cf6;
+            border-color: #8b5cf6;
+        }
+        .dark input[type="radio"]:not(.sr-only):checked {
+            border-color: #8b5cf6;
+        }
+        .dark input[type="radio"]:not(.sr-only):checked::after {
+            background-color: #8b5cf6;
+        }
+        .dark input[type="checkbox"]:not(.sr-only):indeterminate {
+            background-color: #8b5cf6;
+            border-color: #8b5cf6;
+        }
+        /* Size variants */
+        input[type="checkbox"]:not(.sr-only).size-sm,
+        input[type="radio"]:not(.sr-only).size-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+        input[type="checkbox"]:not(.sr-only).size-sm:checked::after {
+            left: 3px;
+            top: 0px;
+            width: 5px;
+            height: 8px;
+        }
+        input[type="radio"]:not(.sr-only).size-sm:checked::after {
+            left: 2px;
+            top: 2px;
+            width: 6px;
+            height: 6px;
+        }
+        input[type="checkbox"]:not(.sr-only).size-lg,
+        input[type="radio"]:not(.sr-only).size-lg {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
+        input[type="checkbox"]:not(.sr-only).size-lg:checked::after {
+            left: 6px;
+            top: 2px;
+            width: 8px;
+            height: 12px;
+        }
+        input[type="radio"]:not(.sr-only).size-lg:checked::after {
+            left: 5px;
+            top: 5px;
+            width: 10px;
+            height: 10px;
+        }
+        /* Card Radio Styles */
+        .card-radio-label input:checked ~ .card-radio-content {
+            border-color: #8b5cf6;
+            background-color: #f5f3ff;
+        }
+        .dark .card-radio-label input:checked ~ .card-radio-content {
+            border-color: #8b5cf6;
+            background-color: rgba(139, 92, 246, 0.2);
+        }
+        .card-radio-label input:checked ~ .card-radio-content .card-radio-indicator {
+            border-color: #8b5cf6;
+            background-color: #8b5cf6;
+        }
+        .card-radio-dot {
+            opacity: 0;
+        }
+        .card-radio-label input:checked ~ .card-radio-content .card-radio-dot {
+            opacity: 1;
+        }
+        .card-radio-label input:focus ~ .card-radio-content {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        /* Card Checkbox Styles */
+        .card-checkbox {
+            border-color: #e5e7eb;
+        }
+        .dark .card-checkbox {
+            border-color: #374151;
+        }
+        .card-checkbox.selected {
+            border-color: #8b5cf6;
+            background-color: #f5f3ff;
+        }
+        .dark .card-checkbox.selected {
+            border-color: #8b5cf6;
+            background-color: rgba(139, 92, 246, 0.2);
+        }
+        .card-checkbox .card-checkbox-indicator {
+            border-color: #d1d5db;
+        }
+        .dark .card-checkbox .card-checkbox-indicator {
+            border-color: #4b5563;
+        }
+        .card-checkbox.selected .card-checkbox-indicator {
+            border-color: #8b5cf6;
+            background-color: #8b5cf6;
+        }
+        .card-checkbox .card-checkbox-icon {
+            opacity: 0;
+        }
+        .card-checkbox.selected .card-checkbox-icon {
+            opacity: 1;
+        }
+        .card-checkbox:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full overflow-hidden bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Atoms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Checkbox + Radio</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Checkbox + Radio</h1>
+                    <p class="text-gray-600 dark:text-gray-400">Checkbox는 여러 옵션 중 다중 선택, Radio는 단일 선택에 사용하는 입력 요소입니다.</p>
+                </div>
+
+                <!-- Basic -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">기본 체크박스와 라디오 버튼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Checkbox -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Checkbox</p>
+                                <div class="flex flex-wrap items-center gap-6">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Unchecked</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Checked</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Radio -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Radio</p>
+                                <div class="flex flex-wrap items-center gap-6">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="radio" name="basic-radio">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Option 1</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="radio" name="basic-radio" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Option 2</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sizes -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sizes</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">체크박스와 라디오 버튼의 크기 변형입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Checkbox Sizes -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Checkbox</p>
+                                <div class="flex flex-wrap items-end gap-6">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="size-sm" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Small</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Medium</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="size-lg" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Large</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Radio Sizes -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Radio</p>
+                                <div class="flex flex-wrap items-end gap-6">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="size-radio" class="size-sm" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Small</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="radio" name="size-radio">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Medium</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="radio" name="size-radio" class="size-lg">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Large</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">체크박스와 라디오의 다양한 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-8">
+                            <!-- Checkbox States -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Checkbox</p>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-pointer mb-2">
+                                            <input type="checkbox">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Default</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">기본 상태</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-pointer mb-2">
+                                            <input type="checkbox" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Checked</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">선택됨</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-not-allowed mb-2">
+                                            <input type="checkbox" disabled>
+                                            <span class="text-sm text-gray-400 dark:text-gray-500">Disabled</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">비활성화</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-pointer mb-2">
+                                            <input type="checkbox" id="indeterminate-checkbox">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Indeterminate</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">부분 선택</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Radio States -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Radio</p>
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-pointer mb-2">
+                                            <input type="radio" name="state-radio-1">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Default</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">기본 상태</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-pointer mb-2">
+                                            <input type="radio" name="state-radio-2" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">Selected</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">선택됨</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-not-allowed mb-2">
+                                            <input type="radio" name="state-radio-3" disabled>
+                                            <span class="text-sm text-gray-400 dark:text-gray-500">Disabled</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">비활성화</p>
+                                    </div>
+                                    <div>
+                                        <label class="flex items-center gap-3 cursor-not-allowed mb-2">
+                                            <input type="radio" name="state-radio-4" checked disabled>
+                                            <span class="text-sm text-gray-400 dark:text-gray-500">Disabled Selected</span>
+                                        </label>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">비활성화 + 선택</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Colors -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Colors</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">다양한 색상의 체크박스입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="flex flex-wrap items-center gap-8">
+                            <!-- Violet (default) -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox"  checked>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Violet</span>
+                            </label>
+                            <!-- Blue -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700" checked>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Blue</span>
+                            </label>
+                            <!-- Emerald -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-emerald-600 focus:ring-emerald-500 dark:bg-gray-700" checked>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Emerald</span>
+                            </label>
+                            <!-- Red -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-red-600 focus:ring-red-500 dark:bg-gray-700" checked>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Red</span>
+                            </label>
+                            <!-- Gray -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" class="w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-gray-600 focus:ring-gray-500 dark:bg-gray-700" checked>
+                                <span class="text-sm text-gray-700 dark:text-gray-300">Gray</span>
+                            </label>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- With Labels -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Labels</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">라벨과 설명 텍스트가 포함된 체크박스입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Simple Label -->
+                            <label class="flex items-center gap-3 cursor-pointer">
+                                <input type="checkbox" >
+                                <span class="text-sm font-medium text-gray-900 dark:text-white">이용약관에 동의합니다</span>
+                            </label>
+                            <!-- With Description -->
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" class="mt-0.5">
+                                <div>
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white block">마케팅 정보 수신 동의</span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400">이메일, SMS를 통해 프로모션 및 이벤트 정보를 받습니다.</span>
+                                </div>
+                            </label>
+                            <!-- Required -->
+                            <label class="flex items-start gap-3 cursor-pointer">
+                                <input type="checkbox" class="mt-0.5" required>
+                                <div>
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white">
+                                        개인정보 처리방침
+                                        <span class="text-red-500">*</span>
+                                    </span>
+                                    <span class="text-sm text-gray-500 dark:text-gray-400 block">필수 동의 항목입니다.</span>
+                                </div>
+                            </label>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- With Description --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-start gap-3 cursor-pointer"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"checkbox"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-5 h-5 <span class="text-amber-600 dark:text-amber-400">mt-0.5</span> rounded ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm font-medium text-gray-900 block"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Label<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Description<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Groups -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Groups</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">체크박스와 라디오 버튼을 그룹으로 묶어 사용합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Checkbox -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Checkbox</p>
+                                <!-- Vertical -->
+                                <div class="mb-4">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Vertical</p>
+                                    <fieldset class="space-y-3">
+                                        <legend class="sr-only">관심 분야 선택</legend>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="checkbox" name="interest" value="design" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">디자인</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="checkbox" name="interest" value="development">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">개발</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="checkbox" name="interest" value="marketing">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">마케팅</span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+                                <!-- Horizontal -->
+                                <div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Horizontal</p>
+                                    <fieldset class="flex flex-wrap gap-6">
+                                        <legend class="sr-only">크기 선택</legend>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" name="size" value="s">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">S</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" name="size" value="m" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">M</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" name="size" value="l">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">L</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="checkbox" name="size" value="xl">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">XL</span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <!-- Radio -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Radio</p>
+                                <!-- Vertical -->
+                                <div class="mb-4">
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Vertical</p>
+                                    <fieldset class="space-y-3">
+                                        <legend class="sr-only">결제 방법 선택</legend>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="radio" name="payment" value="card" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">신용카드</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="radio" name="payment" value="bank">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">계좌이체</span>
+                                        </label>
+                                        <label class="flex items-center gap-3 cursor-pointer">
+                                            <input type="radio" name="payment" value="phone">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">휴대폰 결제</span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+                                <!-- Horizontal -->
+                                <div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">Horizontal</p>
+                                    <fieldset class="flex flex-wrap gap-6">
+                                        <legend class="sr-only">성별 선택</legend>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="gender" value="male">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">남성</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="gender" value="female" checked>
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">여성</span>
+                                        </label>
+                                        <label class="flex items-center gap-2 cursor-pointer">
+                                            <input type="radio" name="gender" value="other">
+                                            <span class="text-sm text-gray-700 dark:text-gray-300">기타</span>
+                                        </label>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Select All Pattern (Checkbox only) -->
+                        <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Select All Pattern (Checkbox)</p>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg max-w-md">
+                                <label class="flex items-center gap-3 cursor-pointer pb-3 border-b border-gray-200 dark:border-gray-700">
+                                    <input type="checkbox" id="select-all">
+                                    <span class="text-sm font-medium text-gray-900 dark:text-white">전체 선택</span>
+                                </label>
+                                <div class="pt-3 space-y-2">
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="select-item w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-violet-600 focus:ring-violet-500 dark:bg-gray-700">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">항목 1</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="select-item w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-violet-600 focus:ring-violet-500 dark:bg-gray-700">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">항목 2</span>
+                                    </label>
+                                    <label class="flex items-center gap-3 cursor-pointer">
+                                        <input type="checkbox" class="select-item w-5 h-5 rounded border-gray-300 dark:border-gray-600 text-violet-600 focus:ring-violet-500 dark:bg-gray-700">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">항목 3</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Selection -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Card Selection</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">카드 형태의 선택 컴포넌트입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <!-- Checkbox (Multi-select) -->
+                        <div class="mb-8">
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Checkbox (다중 선택)</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="card-checkbox-group">
+                                <!-- Card 1 -->
+                                <div class="card-checkbox selected cursor-pointer relative p-4 rounded-xl border-2 transition-all" tabindex="0" data-value="basic">
+                                    <div class="card-checkbox-indicator absolute top-4 right-4 w-5 h-5 rounded border-2 flex items-center justify-center transition-all">
+                                        <svg class="card-checkbox-icon w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-1">Basic Plan</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">개인 사용자를 위한 기본 플랜</p>
+                                </div>
+                                <!-- Card 2 -->
+                                <div class="card-checkbox cursor-pointer relative p-4 rounded-xl border-2 transition-all" tabindex="0" data-value="business">
+                                    <div class="card-checkbox-indicator absolute top-4 right-4 w-5 h-5 rounded border-2 flex items-center justify-center transition-all">
+                                        <svg class="card-checkbox-icon w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-1">Business Plan</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">팀을 위한 비즈니스 플랜</p>
+                                </div>
+                                <!-- Card 3 -->
+                                <div class="card-checkbox cursor-pointer relative p-4 rounded-xl border-2 transition-all" tabindex="0" data-value="enterprise">
+                                    <div class="card-checkbox-indicator absolute top-4 right-4 w-5 h-5 rounded border-2 flex items-center justify-center transition-all">
+                                        <svg class="card-checkbox-icon w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mb-3">
+                                        <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/>
+                                        </svg>
+                                    </div>
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-1">Enterprise Plan</h3>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">대규모 조직을 위한 플랜</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Radio (Single-select) -->
+                        <div>
+                            <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Radio (단일 선택)</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="card-radio-group">
+                                <!-- Card 1 - Selected -->
+                                <label class="card-radio-label relative cursor-pointer block">
+                                    <input type="radio" name="plan" value="basic" class="sr-only" checked>
+                                    <div class="card-radio-content p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 transition-all">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="card-radio-indicator w-5 h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all">
+                                                <div class="card-radio-dot w-2.5 h-2.5 rounded-full bg-white"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="font-medium text-gray-900 dark:text-white mb-1">Basic</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">월 9,900원</p>
+                                    </div>
+                                </label>
+                                <!-- Card 2 -->
+                                <label class="card-radio-label relative cursor-pointer block">
+                                    <input type="radio" name="plan" value="pro" class="sr-only">
+                                    <div class="card-radio-content p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 transition-all">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                                </svg>
+                                            </div>
+                                            <div class="card-radio-indicator w-5 h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all">
+                                                <div class="card-radio-dot w-2.5 h-2.5 rounded-full bg-white"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="font-medium text-gray-900 dark:text-white mb-1">Pro</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">월 29,900원</p>
+                                    </div>
+                                </label>
+                                <!-- Card 3 -->
+                                <label class="card-radio-label relative cursor-pointer block">
+                                    <input type="radio" name="plan" value="enterprise" class="sr-only">
+                                    <div class="card-radio-content p-4 rounded-xl border-2 border-gray-200 dark:border-gray-700 transition-all">
+                                        <div class="flex items-start justify-between mb-3">
+                                            <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                                                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                                </svg>
+                                            </div>
+                                            <div class="card-radio-indicator w-5 h-5 rounded-full border-2 border-gray-300 dark:border-gray-600 flex items-center justify-center transition-all">
+                                                <div class="card-radio-dot w-2.5 h-2.5 rounded-full bg-white"></div>
+                                            </div>
+                                        </div>
+                                        <h3 class="font-medium text-gray-900 dark:text-white mb-1">Enterprise</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">문의</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Validation States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Validation States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">유효성 검사 상태를 나타내는 체크박스입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Error State -->
+                            <div>
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" class="mt-0.5">
+                                    <div>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">
+                                            이용약관에 동의합니다
+                                            <span class="text-red-500">*</span>
+                                        </span>
+                                    </div>
+                                </label>
+                                <p class="ml-8 mt-1 text-sm text-red-500">이용약관에 동의해주세요.</p>
+                            </div>
+                            <!-- Success State -->
+                            <div>
+                                <label class="flex items-start gap-3 cursor-pointer">
+                                    <input type="checkbox" class="mt-0.5" checked>
+                                    <div>
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">개인정보 처리방침에 동의합니다</span>
+                                    </div>
+                                </label>
+                                <p class="ml-8 mt-1 text-sm text-emerald-500 flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    동의가 완료되었습니다.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">CSS Classes</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Error State */</span>
+<span class="text-violet-600 dark:text-violet-400">border-red-500 text-red-600 focus:ring-red-500</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Success State */</span>
+<span class="text-violet-600 dark:text-violet-400">border-emerald-500 text-emerald-600 focus:ring-emerald-500</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Checkbox vs Radio -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Checkbox vs Radio</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Checkbox와 Radio의 차이점과 사용 시나리오입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <h3 class="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-3">Checkbox</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• <strong>다중 선택</strong> 가능</li>
+                                    <li>• 독립적인 옵션들</li>
+                                    <li>• 전체 선택/해제 가능</li>
+                                    <li>• 예: 관심사, 동의 항목</li>
+                                </ul>
+                                <div class="mt-4 space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="size-sm" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">이메일 수신</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="size-sm" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">SMS 수신</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <h3 class="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-3">Radio</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• <strong>단일 선택</strong>만 가능</li>
+                                    <li>• 상호 배타적 옵션</li>
+                                    <li>• 항상 하나는 선택됨</li>
+                                    <li>• 예: 성별, 결제 방법</li>
+                                </ul>
+                                <div class="mt-4 space-y-2">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="compare-radio" class="size-sm" checked>
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">신용카드</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="radio" name="compare-radio" class="size-sm">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">계좌이체</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 여러 옵션 중 다중 선택이 필요할 때 사용하세요</li>
+                                    <li>• 라벨은 체크박스 오른쪽에 배치하세요</li>
+                                    <li>• 명확하고 간결한 라벨 텍스트를 사용하세요</li>
+                                    <li>• 관련 체크박스는 그룹으로 묶어 표시하세요</li>
+                                    <li>• 필수 항목에는 별표(*)를 표시하세요</li>
+                                    <li>• 충분한 터치 영역(44px 이상)을 확보하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 단일 선택에 체크박스를 사용하지 마세요 (Radio 사용)</li>
+                                    <li>• 라벨 없이 체크박스만 사용하지 마세요</li>
+                                    <li>• 기본값으로 체크된 상태를 남용하지 마세요</li>
+                                    <li>• 너무 많은 체크박스를 한 화면에 나열하지 마세요</li>
+                                    <li>• 부정문으로 라벨을 작성하지 마세요</li>
+                                    <li>• disabled 상태를 기본값으로 사용하지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Set indeterminate state
+        document.addEventListener('DOMContentLoaded', function() {
+            const indeterminateCheckbox = document.getElementById('indeterminate-checkbox');
+            if (indeterminateCheckbox) {
+                indeterminateCheckbox.indeterminate = true;
+            }
+
+            // Select All functionality
+            const selectAll = document.getElementById('select-all');
+            const selectItems = document.querySelectorAll('.select-item');
+
+            if (selectAll && selectItems.length > 0) {
+                selectAll.addEventListener('change', function() {
+                    selectItems.forEach(item => {
+                        item.checked = selectAll.checked;
+                    });
+                });
+
+                selectItems.forEach(item => {
+                    item.addEventListener('change', function() {
+                        const checkedCount = document.querySelectorAll('.select-item:checked').length;
+                        if (checkedCount === 0) {
+                            selectAll.checked = false;
+                            selectAll.indeterminate = false;
+                        } else if (checkedCount === selectItems.length) {
+                            selectAll.checked = true;
+                            selectAll.indeterminate = false;
+                        } else {
+                            selectAll.checked = false;
+                            selectAll.indeterminate = true;
+                        }
+                    });
+                });
+            }
+
+            // Card Checkbox functionality
+            const cardCheckboxes = document.querySelectorAll('.card-checkbox');
+            cardCheckboxes.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                });
+                card.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.classList.toggle('selected');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
