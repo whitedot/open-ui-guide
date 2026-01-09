@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Badge - Open UI Guide</title>
+    <title>Badge + Tag - Open UI Guide</title>
 
     <!-- Tailwind CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -175,10 +175,10 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span class="text-gray-900 dark:text-white">Badge</span>
+                        <span class="text-gray-900 dark:text-white">Badge + Tag</span>
                     </div>
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Badge</h1>
-                    <p class="text-gray-600 dark:text-gray-400">상태, 카테고리, 수량 등을 표시하는 작은 라벨 컴포넌트입니다. 주로 다른 요소에 부가 정보를 제공합니다.</p>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Badge + Tag</h1>
+                    <p class="text-gray-600 dark:text-gray-400">상태, 카테고리, 수량 등을 표시하는 작은 라벨 컴포넌트입니다. Badge는 주로 다른 요소에 부가 정보를 제공하고, Tag는 콘텐츠 분류나 필터링에 사용됩니다.</p>
                 </div>
 
                 <!-- Basic Variants -->
@@ -508,6 +508,180 @@
   <span class="text-blue-600 dark:text-blue-400">&lt;button&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">absolute top-1 right-1</span> w-2 h-2 bg-red-500 rounded-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/span&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tags -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tags</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">콘텐츠 분류, 필터링, 키워드 표시에 사용되는 태그입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <!-- Basic Tags -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Basic Tags</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">JavaScript</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">React</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">TypeScript</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">Tailwind CSS</span>
+                            </div>
+                        </div>
+                        <!-- Colored Tags -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Colored Tags</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400">Frontend</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">Backend</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">DevOps</span>
+                                <span class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">Design</span>
+                            </div>
+                        </div>
+                        <!-- Removable Tags -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Removable Tags</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400">
+                                    React
+                                    <button type="button" class="flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center text-violet-500 hover:bg-violet-200 dark:hover:bg-violet-800 hover:text-violet-600 focus:outline-none">
+                                        <svg class="h-3 w-3" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                                    Vue
+                                    <button type="button" class="flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center text-blue-500 hover:bg-blue-200 dark:hover:bg-blue-800 hover:text-blue-600 focus:outline-none">
+                                        <svg class="h-3 w-3" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                    Angular
+                                    <button type="button" class="flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center text-emerald-500 hover:bg-emerald-200 dark:hover:bg-emerald-800 hover:text-emerald-600 focus:outline-none">
+                                        <svg class="h-3 w-3" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <!-- Clickable Tags -->
+                        <div class="mb-8">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Clickable Tags</h3>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <button class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    #javascript
+                                </button>
+                                <button class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    #webdev
+                                </button>
+                                <button class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-violet-600 text-white hover:bg-violet-700 transition-colors">
+                                    #tailwindcss
+                                </button>
+                                <button class="inline-flex items-center px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                                    #ui
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Tag Input Example -->
+                        <div class="mb-6">
+                            <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Tag Input</h3>
+                            <div class="flex flex-wrap items-center gap-2 p-3 bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-sm font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400">
+                                    React
+                                    <button type="button" class="flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center text-violet-500 hover:bg-violet-200 dark:hover:bg-violet-800">
+                                        <svg class="h-2.5 w-2.5" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-sm font-medium bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400">
+                                    TypeScript
+                                    <button type="button" class="flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center text-violet-500 hover:bg-violet-200 dark:hover:bg-violet-800">
+                                        <svg class="h-2.5 w-2.5" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                            <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                        </svg>
+                                    </button>
+                                </span>
+                                <input type="text" placeholder="태그 추가..." class="flex-1 min-w-[100px] bg-transparent border-0 text-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-0">
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Tag --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center <span class="text-amber-600 dark:text-amber-400 font-bold">px-3 py-1 rounded-lg</span> text-sm font-medium bg-gray-100 text-gray-800"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Tag<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Removable Tag --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center <span class="text-amber-600 dark:text-amber-400 font-bold">gap-1.5</span> px-3 py-1 rounded-lg ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  Tag
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-4 w-4 rounded ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>×<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Clickable Tag --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center px-3 py-1 rounded-lg ... <span class="text-amber-600 dark:text-amber-400 font-bold">hover:bg-gray-200</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>#tag<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Badge vs Tag -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Badge vs Tag</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Badge와 Tag의 차이점과 사용 시나리오입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <h3 class="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-3">Badge</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 상태 표시 (성공, 오류, 대기 등)</li>
+                                    <li>• 알림 카운터</li>
+                                    <li>• 짧은 라벨 (1-2 단어)</li>
+                                    <li>• 주로 <strong>읽기 전용</strong></li>
+                                    <li>• 다른 요소에 부착</li>
+                                </ul>
+                                <div class="mt-4 flex items-center gap-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">완료</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">대기중</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">오류</span>
+                                </div>
+                            </div>
+                            <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                <h3 class="text-sm font-semibold text-violet-600 dark:text-violet-400 mb-3">Tag</h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 콘텐츠 분류/카테고리</li>
+                                    <li>• 키워드, 해시태그</li>
+                                    <li>• 필터링 옵션</li>
+                                    <li>• <strong>클릭/삭제 가능</strong></li>
+                                    <li>• 독립적 사용</li>
+                                </ul>
+                                <div class="mt-4 flex items-center gap-2">
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        JavaScript
+                                        <button class="h-4 w-4 rounded text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 inline-flex items-center justify-center">
+                                            <svg class="h-2.5 w-2.5" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                                <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                            </svg>
+                                        </button>
+                                    </span>
+                                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-sm font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                                        React
+                                        <button class="h-4 w-4 rounded text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600 inline-flex items-center justify-center">
+                                            <svg class="h-2.5 w-2.5" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                                                <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                                            </svg>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </section>
