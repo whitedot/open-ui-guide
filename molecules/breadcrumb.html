@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Breadcrumb - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full overflow-hidden bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Molecules</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Breadcrumb</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Breadcrumb</h1>
+                    <p class="text-gray-600 dark:text-gray-400">현재 페이지의 위치를 계층적으로 보여주는 내비게이션 컴포넌트입니다.</p>
+                </div>
+
+                <!-- Basic Breadcrumb -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic Breadcrumb</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">기본 브레드크럼 컴포넌트입니다. 현재 페이지는 마지막 항목으로 표시됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Simple -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Simple</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li class="text-gray-400 dark:text-gray-500">/</li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li class="text-gray-400 dark:text-gray-500">/</li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Electronics</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- With Chevron -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">With Chevron</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Electronics</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- With Arrow -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">With Arrow</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Electronics</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-violet-600 dark:text-violet-400">&lt;nav</span> <span class="text-blue-600 dark:text-blue-400">aria-label</span>=<span class="text-emerald-600 dark:text-emerald-400">"Breadcrumb"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;ol</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-2 text-sm"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+        <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;a</span> <span class="text-blue-600 dark:text-blue-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-500 hover:text-violet-600"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Home<span class="text-violet-600 dark:text-violet-400">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;</span><span class="text-gray-500 dark:text-gray-400">&lt;!-- Separator Icon --&gt;</span><span class="text-violet-600 dark:text-violet-400">&lt;/li&gt;</span>
+        <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;a</span> <span class="text-blue-600 dark:text-blue-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-500 hover:text-violet-600"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Products<span class="text-violet-600 dark:text-violet-400">&lt;/a&gt;&lt;/li&gt;</span>
+        <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;</span><span class="text-gray-500 dark:text-gray-400">&lt;!-- Separator Icon --&gt;</span><span class="text-violet-600 dark:text-violet-400">&lt;/li&gt;</span>
+        <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;span</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-900 font-medium"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Current Page<span class="text-violet-600 dark:text-violet-400">&lt;/span&gt;&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;/ol&gt;</span>
+<span class="text-violet-600 dark:text-violet-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- With Home Icon -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Home Icon</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">홈 아이콘을 사용하여 시작점을 표시하는 브레드크럼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Home Icon Only -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Home Icon Only</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Dashboard</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Settings</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- Home Icon with Text -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Home Icon with Text</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                                </svg>
+                                                Home
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Users</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">John Doe</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Contained Style -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Contained Style</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">배경이 있는 컨테이너 스타일의 브레드크럼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Rounded -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Rounded</p>
+                                <nav aria-label="Breadcrumb" class="inline-flex items-center px-4 py-2 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Library</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Data</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- With Border -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">With Border</p>
+                                <nav aria-label="Breadcrumb" class="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Projects</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Design System</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Components</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- Full Width -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Full Width</p>
+                                <nav aria-label="Breadcrumb" class="flex items-center px-4 py-3 bg-gray-50 dark:bg-gray-900 border-y border-gray-200 dark:border-gray-700 -mx-6">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Category</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Current Page</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Truncated Breadcrumb -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Truncated Breadcrumb</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">깊은 계층 구조에서 중간 항목을 생략하는 브레드크럼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- With Ellipsis -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">With Ellipsis</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-400 dark:text-gray-500">...</span>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Parent</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Current Page</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- With Dropdown -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">With Dropdown (클릭하여 확인)</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li class="relative">
+                                            <button onclick="toggleBreadcrumbDropdown()" class="flex items-center justify-center w-6 h-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-400 dark:text-gray-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"/>
+                                                </svg>
+                                            </button>
+                                            <div id="breadcrumbDropdown" class="hidden absolute top-full left-0 mt-1 py-1 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg z-10 min-w-[160px]">
+                                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Level 1</a>
+                                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Level 2</a>
+                                                <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Level 3</a>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Parent</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Current</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Truncated with Ellipsis --&gt;</span>
+<span class="text-violet-600 dark:text-violet-400">&lt;ol</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-2 text-sm"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;a</span> <span class="text-blue-600 dark:text-blue-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Home<span class="text-violet-600 dark:text-violet-400">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;</span>/<span class="text-violet-600 dark:text-violet-400">&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;span</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-400"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>...<span class="text-violet-600 dark:text-violet-400">&lt;/span&gt;&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;</span>/<span class="text-violet-600 dark:text-violet-400">&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;a</span> <span class="text-blue-600 dark:text-blue-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Parent<span class="text-violet-600 dark:text-violet-400">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;</span>/<span class="text-violet-600 dark:text-violet-400">&lt;/li&gt;</span>
+    <span class="text-violet-600 dark:text-violet-400">&lt;li&gt;&lt;span</span> <span class="text-blue-600 dark:text-blue-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"font-medium"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>Current<span class="text-violet-600 dark:text-violet-400">&lt;/span&gt;&lt;/li&gt;</span>
+<span class="text-violet-600 dark:text-violet-400">&lt;/ol&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sizes -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sizes</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">다양한 크기의 브레드크럼입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6">
+                            <!-- Small -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Small</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-1.5 text-xs">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Details</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- Medium (Default) -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Medium (Default)</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2 text-sm">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Details</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                            <!-- Large -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Large</p>
+                                <nav aria-label="Breadcrumb">
+                                    <ol class="flex items-center gap-2.5 text-base">
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                        </li>
+                                        <li>
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <span class="text-gray-900 dark:text-white font-medium">Details</span>
+                                        </li>
+                                    </ol>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- With Page Title -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Page Title</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">페이지 헤더와 함께 사용하는 브레드크럼 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-8">
+                            <!-- Above Title -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">Above Title</p>
+                                <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                    <nav aria-label="Breadcrumb" class="mb-2">
+                                        <ol class="flex items-center gap-2 text-sm">
+                                            <li>
+                                                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                                            </li>
+                                            <li>
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                                </svg>
+                                            </li>
+                                            <li>
+                                                <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Settings</a>
+                                            </li>
+                                            <li>
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                                </svg>
+                                            </li>
+                                            <li>
+                                                <span class="text-gray-900 dark:text-white">Account</span>
+                                            </li>
+                                        </ol>
+                                    </nav>
+                                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Account Settings</h1>
+                                    <p class="text-gray-600 dark:text-gray-400 mt-1">Manage your account preferences and security settings.</p>
+                                </div>
+                            </div>
+                            <!-- With Back Button -->
+                            <div>
+                                <p class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-4">With Back Button</p>
+                                <div class="p-4 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                    <div class="flex items-center gap-4 mb-4">
+                                        <button class="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                            </svg>
+                                        </button>
+                                        <nav aria-label="Breadcrumb">
+                                            <ol class="flex items-center gap-2 text-sm">
+                                                <li>
+                                                    <a href="#" class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">Products</a>
+                                                </li>
+                                                <li>
+                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                                    </svg>
+                                                </li>
+                                                <li>
+                                                    <span class="text-gray-900 dark:text-white font-medium">Product Details</span>
+                                                </li>
+                                            </ol>
+                                        </nav>
+                                    </div>
+                                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Wireless Headphones</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 홈페이지부터 현재 페이지까지 전체 경로를 표시하세요</li>
+                                    <li>• 현재 페이지는 클릭 불가능하게 표시하세요</li>
+                                    <li>• 페이지 상단에 일관된 위치에 배치하세요</li>
+                                    <li>• 5단계 이상일 경우 생략(...) 표시를 사용하세요</li>
+                                    <li>• aria-label을 사용하여 접근성을 확보하세요</li>
+                                    <li>• 명확한 구분자(/, >, 등)를 사용하세요</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 긴 페이지 이름을 사용하지 마세요</li>
+                                    <li>• 현재 페이지를 클릭 가능한 링크로 만들지 마세요</li>
+                                    <li>• 단일 페이지 또는 홈에서는 사용하지 마세요</li>
+                                    <li>• 브레드크럼을 주요 내비게이션으로 사용하지 마세요</li>
+                                    <li>• 페이지 계층과 다른 경로를 표시하지 마세요</li>
+                                    <li>• 모바일에서 너무 많은 항목을 표시하지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/menu.js"></script>
+    <script>
+        // 다크모드 토글
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        // 모바일 사이드바 토글
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Breadcrumb Dropdown Toggle
+        function toggleBreadcrumbDropdown() {
+            const dropdown = document.getElementById('breadcrumbDropdown');
+            const isHidden = dropdown.classList.contains('hidden');
+
+            dropdown.classList.toggle('hidden');
+
+            if (isHidden) {
+                setTimeout(() => {
+                    document.addEventListener('click', function closeBreadcrumbDropdown(e) {
+                        if (!dropdown.contains(e.target) && !e.target.closest('[onclick="toggleBreadcrumbDropdown()"]')) {
+                            dropdown.classList.add('hidden');
+                            document.removeEventListener('click', closeBreadcrumbDropdown);
+                        }
+                    });
+                }, 0);
+            }
+        }
+    </script>
+</body>
+</html>
