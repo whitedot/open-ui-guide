@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Input - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full overflow-hidden bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Molecules</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Search Input</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Search Input</h1>
+                    <p class="text-gray-600 dark:text-gray-400">검색 기능을 제공하는 복합 입력 컴포넌트입니다. 아이콘, 버튼, 자동완성 등 다양한 요소가 결합됩니다.</p>
+                </div>
+
+                <!-- Basic Search -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic Search</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">검색 아이콘이 포함된 기본 검색 입력 필드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Default -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                            <!-- Rounded Full -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Rounded Full</label>
+                                <div class="relative">
+                                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-11 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-full text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                            <!-- Filled -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filled</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-4 bg-gray-100 dark:bg-gray-700 border-0 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-violet-500 transition-colors">
+                                </div>
+                            </div>
+                            <!-- Large -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Large</label>
+                                <div class="relative">
+                                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-12 pl-12 pr-4 text-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Search --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"search"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full h-10 <span class="text-amber-600 dark:text-amber-400 font-bold">pl-10</span> pr-4 ... rounded-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search with Clear Button -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Search with Clear Button</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">입력 내용을 지울 수 있는 X 버튼이 포함된 검색 필드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- With Value -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Value</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" id="searchClear1" value="Tailwind CSS" oninput="toggleClearBtn('searchClear1', 'clearBtn1')" class="w-full h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button type="button" id="clearBtn1" onclick="clearSearch('searchClear1', 'clearBtn1')" class="absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Empty -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Empty (Type to show clear)</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" id="searchClear2" placeholder="검색어를 입력하세요" oninput="toggleClearBtn('searchClear2', 'clearBtn2')" class="w-full h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button type="button" id="clearBtn2" onclick="clearSearch('searchClear2', 'clearBtn2')" class="hidden absolute right-3 top-1/2 -translate-y-1/2 p-0.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML + JavaScript</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"search"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pl-10 <span class="text-amber-600 dark:text-amber-400 font-bold">pr-10</span> ..."</span> <span class="text-violet-600 dark:text-violet-400">oninput</span>=<span class="text-emerald-600 dark:text-emerald-400">"toggleClear()"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute right-3 top-1/2 -translate-y-1/2 ..."</span> <span class="text-violet-600 dark:text-violet-400">onclick</span>=<span class="text-emerald-600 dark:text-emerald-400">"clearSearch()"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- X Icon --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search with Button -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Search with Button</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">검색 버튼이 결합된 입력 필드입니다. 명시적인 검색 액션을 제공합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Attached Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Attached Button</label>
+                                <div class="flex">
+                                    <div class="relative flex-1">
+                                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    </div>
+                                    <button class="h-10 px-5 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-r-lg transition-colors">
+                                        검색
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Icon Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Icon Button</label>
+                                <div class="flex">
+                                    <input type="search" placeholder="검색어를 입력하세요" class="flex-1 h-10 px-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button class="h-10 w-10 flex items-center justify-center bg-violet-600 hover:bg-violet-700 text-white rounded-r-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Separated Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Separated Button</label>
+                                <div class="flex gap-2">
+                                    <div class="relative flex-1">
+                                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    </div>
+                                    <button class="h-10 px-5 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                        검색
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Attached Button --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative flex-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-l-lg</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-r-lg</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>검색<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search with Category -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Search with Category</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">카테고리 선택과 결합된 검색 필드입니다. 검색 범위를 좁힐 수 있습니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Select + Input + Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Select + Input + Button</label>
+                                <div class="flex">
+                                    <select class="h-10 px-3 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent">
+                                        <option>전체</option>
+                                        <option>제목</option>
+                                        <option>내용</option>
+                                        <option>작성자</option>
+                                    </select>
+                                    <div class="relative flex-1">
+                                        <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 px-4 bg-white dark:bg-gray-900 border-y border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    </div>
+                                    <button class="h-10 px-5 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-r-lg transition-colors">
+                                        검색
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Dropdown Inside -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dropdown Inside</label>
+                                <div class="relative flex">
+                                    <div class="relative">
+                                        <select class="appearance-none h-10 pl-3 pr-8 bg-transparent border-0 text-gray-600 dark:text-gray-400 text-sm focus:ring-0">
+                                            <option>전체</option>
+                                            <option>제목</option>
+                                            <option>내용</option>
+                                        </select>
+                                        <svg class="absolute right-2 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </div>
+                                    <div class="w-px bg-gray-300 dark:bg-gray-600 my-2"></div>
+                                    <div class="flex-1 flex items-center">
+                                        <svg class="ml-3 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <input type="search" placeholder="검색어를 입력하세요" class="flex-1 h-10 px-3 bg-transparent border-0 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-0">
+                                    </div>
+                                    <div class="absolute inset-0 border border-gray-300 dark:border-gray-600 rounded-lg pointer-events-none focus-within:ring-2 focus-within:ring-violet-500"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Select + Input + Button --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;select</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-l-lg</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/select&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 <span class="text-amber-600 dark:text-amber-400 font-bold">border-y</span> ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-r-lg</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>검색<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search with Autocomplete -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Search with Autocomplete</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">검색어 자동완성 드롭다운이 포함된 검색 필드입니다. 사용자 입력에 따라 제안이 표시됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Suggestions -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">검색 제안 (Suggestions) - 클릭하여 확인</label>
+                                <div class="relative max-w-md" id="suggestionWrapper">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" id="suggestionInput" placeholder="검색어를 입력하세요 (예: Tailw)" onfocus="showDropdown('suggestionDropdown', 'suggestionInput')" oninput="handleSuggestionInput()" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <div id="suggestionDropdown" class="hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border border-t-0 border-gray-300 dark:border-gray-600 rounded-b-lg shadow-lg overflow-hidden z-20">
+                                        <ul>
+                                            <li class="px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center gap-3" onclick="selectSuggestion('Tailwind CSS')">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                                </svg>
+                                                <span class="text-gray-900 dark:text-white"><strong>Tailw</strong>ind CSS</span>
+                                            </li>
+                                            <li class="px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center gap-3" onclick="selectSuggestion('Tailwind Components')">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                                </svg>
+                                                <span class="text-gray-900 dark:text-white"><strong>Tailw</strong>ind Components</span>
+                                            </li>
+                                            <li class="px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center gap-3" onclick="selectSuggestion('Tailwind UI')">
+                                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                                </svg>
+                                                <span class="text-gray-900 dark:text-white"><strong>Tailw</strong>ind UI</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Recent Searches -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">최근 검색어 (Recent Searches) - 클릭하여 확인</label>
+                                <div class="relative max-w-md" id="recentWrapper">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" id="recentInput" placeholder="검색어를 입력하세요" onfocus="showDropdown('recentDropdown', 'recentInput')" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <div id="recentDropdown" class="hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border border-t-0 border-gray-300 dark:border-gray-600 rounded-b-lg shadow-lg overflow-hidden z-20">
+                                        <div class="px-4 py-2 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                                            <span class="text-xs font-medium text-gray-500 dark:text-gray-400">최근 검색어</span>
+                                            <button class="text-xs text-violet-600 dark:text-violet-400 hover:underline">전체 삭제</button>
+                                        </div>
+                                        <ul>
+                                            <li class="px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-between group" onclick="selectRecent('React 컴포넌트')">
+                                                <div class="flex items-center gap-3">
+                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    <span class="text-gray-900 dark:text-white">React 컴포넌트</span>
+                                                </div>
+                                                <button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onclick="event.stopPropagation()">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                            <li class="px-4 py-2.5 hover:bg-gray-100 dark:hover:bg-gray-800 cursor-pointer flex items-center justify-between group" onclick="selectRecent('TypeScript 가이드')">
+                                                <div class="flex items-center gap-3">
+                                                    <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                    <span class="text-gray-900 dark:text-white">TypeScript 가이드</span>
+                                                </div>
+                                                <button class="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" onclick="event.stopPropagation()">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                    </svg>
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Search States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Search States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">검색 중, 로딩, 결과 없음 등 다양한 상태를 표현합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Loading -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Loading</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" value="검색 중..." class="w-full h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-violet-500 animate-spin" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- No Results -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">No Results - 클릭하여 확인</label>
+                                <div class="relative max-w-md" id="noResultsWrapper">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" id="noResultsInput" placeholder="검색어를 입력하세요 (예: asdfasdf)" onfocus="showDropdown('noResultsDropdown', 'noResultsInput')" oninput="handleNoResultsInput()" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <div id="noResultsDropdown" class="hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border border-t-0 border-gray-300 dark:border-gray-600 rounded-b-lg shadow-lg overflow-hidden z-20">
+                                        <div class="px-4 py-6 text-center">
+                                            <svg class="w-10 h-10 mx-auto text-gray-300 dark:text-gray-600 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">검색 결과가 없습니다</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Focused -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Focused</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-4 bg-white dark:bg-gray-900 border-2 border-violet-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-2 ring-violet-500/20 transition-colors">
+                                </div>
+                            </div>
+                            <!-- Disabled -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disabled</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색 불가" disabled class="w-full h-10 pl-10 pr-4 bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-400 dark:text-gray-500 placeholder-gray-300 dark:placeholder-gray-600 cursor-not-allowed">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Expandable Search -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Expandable Search</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">공간을 절약하기 위해 아이콘에서 확장되는 검색 필드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Collapsed State -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Collapsed (Click to expand)</label>
+                                <div class="flex items-center gap-4">
+                                    <button id="expandBtn" onclick="toggleExpandSearch()" class="w-10 h-10 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                    </button>
+                                    <div id="expandableSearch" class="hidden">
+                                        <div class="relative">
+                                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                            </svg>
+                                            <input type="search" id="expandableInput" placeholder="검색어를 입력하세요" class="w-64 h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-all">
+                                            <button onclick="toggleExpandSearch()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Expanded State (Static) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Expanded State</label>
+                                <div class="relative inline-block">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-64 h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">JavaScript</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-violet-600 dark:text-violet-400">function</span> <span class="text-blue-600 dark:text-blue-400">toggleExpandSearch</span>() {
+  <span class="text-violet-600 dark:text-violet-400">const</span> btn = document.<span class="text-blue-600 dark:text-blue-400">getElementById</span>(<span class="text-emerald-600 dark:text-emerald-400">'expandBtn'</span>);
+  <span class="text-violet-600 dark:text-violet-400">const</span> search = document.<span class="text-blue-600 dark:text-blue-400">getElementById</span>(<span class="text-emerald-600 dark:text-emerald-400">'expandableSearch'</span>);
+
+  btn.classList.<span class="text-blue-600 dark:text-blue-400">toggle</span>(<span class="text-emerald-600 dark:text-emerald-400">'hidden'</span>);
+  search.classList.<span class="text-blue-600 dark:text-blue-400">toggle</span>(<span class="text-emerald-600 dark:text-emerald-400">'hidden'</span>);
+
+  <span class="text-violet-600 dark:text-violet-400">if</span> (!search.classList.<span class="text-blue-600 dark:text-blue-400">contains</span>(<span class="text-emerald-600 dark:text-emerald-400">'hidden'</span>)) {
+    search.<span class="text-blue-600 dark:text-blue-400">querySelector</span>(<span class="text-emerald-600 dark:text-emerald-400">'input'</span>).<span class="text-blue-600 dark:text-blue-400">focus</span>();
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 검색 아이콘을 왼쪽에 배치하여 검색 필드임을 명확히 표시</li>
+                                    <li>• placeholder로 검색 가능한 항목을 안내</li>
+                                    <li>• 검색 중 로딩 상태를 시각적으로 표시</li>
+                                    <li>• 결과가 없을 때 명확한 메시지 제공</li>
+                                    <li>• 자동완성 결과에서 일치하는 부분 강조</li>
+                                    <li>• 키보드 네비게이션 지원 (위/아래 화살표)</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 많은 카테고리 옵션을 한번에 표시</li>
+                                    <li>• 짧은 검색어에 대해 과도한 API 호출</li>
+                                    <li>• 검색 결과 없음 상태를 빈 화면으로 방치</li>
+                                    <li>• Clear 버튼 없이 긴 검색어 입력 요구</li>
+                                    <li>• 자동완성 결과가 너무 많아 스크롤이 길어짐</li>
+                                    <li>• 모바일에서 작은 터치 영역 사용</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // 다크모드 토글
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark'));
+        }
+
+        // 모바일 사이드바 토글
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Clear 버튼 토글
+        function toggleClearBtn(inputId, btnId) {
+            const input = document.getElementById(inputId);
+            const btn = document.getElementById(btnId);
+            if (input.value) {
+                btn.classList.remove('hidden');
+            } else {
+                btn.classList.add('hidden');
+            }
+        }
+
+        // 검색어 지우기
+        function clearSearch(inputId, btnId) {
+            const input = document.getElementById(inputId);
+            const btn = document.getElementById(btnId);
+            input.value = '';
+            input.focus();
+            btn.classList.add('hidden');
+        }
+
+        // 확장 검색 토글
+        function toggleExpandSearch() {
+            const btn = document.getElementById('expandBtn');
+            const search = document.getElementById('expandableSearch');
+            const input = document.getElementById('expandableInput');
+
+            btn.classList.toggle('hidden');
+            search.classList.toggle('hidden');
+
+            if (!search.classList.contains('hidden')) {
+                input.focus();
+            }
+        }
+
+        // 드롭다운 표시
+        function showDropdown(dropdownId, inputId) {
+            const dropdown = document.getElementById(dropdownId);
+            const input = document.getElementById(inputId);
+            dropdown.classList.remove('hidden');
+            input.classList.remove('rounded-lg');
+            input.classList.add('rounded-t-lg');
+        }
+
+        // 드롭다운 숨김
+        function hideDropdown(dropdownId, inputId) {
+            const dropdown = document.getElementById(dropdownId);
+            const input = document.getElementById(inputId);
+            dropdown.classList.add('hidden');
+            input.classList.remove('rounded-t-lg');
+            input.classList.add('rounded-lg');
+        }
+
+        // Suggestion 입력 핸들러
+        function handleSuggestionInput() {
+            const input = document.getElementById('suggestionInput');
+            const dropdown = document.getElementById('suggestionDropdown');
+            if (input.value.length > 0) {
+                showDropdown('suggestionDropdown', 'suggestionInput');
+            } else {
+                hideDropdown('suggestionDropdown', 'suggestionInput');
+            }
+        }
+
+        // No Results 입력 핸들러
+        function handleNoResultsInput() {
+            const input = document.getElementById('noResultsInput');
+            if (input.value.length > 0) {
+                showDropdown('noResultsDropdown', 'noResultsInput');
+            } else {
+                hideDropdown('noResultsDropdown', 'noResultsInput');
+            }
+        }
+
+        // 제안 선택
+        function selectSuggestion(value) {
+            const input = document.getElementById('suggestionInput');
+            input.value = value;
+            hideDropdown('suggestionDropdown', 'suggestionInput');
+        }
+
+        // 최근 검색어 선택
+        function selectRecent(value) {
+            const input = document.getElementById('recentInput');
+            input.value = value;
+            hideDropdown('recentDropdown', 'recentInput');
+        }
+
+        // 외부 클릭 시 드롭다운 닫기
+        document.addEventListener('click', function(e) {
+            const dropdowns = [
+                { wrapper: 'suggestionWrapper', dropdown: 'suggestionDropdown', input: 'suggestionInput' },
+                { wrapper: 'recentWrapper', dropdown: 'recentDropdown', input: 'recentInput' },
+                { wrapper: 'noResultsWrapper', dropdown: 'noResultsDropdown', input: 'noResultsInput' }
+            ];
+
+            dropdowns.forEach(function(item) {
+                const wrapper = document.getElementById(item.wrapper);
+                if (wrapper && !wrapper.contains(e.target)) {
+                    hideDropdown(item.dropdown, item.input);
+                }
+            });
+        });
+    </script>
+    <script src="../js/menu.js"></script>
+</body>
+</html>
