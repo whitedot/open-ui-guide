@@ -374,7 +374,7 @@
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">States</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">버튼의 상호작용 상태입니다.</p>
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
-                        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                             <!-- Default -->
                             <div class="text-center">
                                 <button class="w-full h-10 px-4 bg-gray-600 dark:bg-gray-500 text-white font-medium rounded-lg transition-colors">
@@ -388,6 +388,13 @@
                                     Hover
                                 </button>
                                 <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">호버 상태</p>
+                            </div>
+                            <!-- Hover + Shadow -->
+                            <div class="text-center">
+                                <button class="w-full h-10 px-4 bg-gray-700 dark:bg-gray-400 text-white font-medium rounded-lg shadow-md">
+                                    Hover
+                                </button>
+                                <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">호버 + 쉐도우</p>
                             </div>
                             <!-- Focus -->
                             <div class="text-center">
@@ -416,6 +423,9 @@
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Hover */</span>
 <span class="text-violet-600 dark:text-violet-400">hover:bg-gray-700 dark:hover:bg-gray-400</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Hover + Shadow */</span>
+<span class="text-violet-600 dark:text-violet-400">hover:bg-gray-700 dark:hover:bg-gray-400 hover:shadow-md</span>
 
 <span class="text-gray-500 dark:text-gray-400">/* Focus */</span>
 <span class="text-violet-600 dark:text-violet-400">focus:ring-2 focus:ring-gray-400 focus:ring-offset-2</span>
