@@ -463,16 +463,19 @@
                     </div>
                 </section>
 
-                <!-- With Labels -->
+                <!-- Labels & Helper Text -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Labels</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">레이블, 필수 표시, 도움말 텍스트가 포함된 입력 필드 패턴입니다.</p>
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Labels & Helper Text</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">레이블은 입력 필드의 목적을 설명하는 필수 요소입니다. <code class="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded text-sm">for</code> 속성으로 입력 필드와 연결하여 접근성을 높입니다.</p>
+
+                    <!-- Basic Labels -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Basic Labels</h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Basic Label -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">이름</label>
-                                <input type="text" placeholder="홍길동" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label for="basic-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">이름</label>
+                                <input type="text" id="basic-input" placeholder="홍길동" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
                             </div>
                             <!-- Required Label -->
                             <div>
@@ -506,17 +509,103 @@
                                 </div>
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Label --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block text-sm font-medium text-gray-700 mb-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"text"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">for</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-id"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block text-sm font-medium text-gray-700 mb-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
 
-<span class="text-gray-500 dark:text-gray-400">&lt;!-- Required Label --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>이메일 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-red-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>*<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Required --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>이메일 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">text-red-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>*<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
 
-<span class="text-gray-500 dark:text-gray-400">&lt;!-- With Helper Text --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Optional --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>닉네임 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-400 font-normal"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>(선택)<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Helper Text --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"mt-1.5 text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>도움말 텍스트<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Inline Labels -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Inline Labels</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">레이블과 입력 필드를 가로로 배치하는 패턴입니다.</p>
+                        <div class="space-y-4 mb-6">
+                            <!-- Basic Inline -->
+                            <div class="flex items-center gap-4">
+                                <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0">이름</label>
+                                <input type="text" placeholder="홍길동" class="flex-1 max-w-xs h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Inline with Required -->
+                            <div class="flex items-center gap-4">
+                                <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0">
+                                    이메일 <span class="text-red-500">*</span>
+                                </label>
+                                <input type="email" placeholder="example@email.com" class="flex-1 max-w-xs h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Inline with Helper -->
+                            <div class="flex items-start gap-4">
+                                <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0 pt-2.5">비밀번호</label>
+                                <div class="flex-1 max-w-xs">
+                                    <input type="password" placeholder="••••••••" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">8자 이상 입력하세요</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Inline Layout --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">flex items-center gap-4</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-24 text-sm font-medium <span class="text-amber-600 dark:text-amber-400 font-bold">text-right flex-shrink-0</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 max-w-xs ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Floating Labels -->
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <h3 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4 uppercase tracking-wider">Floating Labels</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">입력 시 레이블이 위로 이동하는 플로팅 레이블 패턴입니다.</p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Floating Label - Empty -->
+                            <div class="relative">
+                                <input type="text" id="floatingInput1" placeholder=" " class="peer w-full h-12 px-3 pt-4 pb-1 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label for="floatingInput1" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs peer-focus:text-violet-600 peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-xs pointer-events-none">
+                                    이메일
+                                </label>
+                            </div>
+                            <!-- Floating Label - Filled -->
+                            <div class="relative">
+                                <input type="text" id="floatingInput2" placeholder=" " value="example@email.com" class="peer w-full h-12 px-3 pt-4 pb-1 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label for="floatingInput2" class="absolute left-3 top-3 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-violet-600 pointer-events-none">
+                                    이메일
+                                </label>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">" "</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">peer</span> w-full h-12 px-3 pt-4 pb-1 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all
+         <span class="text-amber-600 dark:text-amber-400 font-bold">peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm
+         peer-focus:top-3 peer-focus:text-xs peer-focus:text-violet-600
+         peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-xs</span>
+         pointer-events-none"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    레이블
+  <span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>
                     </div>
                 </section>
@@ -823,6 +912,7 @@
                                 </h3>
                                 <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                                     <li>• 항상 <strong>명확한 레이블</strong>을 함께 사용하세요</li>
+                                    <li>• <code class="px-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">for</code> 속성으로 레이블과 입력 필드를 <strong>명시적 연결</strong>하세요</li>
                                     <li>• 적절한 <strong>input type</strong>을 사용하여 모바일 키보드를 최적화하세요</li>
                                     <li>• 필수 항목은 <strong>빨간 별표(*)</strong>로 표시하세요</li>
                                     <li>• 에러 발생 시 <strong>구체적인 안내 메시지</strong>를 제공하세요</li>
@@ -839,10 +929,11 @@
                                 </h3>
                                 <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
                                     <li>• placeholder를 <strong>레이블 대신</strong> 사용하지 마세요</li>
+                                    <li>• 레이블 없이 <strong>입력 필드만</strong> 배치하지 마세요</li>
                                     <li>• 입력 중에 <strong>실시간 유효성 검사</strong>를 과도하게 하지 마세요</li>
                                     <li>• 불필요한 필수 항목을 만들지 마세요</li>
                                     <li>• 에러 메시지를 <strong>빨간색 테두리만</strong>으로 표시하지 마세요</li>
-                                    <li>• 레이블 없이 아이콘만 사용하지 마세요</li>
+                                    <li>• 레이블과 입력 필드를 <strong>너무 멀리</strong> 배치하지 마세요</li>
                                     <li>• 비밀번호 입력에 <strong>자동완성</strong>을 막지 마세요</li>
                                 </ul>
                             </div>
