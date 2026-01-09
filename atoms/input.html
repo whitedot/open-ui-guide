@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Input - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Atoms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Input</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Input</h1>
+                    <p class="text-gray-600 dark:text-gray-400">사용자로부터 텍스트 데이터를 입력받는 폼 요소입니다. 다양한 타입과 상태를 제공합니다.</p>
+                </div>
+
+                <!-- Input Types -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Input Types</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">다양한 데이터 타입에 맞는 입력 필드입니다. 적절한 타입을 사용하면 모바일에서 최적화된 키보드가 표시됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Text -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Text</label>
+                                <input type="text" placeholder="일반 텍스트 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Email -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                                <input type="email" placeholder="example@email.com" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Password -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
+                                <input type="password" placeholder="비밀번호 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Number -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Number</label>
+                                <input type="number" placeholder="숫자 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Tel -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tel</label>
+                                <input type="tel" placeholder="010-1234-5678" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- URL -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">URL</label>
+                                <input type="url" placeholder="https://example.com" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Search -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search</label>
+                                <input type="search" placeholder="검색어 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Date -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
+                                <input type="date" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"text"</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">"..."</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- 다른 타입들 --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"email"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"password"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"number"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"tel"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"url"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"search"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"date"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sizes -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sizes</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">입력 필드의 크기 변형입니다. Button과 동일한 높이 체계를 사용하여 나란히 배치해도 정렬됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-4 mb-6">
+                            <!-- XS -->
+                            <div class="flex items-center gap-4">
+                                <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">xs</span>
+                                <input type="text" placeholder="Extra Small" class="flex-1 max-w-xs h-7 px-2.5 text-xs bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- SM -->
+                            <div class="flex items-center gap-4">
+                                <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">sm</span>
+                                <input type="text" placeholder="Small" class="flex-1 max-w-xs h-8 px-3 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- MD -->
+                            <div class="flex items-center gap-4">
+                                <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">md</span>
+                                <input type="text" placeholder="Medium (Default)" class="flex-1 max-w-xs h-10 px-3 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- LG -->
+                            <div class="flex items-center gap-4">
+                                <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">lg</span>
+                                <input type="text" placeholder="Large" class="flex-1 max-w-xs h-11 px-4 text-base bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- XL -->
+                            <div class="flex items-center gap-4">
+                                <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">xl</span>
+                                <input type="text" placeholder="Extra Large" class="flex-1 max-w-xs h-12 px-4 text-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                        </div>
+                        <!-- Size Specs Table -->
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-sm">
+                                <thead>
+                                    <tr class="border-b border-gray-200 dark:border-gray-700">
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Size</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Height</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Padding X</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Font Size</th>
+                                        <th class="text-left py-3 px-4 font-medium text-gray-900 dark:text-white">Border Radius</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">xs</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-7 (28px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-2.5</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-xs (12px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded (4px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">sm</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-8 (32px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-3</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-sm (14px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-md (6px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">md</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-10 (40px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-3</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-sm (14px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-lg (8px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">lg</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-11 (44px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-4</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-base (16px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-lg (8px)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3 px-4 font-mono text-violet-600 dark:text-violet-400">xl</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">h-12 (48px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">px-4</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">text-lg (18px)</td>
+                                        <td class="py-3 px-4 text-gray-600 dark:text-gray-400">rounded-xl (12px)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">입력 필드의 상호작용 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                            <!-- Default -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default</label>
+                                <input type="text" placeholder="기본 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Hover (simulated) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hover</label>
+                                <input type="text" placeholder="호버 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-400 dark:border-gray-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 transition-colors">
+                            </div>
+                            <!-- Focus (simulated) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Focus</label>
+                                <input type="text" placeholder="포커스 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border-transparent rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-2 ring-violet-500">
+                            </div>
+                            <!-- Filled -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filled</label>
+                                <input type="text" value="입력된 값" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Disabled -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disabled</label>
+                                <input type="text" placeholder="비활성화" disabled class="w-full h-10 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-400 dark:text-gray-500 placeholder-gray-300 dark:placeholder-gray-600 cursor-not-allowed opacity-50">
+                            </div>
+                            <!-- Read-only -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Read-only</label>
+                                <input type="text" value="읽기 전용 값" readonly class="w-full h-10 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 cursor-default">
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">CSS Classes</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Hover */</span>
+<span class="text-violet-600 dark:text-violet-400">hover:border-gray-400 dark:hover:border-gray-500</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Focus */</span>
+<span class="text-violet-600 dark:text-violet-400">focus:ring-2 focus:ring-violet-500 focus:border-transparent</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Disabled */</span>
+<span class="text-violet-600 dark:text-violet-400">disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-gray-50</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Read-only */</span>
+<span class="text-violet-600 dark:text-violet-400">read-only:bg-gray-50 read-only:cursor-default</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Validation States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Validation States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">폼 유효성 검사 결과를 시각적으로 표시합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <!-- Error -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Error</label>
+                                <input type="text" value="잘못된 값" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-red-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors">
+                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    필수 항목입니다
+                                </p>
+                            </div>
+                            <!-- Success -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Success</label>
+                                <div class="relative">
+                                    <input type="text" value="올바른 값" class="w-full h-10 px-3 pr-10 bg-white dark:bg-gray-900 border border-emerald-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                                <p class="mt-1.5 text-sm text-emerald-600 dark:text-emerald-400">확인되었습니다</p>
+                            </div>
+                            <!-- Warning -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Warning</label>
+                                <input type="text" value="주의 필요" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-amber-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
+                                <p class="mt-1.5 text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                    </svg>
+                                    보안이 취약할 수 있습니다
+                                </p>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Error State --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-red-500 focus:ring-red-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-red-600"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>에러 메시지<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Success State --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-emerald-500 focus:ring-emerald-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Warning State --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-amber-500 focus:ring-amber-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- With Labels -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Labels</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">레이블, 필수 표시, 도움말 텍스트가 포함된 입력 필드 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Basic Label -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">이름</label>
+                                <input type="text" placeholder="홍길동" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- Required Label -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    이메일 <span class="text-red-500">*</span>
+                                </label>
+                                <input type="email" placeholder="example@email.com" required class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                            <!-- With Helper Text -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">비밀번호</label>
+                                <input type="password" placeholder="••••••••" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">8자 이상, 영문/숫자/특수문자 포함</p>
+                            </div>
+                            <!-- Optional Label -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                    닉네임 <span class="text-gray-400 dark:text-gray-500 font-normal">(선택)</span>
+                                </label>
+                                <input type="text" placeholder="닉네임을 입력하세요" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Label --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block text-sm font-medium text-gray-700 mb-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"text"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Required Label --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>이메일 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-red-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>*<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- With Helper Text --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"mt-1.5 text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>도움말 텍스트<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- With Icons -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Icons</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">아이콘이 포함된 입력 필드입니다. 입력 내용의 맥락을 시각적으로 전달합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Leading Icon -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Leading Icon</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                    </svg>
+                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                            <!-- Trailing Icon -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trailing Icon</label>
+                                <div class="relative">
+                                    <input type="email" placeholder="이메일 주소" class="w-full h-10 pl-3 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Both Icons -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Both Icons</label>
+                                <div class="relative">
+                                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                    </svg>
+                                    <input type="text" value="사용자명" class="w-full h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-emerald-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Password Toggle -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password Toggle</label>
+                                <div class="relative">
+                                    <input type="password" id="passwordInput" placeholder="비밀번호" class="w-full h-10 pl-3 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                        <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        <svg id="eyeOffIcon" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Leading Icon --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">pl-10</span> pr-3 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Trailing Icon --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pl-3 <span class="text-amber-600 dark:text-amber-400 font-bold">pr-10</span> ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Input Groups -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Input Groups</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">접두사, 접미사, 버튼 등이 결합된 입력 그룹입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6 mb-6">
+                            <!-- Prefix Text -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Prefix Text</label>
+                                <div class="flex">
+                                    <span class="inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg">https://</span>
+                                    <input type="text" placeholder="example.com" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-r-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                            <!-- Suffix Text -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Suffix Text</label>
+                                <div class="flex">
+                                    <input type="text" placeholder="username" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <span class="inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg">@gmail.com</span>
+                                </div>
+                            </div>
+                            <!-- With Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Button</label>
+                                <div class="flex">
+                                    <input type="email" placeholder="이메일 주소 입력" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <button class="h-10 px-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-r-lg transition-colors">
+                                        구독하기
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- Search with Button -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search with Button</label>
+                                <div class="flex">
+                                    <div class="relative flex-1">
+                                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    </div>
+                                    <button class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-r-lg transition-colors">
+                                        검색
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- With Select -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Select</label>
+                                <div class="flex">
+                                    <select class="h-10 px-3 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent">
+                                        <option>KRW</option>
+                                        <option>USD</option>
+                                        <option>EUR</option>
+                                    </select>
+                                    <input type="number" placeholder="금액 입력" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-r-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Prefix Text --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center px-3 ... border-r-0 rounded-l-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>https://<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 ... rounded-r-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- With Button --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 ... rounded-l-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... rounded-r-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>버튼<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Textarea -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Textarea</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">여러 줄의 텍스트를 입력받는 영역입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <!-- Default -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default</label>
+                                <textarea rows="4" placeholder="내용을 입력하세요" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-y"></textarea>
+                            </div>
+                            <!-- With Counter -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Counter</label>
+                                <textarea id="textareaCounter" rows="4" maxlength="200" placeholder="최대 200자까지 입력 가능합니다" oninput="updateCounter()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-y"></textarea>
+                                <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400 text-right"><span id="charCount">0</span>/200</p>
+                            </div>
+                            <!-- No Resize -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">No Resize</label>
+                                <textarea rows="4" placeholder="크기 조절 불가" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-none"></textarea>
+                            </div>
+                            <!-- Disabled -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disabled</label>
+                                <textarea rows="4" placeholder="비활성화된 텍스트 영역" disabled class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-400 dark:text-gray-500 placeholder-gray-300 dark:placeholder-gray-600 cursor-not-allowed opacity-50 resize-none"></textarea>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Default (resize-y) --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">rows</span>=<span class="text-emerald-600 dark:text-emerald-400">"4"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full px-3 py-2 ... <span class="text-amber-600 dark:text-amber-400 font-bold">resize-y</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- No Resize --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">resize-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Both directions --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">resize</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Interactive Playground -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Interactive Playground</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">입력 필드 스타일을 실시간으로 커스터마이징해보세요.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Preview -->
+                            <div class="flex items-center justify-center min-h-[200px] bg-gray-50 dark:bg-gray-900 rounded-xl p-8">
+                                <div class="w-full max-w-xs">
+                                    <label id="previewLabel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Label</label>
+                                    <div class="relative">
+                                        <svg id="previewLeadingIcon" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <input type="text" id="previewInput" placeholder="Placeholder" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    </div>
+                                    <p id="previewHelperText" class="hidden mt-1.5 text-sm text-gray-500 dark:text-gray-400">Helper text</p>
+                                </div>
+                            </div>
+                            <!-- Controls -->
+                            <div class="space-y-4">
+                                <!-- Size -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Size</label>
+                                    <select id="inputSizeSelect" onchange="updateInputPreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                        <option value="xs">Extra Small</option>
+                                        <option value="sm">Small</option>
+                                        <option value="md" selected>Medium</option>
+                                        <option value="lg">Large</option>
+                                        <option value="xl">Extra Large</option>
+                                    </select>
+                                </div>
+                                <!-- State -->
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">State</label>
+                                    <select id="inputStateSelect" onchange="updateInputPreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                        <option value="default" selected>Default</option>
+                                        <option value="error">Error</option>
+                                        <option value="success">Success</option>
+                                        <option value="disabled">Disabled</option>
+                                    </select>
+                                </div>
+                                <!-- Options -->
+                                <div class="space-y-3">
+                                    <label class="inline-flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" id="showLabelCheck" onchange="updateInputPreview()" checked class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Show Label</span>
+                                    </label>
+                                    <label class="inline-flex items-center gap-2 cursor-pointer ml-4">
+                                        <input type="checkbox" id="showHelperCheck" onchange="updateInputPreview()" class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Show Helper</span>
+                                    </label>
+                                    <label class="inline-flex items-center gap-2 cursor-pointer ml-4">
+                                        <input type="checkbox" id="showIconCheck" onchange="updateInputPreview()" class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                        <span class="text-sm text-gray-700 dark:text-gray-300">Leading Icon</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Generated Code -->
+                        <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Generated Code</span>
+                                <button onclick="copyInputCode()" class="text-xs px-2 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 rounded hover:bg-violet-200 dark:hover:bg-violet-900/50 transition-colors">
+                                    Copy
+                                </button>
+                            </div>
+                            <pre id="generatedInputCode" class="p-4 overflow-x-auto text-sm font-mono leading-relaxed text-gray-800 dark:text-gray-200"></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 항상 <strong>명확한 레이블</strong>을 함께 사용하세요</li>
+                                    <li>• 적절한 <strong>input type</strong>을 사용하여 모바일 키보드를 최적화하세요</li>
+                                    <li>• 필수 항목은 <strong>빨간 별표(*)</strong>로 표시하세요</li>
+                                    <li>• 에러 발생 시 <strong>구체적인 안내 메시지</strong>를 제공하세요</li>
+                                    <li>• 비밀번호 필드에는 <strong>보기/숨기기 토글</strong>을 제공하세요</li>
+                                    <li>• <strong>충분한 터치 영역</strong>(44px 이상)을 확보하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• placeholder를 <strong>레이블 대신</strong> 사용하지 마세요</li>
+                                    <li>• 입력 중에 <strong>실시간 유효성 검사</strong>를 과도하게 하지 마세요</li>
+                                    <li>• 불필요한 필수 항목을 만들지 마세요</li>
+                                    <li>• 에러 메시지를 <strong>빨간색 테두리만</strong>으로 표시하지 마세요</li>
+                                    <li>• 레이블 없이 아이콘만 사용하지 마세요</li>
+                                    <li>• 비밀번호 입력에 <strong>자동완성</strong>을 막지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="copyToast" class="fixed bottom-4 right-4 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium rounded-lg shadow-lg transform translate-y-full opacity-0 transition-all duration-300">
+        Copied to clipboard!
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Password Toggle
+        function togglePassword() {
+            const input = document.getElementById('passwordInput');
+            const eyeIcon = document.getElementById('eyeIcon');
+            const eyeOffIcon = document.getElementById('eyeOffIcon');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                eyeIcon.classList.add('hidden');
+                eyeOffIcon.classList.remove('hidden');
+            } else {
+                input.type = 'password';
+                eyeIcon.classList.remove('hidden');
+                eyeOffIcon.classList.add('hidden');
+            }
+        }
+
+        // Textarea Counter
+        function updateCounter() {
+            const textarea = document.getElementById('textareaCounter');
+            const counter = document.getElementById('charCount');
+            counter.textContent = textarea.value.length;
+        }
+
+        // Input Playground
+        const inputSizes = {
+            xs: { height: 'h-7', padding: 'px-2.5', paddingIcon: 'pl-8 pr-2.5', text: 'text-xs', radius: 'rounded' },
+            sm: { height: 'h-8', padding: 'px-3', paddingIcon: 'pl-9 pr-3', text: 'text-sm', radius: 'rounded-md' },
+            md: { height: 'h-10', padding: 'px-3', paddingIcon: 'pl-10 pr-3', text: 'text-sm', radius: 'rounded-lg' },
+            lg: { height: 'h-11', padding: 'px-4', paddingIcon: 'pl-11 pr-4', text: 'text-base', radius: 'rounded-lg' },
+            xl: { height: 'h-12', padding: 'px-4', paddingIcon: 'pl-12 pr-4', text: 'text-lg', radius: 'rounded-xl' }
+        };
+
+        const inputStates = {
+            default: {
+                border: 'border-gray-300 dark:border-gray-600',
+                focus: 'focus:ring-violet-500',
+                text: 'text-gray-500 dark:text-gray-400'
+            },
+            error: {
+                border: 'border-red-500',
+                focus: 'focus:ring-red-500',
+                text: 'text-red-600 dark:text-red-400'
+            },
+            success: {
+                border: 'border-emerald-500',
+                focus: 'focus:ring-emerald-500',
+                text: 'text-emerald-600 dark:text-emerald-400'
+            },
+            disabled: {
+                border: 'border-gray-300 dark:border-gray-600',
+                focus: '',
+                text: 'text-gray-400'
+            }
+        };
+
+        function updateInputPreview() {
+            const size = document.getElementById('inputSizeSelect').value;
+            const state = document.getElementById('inputStateSelect').value;
+            const showLabel = document.getElementById('showLabelCheck').checked;
+            const showHelper = document.getElementById('showHelperCheck').checked;
+            const showIcon = document.getElementById('showIconCheck').checked;
+
+            const input = document.getElementById('previewInput');
+            const label = document.getElementById('previewLabel');
+            const helper = document.getElementById('previewHelperText');
+            const leadingIcon = document.getElementById('previewLeadingIcon');
+
+            // Update label visibility
+            label.classList.toggle('hidden', !showLabel);
+
+            // Update helper visibility and text
+            helper.classList.toggle('hidden', !showHelper);
+            helper.className = `mt-1.5 text-sm ${inputStates[state].text}`;
+            if (state === 'error') {
+                helper.textContent = '필수 항목입니다';
+            } else if (state === 'success') {
+                helper.textContent = '확인되었습니다';
+            } else {
+                helper.textContent = 'Helper text';
+            }
+            if (!showHelper) helper.classList.add('hidden');
+
+            // Update icon visibility
+            leadingIcon.classList.toggle('hidden', !showIcon);
+
+            // Build input classes
+            const sizeConfig = inputSizes[size];
+            const stateConfig = inputStates[state];
+
+            let padding = showIcon ? sizeConfig.paddingIcon : sizeConfig.padding;
+            let baseClasses = `w-full ${sizeConfig.height} ${padding} ${sizeConfig.text} ${sizeConfig.radius} bg-white dark:bg-gray-900 border ${stateConfig.border} text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 ${stateConfig.focus} focus:border-transparent transition-colors`;
+
+            if (state === 'disabled') {
+                baseClasses += ' opacity-50 cursor-not-allowed bg-gray-50';
+                input.disabled = true;
+            } else {
+                input.disabled = false;
+            }
+
+            input.className = baseClasses;
+
+            // Update generated code
+            updateGeneratedInputCode(size, state, showLabel, showHelper, showIcon);
+        }
+
+        function updateGeneratedInputCode(size, state, showLabel, showHelper, showIcon) {
+            const sizeConfig = inputSizes[size];
+            const stateConfig = inputStates[state];
+
+            let padding = showIcon ? sizeConfig.paddingIcon : sizeConfig.padding;
+            let inputClasses = `w-full ${sizeConfig.height} ${padding} ${sizeConfig.text} ${sizeConfig.radius} bg-white dark:bg-gray-900 border ${stateConfig.border} text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 ${stateConfig.focus} focus:border-transparent`;
+
+            if (state === 'disabled') {
+                inputClasses += ' opacity-50 cursor-not-allowed';
+            }
+
+            let code = '';
+
+            if (showLabel) {
+                code += `<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Label</label>\n`;
+            }
+
+            if (showIcon) {
+                code += `<div class="relative">\n`;
+                code += `  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400">...</svg>\n`;
+                code += `  <input type="text" placeholder="Placeholder" class="${inputClasses}"${state === 'disabled' ? ' disabled' : ''}>\n`;
+                code += `</div>`;
+            } else {
+                code += `<input type="text" placeholder="Placeholder" class="${inputClasses}"${state === 'disabled' ? ' disabled' : ''}>`;
+            }
+
+            if (showHelper) {
+                code += `\n<p class="mt-1.5 text-sm ${stateConfig.text}">Helper text</p>`;
+            }
+
+            document.getElementById('generatedInputCode').textContent = code;
+        }
+
+        function copyInputCode() {
+            const code = document.getElementById('generatedInputCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showToast();
+            });
+        }
+
+        function showToast() {
+            const toast = document.getElementById('copyToast');
+            toast.classList.remove('translate-y-full', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-full', 'opacity-0');
+            }, 2000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateInputPreview();
+        });
+    </script>
+</body>
+</html>
