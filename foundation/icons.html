@@ -19,8 +19,8 @@
     <!-- Pretendard 폰트 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 
-    <!-- Material Symbols -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <!-- Material Symbols with font-display: swap -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" rel="stylesheet" />
 
     <style>
         body {
@@ -30,6 +30,15 @@
         /* Material Symbols Base */
         .material-symbols-outlined {
             font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* FOUT 방지: 폰트 로드 전 투명 처리 */
+        .material-symbols-outlined {
+            opacity: 0;
+            transition: opacity 0.15s ease;
+        }
+        .fonts-loaded .material-symbols-outlined {
+            opacity: 1;
         }
 
         /* Icon Sizes */
@@ -66,6 +75,25 @@
             (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
         }
+
+        // Material Symbols 폰트 로드 감지
+        function checkFontLoaded() {
+            document.fonts.load('24px "Material Symbols Outlined"').then(function(fonts) {
+                if (fonts.length > 0) {
+                    document.documentElement.classList.add('fonts-loaded');
+                }
+            });
+        }
+
+        if (document.fonts && document.fonts.load) {
+            checkFontLoaded();
+            document.fonts.ready.then(checkFontLoaded);
+        }
+
+        // Fallback: 2초 후 강제 표시
+        setTimeout(function() {
+            document.documentElement.classList.add('fonts-loaded');
+        }, 2000);
     </script>
 </head>
 <body class="h-full bg-white dark:bg-gray-900">
