@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabs - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full overflow-hidden bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Molecules</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Tabs</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Tabs</h1>
+                    <p class="text-gray-600 dark:text-gray-400">관련된 콘텐츠를 그룹화하고 탭을 통해 전환할 수 있는 네비게이션 컴포넌트입니다.</p>
+                </div>
+
+                <!-- Basic Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">기본적인 탭 컴포넌트입니다. 하단 라인으로 활성 탭을 표시합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="basic">
+                            <!-- Tab List -->
+                            <div class="border-b border-gray-200 dark:border-gray-700">
+                                <nav class="flex gap-8" aria-label="Tabs">
+                                    <button class="tab-btn active py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400 transition-colors" data-tab="tab1">
+                                        Overview
+                                    </button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="tab2">
+                                        Features
+                                    </button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="tab3">
+                                        Specifications
+                                    </button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="tab1">
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-2">Overview</h3>
+                                <p class="text-gray-600 dark:text-gray-400">제품에 대한 전반적인 개요와 소개 내용이 여기에 표시됩니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="tab2">
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-2">Features</h3>
+                                <p class="text-gray-600 dark:text-gray-400">제품의 주요 기능과 특징이 여기에 표시됩니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="tab3">
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-2">Specifications</h3>
+                                <p class="text-gray-600 dark:text-gray-400">제품의 상세 사양이 여기에 표시됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tabs with Icons -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tabs with Icons</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">아이콘이 포함된 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="icon">
+                            <!-- Tab List -->
+                            <div class="border-b border-gray-200 dark:border-gray-700">
+                                <nav class="flex gap-6" aria-label="Tabs">
+                                    <button class="tab-btn active flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400 transition-colors" data-tab="icon-tab1">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                        </svg>
+                                        Home
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="icon-tab2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        Profile
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="icon-tab3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        Settings
+                                    </button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="icon-tab1">
+                                <p class="text-gray-600 dark:text-gray-400">홈 탭의 콘텐츠입니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="icon-tab2">
+                                <p class="text-gray-600 dark:text-gray-400">프로필 탭의 콘텐츠입니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="icon-tab3">
+                                <p class="text-gray-600 dark:text-gray-400">설정 탭의 콘텐츠입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pill Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Pill Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">둥근 필 스타일의 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-6">
+                            <!-- Gray Background -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Gray Background</label>
+                                <div data-tabs="pill1">
+                                    <div class="inline-flex p-1 bg-gray-100 dark:bg-gray-900 rounded-lg">
+                                        <button class="tab-btn active px-4 py-2 text-sm font-medium rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow transition-all" data-tab="pill1-tab1">All</button>
+                                        <button class="tab-btn px-4 py-2 text-sm font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-all" data-tab="pill1-tab2">Active</button>
+                                        <button class="tab-btn px-4 py-2 text-sm font-medium rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-all" data-tab="pill1-tab3">Archived</button>
+                                    </div>
+                                    <div class="tab-panel active pt-4" data-panel="pill1-tab1">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">모든 항목을 표시합니다.</p>
+                                    </div>
+                                    <div class="tab-panel hidden pt-4" data-panel="pill1-tab2">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">활성 항목만 표시합니다.</p>
+                                    </div>
+                                    <div class="tab-panel hidden pt-4" data-panel="pill1-tab3">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">보관된 항목만 표시합니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Colored Background -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Colored Pill</label>
+                                <div data-tabs="pill2">
+                                    <div class="inline-flex p-1 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
+                                        <button class="tab-btn active px-4 py-2 text-sm font-medium rounded-md bg-violet-600 text-white shadow transition-all" data-tab="pill2-tab1">Daily</button>
+                                        <button class="tab-btn px-4 py-2 text-sm font-medium rounded-md text-violet-600 dark:text-violet-400 hover:bg-violet-100 dark:hover:bg-violet-900/40 transition-all" data-tab="pill2-tab2">Weekly</button>
+                                        <button class="tab-btn px-4 py-2 text-sm font-medium rounded-md text-violet-600 dark:text-violet-400 hover:bg-violet-100 dark:hover:bg-violet-900/40 transition-all" data-tab="pill2-tab3">Monthly</button>
+                                    </div>
+                                    <div class="tab-panel active pt-4" data-panel="pill2-tab1">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">일일 데이터를 표시합니다.</p>
+                                    </div>
+                                    <div class="tab-panel hidden pt-4" data-panel="pill2-tab2">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">주간 데이터를 표시합니다.</p>
+                                    </div>
+                                    <div class="tab-panel hidden pt-4" data-panel="pill2-tab3">
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">월간 데이터를 표시합니다.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Boxed Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Boxed Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">박스 스타일의 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="boxed">
+                            <!-- Tab List -->
+                            <div class="flex border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden">
+                                <button class="tab-btn active flex-1 px-4 py-3 text-sm font-medium bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 border-r border-gray-200 dark:border-gray-700 transition-colors" data-tab="boxed-tab1">
+                                    Details
+                                </button>
+                                <button class="tab-btn flex-1 px-4 py-3 text-sm font-medium bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 border-r border-gray-200 dark:border-gray-700 transition-colors" data-tab="boxed-tab2">
+                                    Reviews
+                                </button>
+                                <button class="tab-btn flex-1 px-4 py-3 text-sm font-medium bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors" data-tab="boxed-tab3">
+                                    Q&A
+                                </button>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="boxed-tab1">
+                                <p class="text-gray-600 dark:text-gray-400">상세 정보 탭의 콘텐츠입니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="boxed-tab2">
+                                <p class="text-gray-600 dark:text-gray-400">리뷰 탭의 콘텐츠입니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="boxed-tab3">
+                                <p class="text-gray-600 dark:text-gray-400">Q&A 탭의 콘텐츠입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Tabs with Badge -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Tabs with Badge</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">배지가 포함된 탭입니다. 알림 수나 상태를 표시할 때 유용합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="badge">
+                            <!-- Tab List -->
+                            <div class="border-b border-gray-200 dark:border-gray-700">
+                                <nav class="flex gap-8" aria-label="Tabs">
+                                    <button class="tab-btn active flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400 transition-colors" data-tab="badge-tab1">
+                                        Inbox
+                                        <span class="px-2 py-0.5 text-xs font-medium bg-violet-100 dark:bg-violet-900/50 text-violet-600 dark:text-violet-400 rounded-full">24</span>
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="badge-tab2">
+                                        Sent
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="badge-tab3">
+                                        Drafts
+                                        <span class="px-2 py-0.5 text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full">3</span>
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-2 py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="badge-tab4">
+                                        Spam
+                                        <span class="w-2 h-2 bg-red-500 rounded-full"></span>
+                                    </button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="badge-tab1">
+                                <p class="text-gray-600 dark:text-gray-400">받은 메시지함입니다. 24개의 읽지 않은 메시지가 있습니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="badge-tab2">
+                                <p class="text-gray-600 dark:text-gray-400">보낸 메시지함입니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="badge-tab3">
+                                <p class="text-gray-600 dark:text-gray-400">임시 저장된 메시지입니다. 3개의 임시 저장 메시지가 있습니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="badge-tab4">
+                                <p class="text-gray-600 dark:text-gray-400">스팸 메시지함입니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vertical Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Vertical Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">세로로 배치된 탭입니다. 사이드 네비게이션 형태로 사용합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="vertical" class="flex gap-6">
+                            <!-- Tab List -->
+                            <div class="w-48 flex-shrink-0">
+                                <nav class="flex flex-col gap-1" aria-label="Tabs">
+                                    <button class="tab-btn active flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 transition-colors" data-tab="vertical-tab1">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                        </svg>
+                                        Account
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tab="vertical-tab2">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                        </svg>
+                                        Security
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tab="vertical-tab3">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                        </svg>
+                                        Notifications
+                                    </button>
+                                    <button class="tab-btn flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" data-tab="vertical-tab4">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                                        </svg>
+                                        Billing
+                                    </button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="flex-1 pl-6 border-l border-gray-200 dark:border-gray-700">
+                                <div class="tab-panel active" data-panel="vertical-tab1">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Account Settings</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">프로필 정보, 이메일 주소 등 계정 관련 설정을 관리합니다.</p>
+                                </div>
+                                <div class="tab-panel hidden" data-panel="vertical-tab2">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Security Settings</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">비밀번호, 2단계 인증 등 보안 관련 설정을 관리합니다.</p>
+                                </div>
+                                <div class="tab-panel hidden" data-panel="vertical-tab3">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Notification Settings</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">이메일, 푸시 알림 등 알림 관련 설정을 관리합니다.</p>
+                                </div>
+                                <div class="tab-panel hidden" data-panel="vertical-tab4">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Billing Settings</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">결제 수단, 청구서 등 결제 관련 설정을 관리합니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Full Width Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Full Width Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">전체 너비를 사용하는 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="fullwidth">
+                            <!-- Tab List -->
+                            <div class="border-b border-gray-200 dark:border-gray-700">
+                                <nav class="flex" aria-label="Tabs">
+                                    <button class="tab-btn active flex-1 py-3 text-sm font-medium text-center border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400 transition-colors" data-tab="full-tab1">
+                                        Description
+                                    </button>
+                                    <button class="tab-btn flex-1 py-3 text-sm font-medium text-center border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="full-tab2">
+                                        Reviews (128)
+                                    </button>
+                                    <button class="tab-btn flex-1 py-3 text-sm font-medium text-center border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors" data-tab="full-tab3">
+                                        Shipping
+                                    </button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="full-tab1">
+                                <p class="text-gray-600 dark:text-gray-400">제품 설명이 여기에 표시됩니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="full-tab2">
+                                <p class="text-gray-600 dark:text-gray-400">128개의 리뷰가 여기에 표시됩니다.</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="full-tab3">
+                                <p class="text-gray-600 dark:text-gray-400">배송 정보가 여기에 표시됩니다.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sizes -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sizes</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">다양한 크기의 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-8">
+                            <!-- Small -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Small</label>
+                                <div class="border-b border-gray-200 dark:border-gray-700">
+                                    <nav class="flex gap-6" aria-label="Tabs">
+                                        <button class="py-2 text-xs font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400">Tab 1</button>
+                                        <button class="py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 2</button>
+                                        <button class="py-2 text-xs font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 3</button>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- Medium (Default) -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Medium (Default)</label>
+                                <div class="border-b border-gray-200 dark:border-gray-700">
+                                    <nav class="flex gap-8" aria-label="Tabs">
+                                        <button class="py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400">Tab 1</button>
+                                        <button class="py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 2</button>
+                                        <button class="py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 3</button>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- Large -->
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">Large</label>
+                                <div class="border-b border-gray-200 dark:border-gray-700">
+                                    <nav class="flex gap-10" aria-label="Tabs">
+                                        <button class="py-4 text-base font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400">Tab 1</button>
+                                        <button class="py-4 text-base font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 2</button>
+                                        <button class="py-4 text-base font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Tab 3</button>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Disabled State -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Disabled State</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">비활성화된 탭 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="border-b border-gray-200 dark:border-gray-700">
+                            <nav class="flex gap-8" aria-label="Tabs">
+                                <button class="py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400">Active</button>
+                                <button class="py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Available</button>
+                                <button class="py-3 text-sm font-medium border-b-2 border-transparent text-gray-300 dark:text-gray-600 cursor-not-allowed" disabled>Disabled</button>
+                                <button class="py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">Another Tab</button>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scrollable Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Scrollable Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">탭이 많을 때 가로 스크롤이 가능한 탭입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="scroll" class="relative">
+                            <!-- Tab List with Scroll -->
+                            <div class="border-b border-gray-200 dark:border-gray-700 overflow-x-auto scrollbar-hide">
+                                <nav class="flex gap-8 min-w-max" aria-label="Tabs">
+                                    <button class="tab-btn active py-3 text-sm font-medium border-b-2 border-violet-600 text-violet-600 dark:text-violet-400 dark:border-violet-400 whitespace-nowrap transition-colors" data-tab="scroll-tab1">Dashboard</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab2">Analytics</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab3">Reports</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab4">Customers</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab5">Products</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab6">Orders</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab7">Inventory</button>
+                                    <button class="tab-btn py-3 text-sm font-medium border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 whitespace-nowrap transition-colors" data-tab="scroll-tab8">Settings</button>
+                                </nav>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="tab-panel active pt-6" data-panel="scroll-tab1">
+                                <p class="text-gray-600 dark:text-gray-400">Dashboard 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab2">
+                                <p class="text-gray-600 dark:text-gray-400">Analytics 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab3">
+                                <p class="text-gray-600 dark:text-gray-400">Reports 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab4">
+                                <p class="text-gray-600 dark:text-gray-400">Customers 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab5">
+                                <p class="text-gray-600 dark:text-gray-400">Products 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab6">
+                                <p class="text-gray-600 dark:text-gray-400">Orders 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab7">
+                                <p class="text-gray-600 dark:text-gray-400">Inventory 콘텐츠</p>
+                            </div>
+                            <div class="tab-panel hidden pt-6" data-panel="scroll-tab8">
+                                <p class="text-gray-600 dark:text-gray-400">Settings 콘텐츠</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Style Tabs -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Card Style Tabs</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">카드 스타일의 탭입니다. 콘텐츠와 시각적으로 연결되어 보입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div data-tabs="card">
+                            <!-- Tab List -->
+                            <div class="flex gap-1 mb-[-1px] relative z-10">
+                                <button class="tab-btn active px-6 py-3 text-sm font-medium rounded-t-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 border-b-white dark:border-b-gray-900 text-violet-600 dark:text-violet-400 transition-colors" data-tab="card-tab1">Tab One</button>
+                                <button class="tab-btn px-6 py-3 text-sm font-medium rounded-t-lg bg-gray-50 dark:bg-gray-800 border border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" data-tab="card-tab2">Tab Two</button>
+                                <button class="tab-btn px-6 py-3 text-sm font-medium rounded-t-lg bg-gray-50 dark:bg-gray-800 border border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" data-tab="card-tab3">Tab Three</button>
+                            </div>
+                            <!-- Tab Panels -->
+                            <div class="border border-gray-200 dark:border-gray-700 rounded-b-lg rounded-tr-lg bg-white dark:bg-gray-900 p-6">
+                                <div class="tab-panel active" data-panel="card-tab1">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">First Tab Content</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">첫 번째 탭의 콘텐츠입니다. 카드 스타일의 탭은 콘텐츠 영역과 시각적으로 연결되어 있습니다.</p>
+                                </div>
+                                <div class="tab-panel hidden" data-panel="card-tab2">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Second Tab Content</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">두 번째 탭의 콘텐츠입니다.</p>
+                                </div>
+                                <div class="tab-panel hidden" data-panel="card-tab3">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-2">Third Tab Content</h3>
+                                    <p class="text-gray-600 dark:text-gray-400">세 번째 탭의 콘텐츠입니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Code Example -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Code Example</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">기본 탭 구현 코드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML + JavaScript</span>
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                            </div>
+                        </div>
+                        <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Tab Container --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">data-tabs</span>=<span class="text-emerald-600 dark:text-emerald-400">"example"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Tab List --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"border-b border-gray-200"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-8"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab-btn active ..."</span> <span class="text-violet-600 dark:text-violet-400">data-tab</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Tab 1<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab-btn ..."</span> <span class="text-violet-600 dark:text-violet-400">data-tab</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Tab 2<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Tab Panels --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab-panel active"</span> <span class="text-violet-600 dark:text-violet-400">data-panel</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Content 1<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab-panel hidden"</span> <span class="text-violet-600 dark:text-violet-400">data-panel</span>=<span class="text-emerald-600 dark:text-emerald-400">"tab2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Content 2<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- JavaScript --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;script&gt;</span>
+<span class="text-amber-600 dark:text-amber-400">document</span>.querySelectorAll(<span class="text-emerald-600 dark:text-emerald-400">'[data-tabs]'</span>).forEach(<span class="text-violet-600 dark:text-violet-400">container</span> => {
+  <span class="text-amber-600 dark:text-amber-400">container</span>.querySelectorAll(<span class="text-emerald-600 dark:text-emerald-400">'.tab-btn'</span>).forEach(<span class="text-violet-600 dark:text-violet-400">btn</span> => {
+    <span class="text-violet-600 dark:text-violet-400">btn</span>.addEventListener(<span class="text-emerald-600 dark:text-emerald-400">'click'</span>, () => {
+      <span class="text-gray-500 dark:text-gray-400">// Update active tab button</span>
+      <span class="text-gray-500 dark:text-gray-400">// Show corresponding panel</span>
+    });
+  });
+});
+<span class="text-blue-600 dark:text-blue-400">&lt;/script&gt;</span></code></pre>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 관련된 콘텐츠를 논리적으로 그룹화하세요</li>
+                                    <li>• 탭 레이블은 짧고 명확하게 작성하세요</li>
+                                    <li>• 현재 활성 탭을 시각적으로 명확히 표시하세요</li>
+                                    <li>• 탭 순서는 중요도나 사용 빈도를 고려하세요</li>
+                                    <li>• 모바일에서는 스크롤 가능한 탭을 사용하세요</li>
+                                    <li>• 키보드 네비게이션을 지원하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 많은 탭을 사용하지 마세요 (5-7개 이하 권장)</li>
+                                    <li>• 탭 레이블에 긴 텍스트를 사용하지 마세요</li>
+                                    <li>• 탭 간 콘텐츠 높이 차이가 크면 피하세요</li>
+                                    <li>• 중첩된 탭 구조를 사용하지 마세요</li>
+                                    <li>• 탭 전환 시 페이지 이동을 발생시키지 마세요</li>
+                                    <li>• 탭 콘텐츠가 비어있는 상태로 두지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        // Tab functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[data-tabs]').forEach(function(container) {
+                var tabType = container.getAttribute('data-tabs');
+                var buttons = container.querySelectorAll('.tab-btn');
+                var panels = container.querySelectorAll('.tab-panel');
+
+                buttons.forEach(function(btn) {
+                    btn.addEventListener('click', function() {
+                        var tabId = btn.getAttribute('data-tab');
+
+                        // Update buttons
+                        buttons.forEach(function(b) {
+                            b.classList.remove('active');
+                            // Reset styles based on tab type
+                            if (tabType === 'basic' || tabType === 'icon' || tabType === 'badge' || tabType === 'fullwidth' || tabType === 'scroll') {
+                                b.classList.remove('border-violet-600', 'text-violet-600', 'dark:text-violet-400', 'dark:border-violet-400');
+                                b.classList.add('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                            } else if (tabType === 'pill1') {
+                                b.classList.remove('bg-white', 'dark:bg-gray-700', 'text-gray-900', 'dark:text-white', 'shadow');
+                                b.classList.add('text-gray-500', 'dark:text-gray-400');
+                            } else if (tabType === 'pill2') {
+                                b.classList.remove('bg-violet-600', 'text-white', 'shadow');
+                                b.classList.add('text-violet-600', 'dark:text-violet-400');
+                            } else if (tabType === 'boxed') {
+                                b.classList.remove('bg-violet-50', 'dark:bg-violet-900/30', 'text-violet-600', 'dark:text-violet-400');
+                                b.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-500', 'dark:text-gray-400');
+                            } else if (tabType === 'vertical') {
+                                b.classList.remove('bg-violet-50', 'dark:bg-violet-900/30', 'text-violet-600', 'dark:text-violet-400');
+                                b.classList.add('text-gray-600', 'dark:text-gray-400');
+                            } else if (tabType === 'card') {
+                                b.classList.remove('bg-white', 'dark:bg-gray-900', 'border-gray-200', 'dark:border-gray-700', 'border-b-white', 'dark:border-b-gray-900', 'text-violet-600', 'dark:text-violet-400');
+                                b.classList.add('bg-gray-50', 'dark:bg-gray-800', 'border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                            }
+                        });
+
+                        // Set active button
+                        btn.classList.add('active');
+                        if (tabType === 'basic' || tabType === 'icon' || tabType === 'badge' || tabType === 'fullwidth' || tabType === 'scroll') {
+                            btn.classList.remove('border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                            btn.classList.add('border-violet-600', 'text-violet-600', 'dark:text-violet-400', 'dark:border-violet-400');
+                        } else if (tabType === 'pill1') {
+                            btn.classList.remove('text-gray-500', 'dark:text-gray-400');
+                            btn.classList.add('bg-white', 'dark:bg-gray-700', 'text-gray-900', 'dark:text-white', 'shadow');
+                        } else if (tabType === 'pill2') {
+                            btn.classList.remove('text-violet-600', 'dark:text-violet-400');
+                            btn.classList.add('bg-violet-600', 'text-white', 'shadow');
+                        } else if (tabType === 'boxed') {
+                            btn.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-500', 'dark:text-gray-400');
+                            btn.classList.add('bg-violet-50', 'dark:bg-violet-900/30', 'text-violet-600', 'dark:text-violet-400');
+                        } else if (tabType === 'vertical') {
+                            btn.classList.remove('text-gray-600', 'dark:text-gray-400');
+                            btn.classList.add('bg-violet-50', 'dark:bg-violet-900/30', 'text-violet-600', 'dark:text-violet-400');
+                        } else if (tabType === 'card') {
+                            btn.classList.remove('bg-gray-50', 'dark:bg-gray-800', 'border-transparent', 'text-gray-500', 'dark:text-gray-400');
+                            btn.classList.add('bg-white', 'dark:bg-gray-900', 'border', 'border-gray-200', 'dark:border-gray-700', 'border-b-white', 'dark:border-b-gray-900', 'text-violet-600', 'dark:text-violet-400');
+                        }
+
+                        // Update panels
+                        panels.forEach(function(panel) {
+                            if (panel.getAttribute('data-panel') === tabId) {
+                                panel.classList.remove('hidden');
+                                panel.classList.add('active');
+                            } else {
+                                panel.classList.add('hidden');
+                                panel.classList.remove('active');
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
