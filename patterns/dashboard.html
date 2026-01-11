@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span>Patterns</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-gray-900 dark:text-white">Dashboard</span>
+                </div>
+
+                <!-- Page Title -->
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Dashboard</h1>
+                <p class="text-gray-600 dark:text-gray-400 mb-8">데이터 시각화와 핵심 지표를 보여주는 대시보드 레이아웃 패턴입니다. 관리자 페이지, 분석 도구, 모니터링 시스템에 활용됩니다.</p>
+
+                <!-- Stats Cards -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Stats Cards</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">핵심 지표를 카드 형태로 보여주는 기본 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <!-- Stat Card 1 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">총 매출</span>
+                                        <div class="w-8 h-8 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white">₩24,500,000</p>
+                                    <div class="flex items-center gap-1 mt-2">
+                                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                                            </svg>
+                                            12.5%
+                                        </span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">지난 달 대비</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stat Card 2 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">신규 사용자</span>
+                                        <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white">1,234</p>
+                                    <div class="flex items-center gap-1 mt-2">
+                                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                                            </svg>
+                                            8.2%
+                                        </span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">지난 주 대비</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stat Card 3 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">주문 건수</span>
+                                        <div class="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white">856</p>
+                                    <div class="flex items-center gap-1 mt-2">
+                                        <span class="text-xs font-medium text-red-600 dark:text-red-400 flex items-center gap-0.5">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+                                            </svg>
+                                            3.1%
+                                        </span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">지난 달 대비</span>
+                                    </div>
+                                </div>
+
+                                <!-- Stat Card 4 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-500 dark:text-gray-400">전환율</span>
+                                        <div class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-lg flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <p class="text-2xl font-bold text-gray-900 dark:text-white">3.24%</p>
+                                    <div class="flex items-center gap-1 mt-2">
+                                        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-0.5">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+                                            </svg>
+                                            0.8%
+                                        </span>
+                                        <span class="text-xs text-gray-500 dark:text-gray-400">지난 달 대비</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Chart Cards -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Chart Cards</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">차트와 그래프를 포함한 데이터 시각화 카드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                <!-- Line Chart Card -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">매출 추이</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">최근 7일</p>
+                                        </div>
+                                        <select class="text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 text-gray-600 dark:text-gray-400">
+                                            <option>7일</option>
+                                            <option>30일</option>
+                                            <option>90일</option>
+                                        </select>
+                                    </div>
+                                    <!-- Simulated Chart -->
+                                    <div class="h-48 flex items-end gap-2">
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 60%"></div>
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 75%"></div>
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 45%"></div>
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 85%"></div>
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 70%"></div>
+                                        <div class="flex-1 bg-violet-100 dark:bg-violet-900/30 rounded-t" style="height: 90%"></div>
+                                        <div class="flex-1 bg-violet-500 rounded-t" style="height: 100%"></div>
+                                    </div>
+                                    <div class="flex justify-between mt-2 text-xs text-gray-500 dark:text-gray-400">
+                                        <span>월</span>
+                                        <span>화</span>
+                                        <span>수</span>
+                                        <span>목</span>
+                                        <span>금</span>
+                                        <span>토</span>
+                                        <span>일</span>
+                                    </div>
+                                </div>
+
+                                <!-- Donut Chart Card -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <div>
+                                            <h3 class="font-semibold text-gray-900 dark:text-white">카테고리별 매출</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">이번 달</p>
+                                        </div>
+                                        <button class="text-sm text-violet-600 dark:text-violet-400 hover:underline">상세보기</button>
+                                    </div>
+                                    <div class="flex items-center gap-6">
+                                        <!-- Simulated Donut -->
+                                        <div class="relative w-32 h-32 flex-shrink-0">
+                                            <svg class="w-32 h-32 transform -rotate-90" viewBox="0 0 32 32">
+                                                <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" class="text-gray-200 dark:text-gray-700" stroke-width="4"/>
+                                                <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" class="text-violet-500" stroke-width="4" stroke-dasharray="45 75.4" stroke-linecap="round"/>
+                                                <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" class="text-blue-500" stroke-width="4" stroke-dasharray="20 75.4" stroke-dashoffset="-45" stroke-linecap="round"/>
+                                                <circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" class="text-emerald-500" stroke-width="4" stroke-dasharray="10.4 75.4" stroke-dashoffset="-65" stroke-linecap="round"/>
+                                            </svg>
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <span class="text-lg font-bold text-gray-900 dark:text-white">100%</span>
+                                            </div>
+                                        </div>
+                                        <!-- Legend -->
+                                        <div class="flex-1 space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="w-3 h-3 bg-violet-500 rounded-full"></span>
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">전자제품</span>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">60%</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="w-3 h-3 bg-blue-500 rounded-full"></span>
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">의류</span>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">26%</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="w-3 h-3 bg-emerald-500 rounded-full"></span>
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">기타</span>
+                                                </div>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">14%</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Activity Feed -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Activity Feed</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">실시간 활동 로그를 타임라인 형태로 보여주는 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                <div class="flex items-center justify-between mb-4">
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">최근 활동</h3>
+                                    <button class="text-sm text-violet-600 dark:text-violet-400 hover:underline">전체보기</button>
+                                </div>
+                                <div class="space-y-4">
+                                    <!-- Activity Item 1 -->
+                                    <div class="flex gap-3">
+                                        <div class="relative">
+                                            <img src="https://i.pravatar.cc/32?img=1" alt="Avatar" class="w-8 h-8 rounded-full">
+                                            <span class="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-500 border-2 border-white dark:border-gray-800 rounded-full"></span>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-900 dark:text-white">
+                                                <span class="font-medium">김민수</span>님이 새 주문을 등록했습니다.
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">2분 전</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Activity Item 2 -->
+                                    <div class="flex gap-3">
+                                        <div class="relative">
+                                            <img src="https://i.pravatar.cc/32?img=5" alt="Avatar" class="w-8 h-8 rounded-full">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-900 dark:text-white">
+                                                <span class="font-medium">이영희</span>님이 결제를 완료했습니다.
+                                            </p>
+                                            <div class="mt-2 p-3 bg-gray-50 dark:bg-gray-900 rounded-lg">
+                                                <p class="text-sm text-gray-600 dark:text-gray-400">주문번호: #ORD-2024-0156</p>
+                                                <p class="text-sm font-medium text-gray-900 dark:text-white">₩158,000</p>
+                                            </div>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1.5">15분 전</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Activity Item 3 -->
+                                    <div class="flex gap-3">
+                                        <div class="w-8 h-8 bg-amber-100 dark:bg-amber-900/30 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-900 dark:text-white">
+                                                재고 부족 알림: <span class="font-medium">MacBook Pro 14"</span>
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">1시간 전</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Activity Item 4 -->
+                                    <div class="flex gap-3">
+                                        <div class="w-8 h-8 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center">
+                                            <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-900 dark:text-white">
+                                                배송 완료: 주문번호 <span class="font-medium">#ORD-2024-0142</span>
+                                            </p>
+                                            <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">3시간 전</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dashboard Grid Layout -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dashboard Grid Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">통계 카드, 차트, 테이블을 조합한 전체 대시보드 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="space-y-6">
+                                <!-- Header -->
+                                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">대시보드</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">2024년 1월 15일 기준</p>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <button class="px-3 py-1.5 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700">
+                                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                            </svg>
+                                            내보내기
+                                        </button>
+                                        <button class="px-3 py-1.5 text-sm bg-violet-600 hover:bg-violet-700 text-white rounded-lg">
+                                            <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                            </svg>
+                                            새 보고서
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Stats Row -->
+                                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">방문자</p>
+                                        <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">12,453</p>
+                                        <span class="text-xs text-emerald-600 dark:text-emerald-400">+15.3%</span>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">페이지뷰</p>
+                                        <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">48,291</p>
+                                        <span class="text-xs text-emerald-600 dark:text-emerald-400">+8.7%</span>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">이탈률</p>
+                                        <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">34.2%</p>
+                                        <span class="text-xs text-red-600 dark:text-red-400">+2.1%</span>
+                                    </div>
+                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">체류시간</p>
+                                        <p class="text-xl font-bold text-gray-900 dark:text-white mt-1">4m 32s</p>
+                                        <span class="text-xs text-emerald-600 dark:text-emerald-400">+12.5%</span>
+                                    </div>
+                                </div>
+
+                                <!-- Main Content Grid -->
+                                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                    <!-- Chart Area (2 cols) -->
+                                    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <h4 class="font-medium text-gray-900 dark:text-white mb-4">트래픽 추이</h4>
+                                        <div class="h-48 flex items-end gap-1">
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 40%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 55%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 35%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 65%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 50%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 80%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 70%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 60%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 85%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 75%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t opacity-50" style="height: 90%"></div>
+                                            <div class="flex-1 bg-gradient-to-t from-violet-500 to-violet-300 rounded-t" style="height: 100%"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Side Panel -->
+                                    <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                        <h4 class="font-medium text-gray-900 dark:text-white mb-4">인기 페이지</h4>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-600 dark:text-gray-400 truncate">/products</span>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">2,453</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-600 dark:text-gray-400 truncate">/checkout</span>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">1,892</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-600 dark:text-gray-400 truncate">/about</span>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">1,234</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-600 dark:text-gray-400 truncate">/contact</span>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">987</span>
+                                            </div>
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-sm text-gray-600 dark:text-gray-400 truncate">/blog</span>
+                                                <span class="text-sm font-medium text-gray-900 dark:text-white">654</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Recent Orders Table -->
+                                <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                    <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                                        <h4 class="font-medium text-gray-900 dark:text-white">최근 주문</h4>
+                                    </div>
+                                    <div class="overflow-x-auto">
+                                        <table class="w-full">
+                                            <thead class="bg-gray-50 dark:bg-gray-900">
+                                                <tr>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">주문번호</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">고객</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">금액</th>
+                                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">상태</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                <tr>
+                                                    <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">#ORD-0156</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">김민수</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">₩158,000</td>
+                                                    <td class="px-4 py-3">
+                                                        <span class="px-2 py-1 text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 rounded-full">완료</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">#ORD-0155</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">이영희</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">₩89,000</td>
+                                                    <td class="px-4 py-3">
+                                                        <span class="px-2 py-1 text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-full">배송중</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-3 text-sm font-medium text-gray-900 dark:text-white">#ORD-0154</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-600 dark:text-gray-400">박지훈</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-900 dark:text-white">₩245,000</td>
+                                                    <td class="px-4 py-3">
+                                                        <span class="px-2 py-1 text-xs font-medium bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 rounded-full">처리중</span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Progress Cards -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Progress Cards</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">목표 달성률이나 진행 상황을 보여주는 카드 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <!-- Progress Card 1 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">월간 목표</span>
+                                        <span class="text-sm font-medium text-violet-600 dark:text-violet-400">78%</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-violet-500 rounded-full" style="width: 78%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">₩19,500,000 / ₩25,000,000</p>
+                                </div>
+
+                                <!-- Progress Card 2 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">신규 가입</span>
+                                        <span class="text-sm font-medium text-emerald-600 dark:text-emerald-400">92%</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-emerald-500 rounded-full" style="width: 92%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">920명 / 1,000명</p>
+                                </div>
+
+                                <!-- Progress Card 3 -->
+                                <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                                    <div class="flex items-center justify-between mb-3">
+                                        <span class="text-sm font-medium text-gray-900 dark:text-white">프로젝트</span>
+                                        <span class="text-sm font-medium text-amber-600 dark:text-amber-400">45%</span>
+                                    </div>
+                                    <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                                        <div class="h-full bg-amber-500 rounded-full" style="width: 45%"></div>
+                                    </div>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">9개 / 20개 완료</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Quick Actions -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Quick Actions</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">자주 사용하는 작업에 빠르게 접근할 수 있는 액션 카드입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <!-- Action 1 -->
+                                <button class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-violet-300 dark:hover:border-violet-700 hover:shadow-md transition-all group">
+                                    <div class="w-12 h-12 bg-violet-100 dark:bg-violet-900/30 rounded-xl flex items-center justify-center mb-3 group-hover:bg-violet-200 dark:group-hover:bg-violet-900/50 transition-colors">
+                                        <svg class="w-6 h-6 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-gray-900 dark:text-white text-sm">새 상품</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">상품 등록</p>
+                                </button>
+
+                                <!-- Action 2 -->
+                                <button class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-blue-300 dark:hover:border-blue-700 hover:shadow-md transition-all group">
+                                    <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center mb-3 group-hover:bg-blue-200 dark:group-hover:bg-blue-900/50 transition-colors">
+                                        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-gray-900 dark:text-white text-sm">고객 관리</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">고객 목록</p>
+                                </button>
+
+                                <!-- Action 3 -->
+                                <button class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-md transition-all group">
+                                    <div class="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl flex items-center justify-center mb-3 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-900/50 transition-colors">
+                                        <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-gray-900 dark:text-white text-sm">리포트</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">분석 보고서</p>
+                                </button>
+
+                                <!-- Action 4 -->
+                                <button class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 hover:border-amber-300 dark:hover:border-amber-700 hover:shadow-md transition-all group">
+                                    <div class="w-12 h-12 bg-amber-100 dark:bg-amber-900/30 rounded-xl flex items-center justify-center mb-3 group-hover:bg-amber-200 dark:group-hover:bg-amber-900/50 transition-colors">
+                                        <svg class="w-6 h-6 text-amber-600 dark:text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                    </div>
+                                    <p class="font-medium text-gray-900 dark:text-white text-sm">설정</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">환경 설정</p>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 가장 중요한 지표를 상단에 배치하세요</li>
+                                    <li>• 데이터 변화율을 함께 표시하세요</li>
+                                    <li>• 일관된 시각적 계층을 유지하세요</li>
+                                    <li>• 빠른 액션을 위한 바로가기를 제공하세요</li>
+                                    <li>• 실시간 데이터 갱신을 지원하세요</li>
+                                    <li>• 반응형 그리드 레이아웃을 사용하세요</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 많은 정보를 한 화면에 담지 마세요</li>
+                                    <li>• 의미 없는 데이터를 표시하지 마세요</li>
+                                    <li>• 차트만으로 정확한 값을 파악하게 하지 마세요</li>
+                                    <li>• 데이터 로딩 상태를 무시하지 마세요</li>
+                                    <li>• 접근성을 고려하지 않은 색상을 사용하지 마세요</li>
+                                    <li>• 모바일에서의 사용성을 간과하지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Dark Mode & Sidebar Scripts -->
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
+
+    <!-- Menu Script -->
+    <script src="../js/menu.js"></script>
+</body>
+</html>
