@@ -42,7 +42,7 @@
   }
 
   /* === Primary Color (CTA용) === */
-  .btn-primary-primary {
+  .btn-primary {
     @apply bg-violet-600 hover:bg-violet-700 text-white;
   }
   .btn-primary-secondary {
@@ -60,14 +60,17 @@
 
   /* === Semantic Colors === */
   .btn-success { @apply bg-emerald-600 hover:bg-emerald-700 text-white; }
+  .btn-warning { @apply bg-amber-500 hover:bg-amber-600 text-white; }
   .btn-danger { @apply bg-red-600 hover:bg-red-700 text-white; }
+  .btn-info { @apply bg-blue-600 hover:bg-blue-700 text-white; }
 
   /* === Icon Only === */
   .btn-icon { @apply w-10 justify-center px-0; }
-  .btn-icon-xs { @apply w-7; }
-  .btn-icon-sm { @apply w-8; }
-  .btn-icon-lg { @apply w-11; }
-  .btn-icon-xl { @apply w-12; }
+  .btn-icon-xs { @apply h-7 w-7 p-0; }
+  .btn-icon-sm { @apply h-8 w-8 p-0; }
+  .btn-icon-md { @apply h-10 w-10 p-0; }
+  .btn-icon-lg { @apply h-11 w-11 p-0; }
+  .btn-icon-xl { @apply h-12 w-12 p-0; }
   .btn-icon-circle { @apply rounded-full; }
 
   /* === States === */

@@ -5,62 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Button - Open UI Guide</title>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {}
-            }
-        }
-    </script>
+    <!-- Tailwind CSS v4 빌드 출력 -->
+    <link rel="stylesheet" href="../dist/output.css">
 
     <!-- Pretendard 폰트 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
     <style>
         body {
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-    </style>
-    <style type="text/tailwindcss">
-        @layer components {
-            /* Button Base */
-            .btn {
-                @apply inline-flex items-center justify-center font-medium transition-colors;
-            }
-            /* Button Sizes */
-            .btn-xs { @apply h-7 px-2.5 text-xs rounded; }
-            .btn-sm { @apply h-8 px-3 text-sm rounded-md; }
-            .btn-md { @apply h-10 px-4 text-sm rounded-lg; }
-            .btn-lg { @apply h-11 px-5 text-base rounded-lg; }
-            .btn-xl { @apply h-12 px-6 text-lg rounded-xl; }
-            /* Button Variants - Base */
-            .btn-base-primary { @apply bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white; }
-            .btn-base-secondary { @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white; }
-            .btn-base-tertiary { @apply hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300; }
-            .btn-base-outline { @apply border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300; }
-            .btn-base-ghost { @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white; }
-            /* Button Variants - Primary */
-            .btn-primary { @apply bg-violet-600 hover:bg-violet-700 text-white; }
-            .btn-primary-secondary { @apply bg-violet-100 hover:bg-violet-200 dark:bg-violet-900/30 dark:hover:bg-violet-900/50 text-violet-700 dark:text-violet-300; }
-            .btn-primary-tertiary { @apply hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400; }
-            .btn-primary-outline { @apply border border-violet-300 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400; }
-            .btn-primary-ghost { @apply text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300; }
-            /* Button Variants - Semantic */
-            .btn-success { @apply bg-emerald-600 hover:bg-emerald-700 text-white; }
-            .btn-warning { @apply bg-amber-500 hover:bg-amber-600 text-white; }
-            .btn-danger { @apply bg-red-600 hover:bg-red-700 text-white; }
-            .btn-info { @apply bg-blue-600 hover:bg-blue-700 text-white; }
-            /* Button States */
-            .btn-disabled { @apply opacity-50 cursor-not-allowed pointer-events-none; }
-            .btn-loading { @apply opacity-75 cursor-wait pointer-events-none; }
-            /* Icon Button */
-            .btn-icon-xs { @apply h-7 w-7 p-0; }
-            .btn-icon-sm { @apply h-8 w-8 p-0; }
-            .btn-icon-md { @apply h-10 w-10 p-0; }
-            .btn-icon-lg { @apply h-11 w-11 p-0; }
-            .btn-icon-xl { @apply h-12 w-12 p-0; }
         }
     </style>
 
