@@ -175,4 +175,42 @@
     @apply peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-violet-600 dark:peer-focus:text-violet-400;
     @apply peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-gray-400;
   }
+
+  /* === Textarea === */
+  .textarea {
+    @apply px-3 py-2 rounded-lg;
+  }
+  .textarea-resize { @apply resize-y; }
+  .textarea-no-resize { @apply resize-none; }
+
+  /* === Input Icon Wrap === */
+  .input-icon-wrap {
+    @apply relative;
+  }
+  .input-icon {
+    @apply absolute top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;
+  }
+  .input-icon-left { @apply left-3; }
+  .input-icon-right { @apply right-3; }
+
+  /* === Input Group === */
+  .input-group {
+    @apply flex;
+  }
+  .input-group-addon {
+    @apply inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600;
+  }
+  .input-group-addon-left {
+    @apply border-r-0 rounded-l-lg;
+  }
+  .input-group-addon-right {
+    @apply border-l-0 rounded-r-lg;
+  }
+  .input-group-select {
+    @apply h-10 px-3 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent;
+  }
+
+  /* === Input Rounded Overrides === */
+  .input-rounded-l-none { @apply rounded-l-none; }
+  .input-rounded-r-none { @apply rounded-r-none; }
 }
