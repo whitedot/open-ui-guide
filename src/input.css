@@ -75,14 +75,58 @@
 
   /* === States === */
   .btn-disabled {
-    @apply opacity-50 cursor-not-allowed;
+    @apply opacity-50 cursor-not-allowed pointer-events-none;
   }
   .btn-loading {
-    @apply cursor-wait;
+    @apply opacity-75 cursor-wait pointer-events-none;
+  }
+
+  /* === Hover Shadow (선택적) === */
+  .btn-hover-shadow {
+    @apply hover:shadow-md;
+  }
+
+  /* === Button Group === */
+  .btn-group {
+    @apply inline-flex h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700;
+  }
+  .btn-group-item {
+    @apply inline-flex items-center justify-center font-medium transition-colors px-4 border-r border-gray-200 dark:border-gray-700 rounded-none last:border-r-0;
+  }
+  .btn-group-item-active {
+    @apply bg-gray-600 dark:bg-gray-500 text-white border-r-gray-500 dark:border-r-gray-400;
   }
 
   /* === Full Width === */
   .btn-full {
     @apply w-full;
+  }
+
+  /* === Icon Button Shapes === */
+  .btn-icon-square {
+    @apply rounded-lg;
+  }
+  .btn-icon-rounded {
+    @apply rounded-full;
+  }
+
+  /* === With Icon === */
+  .btn-with-icon {
+    @apply gap-2;
+  }
+
+  /* ============================================
+     Link Component
+     ============================================ */
+
+  /* === Link Base === */
+  .link {
+    @apply text-violet-600 dark:text-violet-400 hover:underline;
+  }
+  .link-muted {
+    @apply text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline;
+  }
+  .link-with-icon {
+    @apply inline-flex items-center gap-1;
   }
 }
