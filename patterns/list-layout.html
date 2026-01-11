@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>List Layout - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Patterns</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">List Layout</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">List Layout</h1>
+                    <p class="text-gray-600 dark:text-gray-400">데이터 목록을 효과적으로 표시하는 레이아웃 패턴입니다. 검색, 필터링, 정렬, 페이지네이션 등의 기능을 포함합니다.</p>
+                </div>
+
+                <!-- Anatomy -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Anatomy</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">List Layout은 헤더, 툴바, 리스트 영역, 페이지네이션으로 구성됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-3">
+                            <!-- Page Header -->
+                            <div class="border-2 border-dashed border-violet-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-xs font-medium rounded">
+                                    1. Page Header
+                                </span>
+                                <div class="flex items-center justify-between">
+                                    <div class="w-32 h-6 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                                    <div class="w-24 h-8 bg-violet-200 dark:bg-violet-900/30 rounded"></div>
+                                </div>
+                            </div>
+
+                            <!-- Toolbar -->
+                            <div class="border-2 border-dashed border-blue-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded">
+                                    2. Toolbar
+                                </span>
+                                <div class="flex items-center justify-between gap-4">
+                                    <div class="flex-1 max-w-xs h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                    <div class="flex gap-2">
+                                        <div class="w-24 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                        <div class="w-24 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- List Area -->
+                            <div class="border-2 border-dashed border-emerald-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-medium rounded">
+                                    3. List Items
+                                </span>
+                                <div class="space-y-2">
+                                    <div class="h-12 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                                    <div class="h-12 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                                    <div class="h-12 bg-gray-100 dark:bg-gray-700 rounded"></div>
+                                </div>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="border-2 border-dashed border-amber-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded">
+                                    4. Pagination
+                                </span>
+                                <div class="flex items-center justify-between">
+                                    <div class="w-32 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                    <div class="flex gap-1">
+                                        <div class="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                        <div class="w-8 h-8 bg-violet-200 dark:bg-violet-900/30 rounded"></div>
+                                        <div class="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                            <div class="p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
+                                <h4 class="font-medium text-violet-700 dark:text-violet-300 mb-1">1. Page Header</h4>
+                                <p class="text-violet-600/80 dark:text-violet-400/80">제목, 생성 버튼</p>
+                            </div>
+                            <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                <h4 class="font-medium text-blue-700 dark:text-blue-300 mb-1">2. Toolbar</h4>
+                                <p class="text-blue-600/80 dark:text-blue-400/80">검색, 필터, 정렬</p>
+                            </div>
+                            <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                                <h4 class="font-medium text-emerald-700 dark:text-emerald-300 mb-1">3. List Items</h4>
+                                <p class="text-emerald-600/80 dark:text-emerald-400/80">데이터 목록</p>
+                            </div>
+                            <div class="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                                <h4 class="font-medium text-amber-700 dark:text-amber-300 mb-1">4. Pagination</h4>
+                                <p class="text-amber-600/80 dark:text-amber-400/80">페이지 네비게이션</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic List Layout -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic List Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">가장 기본적인 리스트 레이아웃 구조입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Page Header -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">사용자 목록</h2>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">총 128명의 사용자</p>
+                                        </div>
+                                        <button class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                            사용자 추가
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Toolbar -->
+                                <div class="px-6 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+                                        <!-- Search -->
+                                        <div class="relative flex-1 max-w-xs">
+                                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                            </svg>
+                                            <input type="text" placeholder="검색..." class="w-full pl-9 pr-4 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                                        </div>
+                                        <!-- Filters -->
+                                        <div class="flex gap-2">
+                                            <select class="px-3 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500">
+                                                <option>모든 상태</option>
+                                                <option>활성</option>
+                                                <option>비활성</option>
+                                            </select>
+                                            <select class="px-3 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500">
+                                                <option>최신순</option>
+                                                <option>이름순</option>
+                                                <option>가입일순</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- List -->
+                                <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <!-- Item 1 -->
+                                    <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <img src="https://i.pravatar.cc/40?img=1" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white truncate">김민수</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400 truncate">minsu.kim@example.com</p>
+                                            </div>
+                                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full">활성</span>
+                                            <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Item 2 -->
+                                    <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <img src="https://i.pravatar.cc/40?img=5" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white truncate">이지은</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400 truncate">jieun.lee@example.com</p>
+                                            </div>
+                                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full">활성</span>
+                                            <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Item 3 -->
+                                    <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <img src="https://i.pravatar.cc/40?img=8" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white truncate">박정호</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400 truncate">jungho.park@example.com</p>
+                                            </div>
+                                            <span class="px-2.5 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded-full">비활성</span>
+                                            <button class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pagination -->
+                                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">1-10 / 128</p>
+                                        <div class="flex gap-1">
+                                            <button class="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors disabled:opacity-50" disabled>이전</button>
+                                            <button class="px-3 py-1.5 text-sm bg-violet-600 text-white rounded-lg">1</button>
+                                            <button class="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">2</button>
+                                            <button class="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">3</button>
+                                            <button class="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-lg transition-colors">다음</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Card Grid Layout -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Card Grid Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">카드 형태로 데이터를 그리드 배열하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Header -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">프로젝트</h2>
+                                        <div class="flex items-center gap-2">
+                                            <!-- View Toggle -->
+                                            <div class="flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                                                <button class="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                                    </svg>
+                                                </button>
+                                                <button class="p-1.5 bg-white dark:bg-gray-600 text-violet-600 dark:text-violet-400 rounded shadow-sm">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/>
+                                                    </svg>
+                                                </button>
+                                            </div>
+                                            <button class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                                새 프로젝트
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Grid -->
+                                <div class="p-6">
+                                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        <!-- Card 1 -->
+                                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-violet-300 dark:hover:border-violet-600 transition-colors cursor-pointer">
+                                            <div class="flex items-start justify-between mb-3">
+                                                <div class="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="px-2 py-0.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded">진행중</span>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900 dark:text-white mb-1">디자인 시스템</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">UI 컴포넌트 라이브러리 구축</p>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex -space-x-2">
+                                                    <img src="https://i.pravatar.cc/24?img=1" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=2" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=3" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                </div>
+                                                <span class="text-xs text-gray-400">3일 전 업데이트</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 2 -->
+                                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-violet-300 dark:hover:border-violet-600 transition-colors cursor-pointer">
+                                            <div class="flex items-start justify-between mb-3">
+                                                <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="px-2 py-0.5 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded">검토중</span>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900 dark:text-white mb-1">대시보드 리뉴얼</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">관리자 대시보드 UI 개선</p>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex -space-x-2">
+                                                    <img src="https://i.pravatar.cc/24?img=4" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=5" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                </div>
+                                                <span class="text-xs text-gray-400">1주 전 업데이트</span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Card 3 -->
+                                        <div class="bg-gray-50 dark:bg-gray-900 rounded-lg border border-gray-200 dark:border-gray-700 p-4 hover:border-violet-300 dark:hover:border-violet-600 transition-colors cursor-pointer">
+                                            <div class="flex items-start justify-between mb-3">
+                                                <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center">
+                                                    <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                                    </svg>
+                                                </div>
+                                                <span class="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-xs font-medium rounded">완료</span>
+                                            </div>
+                                            <h3 class="font-medium text-gray-900 dark:text-white mb-1">모바일 앱 v2.0</h3>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">앱 전면 리디자인</p>
+                                            <div class="flex items-center justify-between">
+                                                <div class="flex -space-x-2">
+                                                    <img src="https://i.pravatar.cc/24?img=6" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=7" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=8" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                    <img src="https://i.pravatar.cc/24?img=9" class="w-6 h-6 rounded-full border-2 border-white dark:border-gray-900">
+                                                </div>
+                                                <span class="text-xs text-gray-400">2주 전 완료</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Table Layout -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Table Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">테이블 형태의 데이터 표시에 적합한 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Header -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center justify-between">
+                                        <h2 class="text-lg font-semibold text-gray-900 dark:text-white">주문 내역</h2>
+                                        <button class="px-3 py-1.5 text-sm border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors flex items-center gap-2">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/>
+                                            </svg>
+                                            내보내기
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Table -->
+                                <div class="overflow-x-auto">
+                                    <table class="w-full">
+                                        <thead class="bg-gray-50 dark:bg-gray-900">
+                                            <tr>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">주문번호</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">고객</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">상품</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">금액</th>
+                                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">상태</th>
+                                                <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">날짜</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-001</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">김민수</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">프리미엄 플랜</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩99,000</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full">완료</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-15</td>
+                                            </tr>
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-002</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">이지은</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">스타터 플랜</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩29,000</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2.5 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded-full">처리중</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-14</td>
+                                            </tr>
+                                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-003</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">박정호</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">엔터프라이즈 플랜</td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩299,000</td>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    <span class="px-2.5 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-medium rounded-full">취소</span>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-13</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Empty & Loading States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Empty & Loading States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">데이터가 없거나 로딩 중일 때의 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Empty State -->
+                                <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-8">
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                            </svg>
+                                        </div>
+                                        <h4 class="font-medium text-gray-900 dark:text-white mb-1">데이터가 없습니다</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">새 항목을 추가하여 시작하세요.</p>
+                                        <button class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                            항목 추가
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Loading State -->
+                                <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                                    <div class="space-y-4 animate-pulse">
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                                            </div>
+                                            <div class="w-16 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/5"></div>
+                                            </div>
+                                            <div class="w-16 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                        </div>
+                                        <div class="flex items-center gap-4">
+                                            <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/5"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                                            </div>
+                                            <div class="w-16 h-6 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Labels -->
+                        <div class="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-2 gap-4 text-sm text-center">
+                                <span class="text-gray-600 dark:text-gray-400">Empty State</span>
+                                <span class="text-gray-600 dark:text-gray-400">Loading State (Skeleton)</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bulk Actions -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Bulk Actions</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">여러 항목을 선택하여 일괄 작업을 수행할 수 있는 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Bulk Action Bar -->
+                                <div class="px-6 py-3 bg-violet-50 dark:bg-violet-900/20 border-b border-violet-100 dark:border-violet-900/30">
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-3">
+                                            <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                            <span class="text-sm font-medium text-violet-700 dark:text-violet-300">3개 선택됨</span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <button class="px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:bg-violet-100 dark:hover:bg-violet-900/30 rounded-lg transition-colors">
+                                                보관
+                                            </button>
+                                            <button class="px-3 py-1.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors">
+                                                삭제
+                                            </button>
+                                            <button class="px-3 py-1.5 text-sm text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                선택 해제
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- List with checkboxes -->
+                                <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <div class="px-6 py-4 bg-violet-50/50 dark:bg-violet-900/10">
+                                        <div class="flex items-center gap-4">
+                                            <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                            <img src="https://i.pravatar.cc/40?img=1" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">김민수</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">minsu.kim@example.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 py-4 bg-violet-50/50 dark:bg-violet-900/10">
+                                        <div class="flex items-center gap-4">
+                                            <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                            <img src="https://i.pravatar.cc/40?img=5" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">이지은</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">jieun.lee@example.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 py-4 bg-violet-50/50 dark:bg-violet-900/10">
+                                        <div class="flex items-center gap-4">
+                                            <input type="checkbox" checked class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                            <img src="https://i.pravatar.cc/40?img=8" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">박정호</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">jungho.park@example.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="px-6 py-4 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                        <div class="flex items-center gap-4">
+                                            <input type="checkbox" class="w-4 h-4 rounded border-gray-300 text-violet-600 focus:ring-violet-500">
+                                            <img src="https://i.pravatar.cc/40?img=12" alt="User" class="w-10 h-10 rounded-full">
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">최영희</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">younghee.choi@example.com</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 검색과 필터를 쉽게 접근할 수 있게 배치하세요</li>
+                                    <li>• 현재 표시 중인 항목 수와 전체 개수를 표시하세요</li>
+                                    <li>• 빈 상태에서 다음 액션을 안내하세요</li>
+                                    <li>• 로딩 시 스켈레톤 UI를 사용하세요</li>
+                                    <li>• 일괄 작업 시 선택 개수를 명확히 표시하세요</li>
+                                    <li>• 목록/그리드 뷰 전환 옵션을 제공하세요</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 한 페이지에 너무 많은 항목을 표시하지 마세요</li>
+                                    <li>• 페이지네이션 없이 무한 스크롤만 사용하지 마세요</li>
+                                    <li>• 검색 결과가 없을 때 빈 화면만 표시하지 마세요</li>
+                                    <li>• 필터 옵션을 너무 많이 노출하지 마세요</li>
+                                    <li>• 모바일에서 테이블 레이아웃을 그대로 사용하지 마세요</li>
+                                    <li>• 정렬 상태를 사용자에게 숨기지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Dark Mode & Sidebar Scripts -->
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
+
+    <!-- Menu Script -->
+    <script src="../js/menu.js"></script>
+</body>
+</html>
