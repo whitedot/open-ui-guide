@@ -5,16 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Typography - Open UI Guide</title>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {}
-            }
-        }
-    </script>
+    <!-- Tailwind CSS (빌드된 파일) -->
+    <link rel="stylesheet" href="../dist/output.css">
 
     <!-- Pretendard 폰트 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
@@ -203,25 +195,25 @@
                                 <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">특징</h4>
                                 <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                                     <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                         </svg>
                                         가변 폰트 (Variable Font)
                                     </li>
                                     <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                         </svg>
                                         한글/영문 최적화
                                     </li>
                                     <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                         </svg>
                                         9가지 굵기 지원 (100-900)
                                     </li>
                                     <li class="flex items-center gap-2">
-                                        <svg class="w-4 h-4 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg class="w-4 h-4 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                         </svg>
                                         오픈소스 (OFL 라이선스)
@@ -249,7 +241,7 @@
                             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-xs</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-xs</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">12px</td>
                                     <td class="px-6 py-4 text-xs text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -257,7 +249,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-sm</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-sm</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">14px</td>
                                     <td class="px-6 py-4 text-sm text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -265,7 +257,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-base</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-base</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">16px</td>
                                     <td class="px-6 py-4 text-base text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -273,7 +265,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-lg</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-lg</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">18px</td>
                                     <td class="px-6 py-4 text-lg text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -281,7 +273,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-xl</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-xl</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">20px</td>
                                     <td class="px-6 py-4 text-xl text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -289,7 +281,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-2xl</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-2xl</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">24px</td>
                                     <td class="px-6 py-4 text-2xl text-gray-900 dark:text-white">가나다라마바사 ABCDEFG</td>
@@ -297,7 +289,7 @@
                                 </tr>
                                 <tr>
                                     <td class="px-6 py-4">
-                                        <code class="text-sm font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-1 rounded">text-3xl</code>
+                                        <code class="text-sm font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-1 rounded">text-3xl</code>
                                     </td>
                                     <td class="px-6 py-4 text-sm text-gray-500 dark:text-gray-400">30px</td>
                                     <td class="px-6 py-4 text-3xl text-gray-900 dark:text-white">가나다라마바사</td>
@@ -316,28 +308,28 @@
                         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
                             <p class="text-2xl font-normal text-gray-900 dark:text-white mb-3">가나다 Aa</p>
                             <div class="flex items-center justify-between">
-                                <code class="text-sm font-mono text-violet-600 dark:text-violet-400">font-normal</code>
+                                <code class="text-sm font-mono text-primary-600 dark:text-primary-400">font-normal</code>
                                 <span class="text-sm text-gray-500 dark:text-gray-400">400</span>
                             </div>
                         </div>
                         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
                             <p class="text-2xl font-medium text-gray-900 dark:text-white mb-3">가나다 Aa</p>
                             <div class="flex items-center justify-between">
-                                <code class="text-sm font-mono text-violet-600 dark:text-violet-400">font-medium</code>
+                                <code class="text-sm font-mono text-primary-600 dark:text-primary-400">font-medium</code>
                                 <span class="text-sm text-gray-500 dark:text-gray-400">500</span>
                             </div>
                         </div>
                         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
                             <p class="text-2xl font-semibold text-gray-900 dark:text-white mb-3">가나다 Aa</p>
                             <div class="flex items-center justify-between">
-                                <code class="text-sm font-mono text-violet-600 dark:text-violet-400">font-semibold</code>
+                                <code class="text-sm font-mono text-primary-600 dark:text-primary-400">font-semibold</code>
                                 <span class="text-sm text-gray-500 dark:text-gray-400">600</span>
                             </div>
                         </div>
                         <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
                             <p class="text-2xl font-bold text-gray-900 dark:text-white mb-3">가나다 Aa</p>
                             <div class="flex items-center justify-between">
-                                <code class="text-sm font-mono text-violet-600 dark:text-violet-400">font-bold</code>
+                                <code class="text-sm font-mono text-primary-600 dark:text-primary-400">font-bold</code>
                                 <span class="text-sm text-gray-500 dark:text-gray-400">700</span>
                             </div>
                         </div>
@@ -352,50 +344,50 @@
                         <div class="divide-y divide-gray-200 dark:divide-gray-700">
                             <div class="p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                                 <div class="sm:w-32">
-                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Primary</span>
+                                    <span class="text-xs font-medium text-base-500 dark:text-base-400 uppercase tracking-wider">Primary</span>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-lg text-gray-900 dark:text-white">주요 텍스트에 사용합니다</p>
+                                    <p class="text-lg text-base-900 dark:text-white">주요 텍스트에 사용합니다</p>
                                 </div>
                                 <div class="flex flex-col gap-1 text-sm font-mono">
-                                    <span class="text-gray-600 dark:text-gray-400">text-gray-900</span>
-                                    <span class="text-gray-500">dark:text-white</span>
+                                    <span class="text-base-600 dark:text-base-400">text-base-900</span>
+                                    <span class="text-base-500">dark:text-white</span>
                                 </div>
                             </div>
                             <div class="p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                                 <div class="sm:w-32">
-                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Secondary</span>
+                                    <span class="text-xs font-medium text-base-500 dark:text-base-400 uppercase tracking-wider">Secondary</span>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-lg text-gray-600 dark:text-gray-400">보조 텍스트에 사용합니다</p>
+                                    <p class="text-lg text-base-600 dark:text-base-400">보조 텍스트에 사용합니다</p>
                                 </div>
                                 <div class="flex flex-col gap-1 text-sm font-mono">
-                                    <span class="text-gray-600 dark:text-gray-400">text-gray-600</span>
-                                    <span class="text-gray-500">dark:text-gray-400</span>
+                                    <span class="text-base-600 dark:text-base-400">text-base-600</span>
+                                    <span class="text-base-500">dark:text-base-400</span>
                                 </div>
                             </div>
                             <div class="p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                                 <div class="sm:w-32">
-                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Tertiary</span>
+                                    <span class="text-xs font-medium text-base-500 dark:text-base-400 uppercase tracking-wider">Tertiary</span>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-lg text-gray-500 dark:text-gray-500">힌트, 플레이스홀더에 사용합니다</p>
+                                    <p class="text-lg text-base-500 dark:text-base-500">힌트, 플레이스홀더에 사용합니다</p>
                                 </div>
                                 <div class="flex flex-col gap-1 text-sm font-mono">
-                                    <span class="text-gray-600 dark:text-gray-400">text-gray-500</span>
-                                    <span class="text-gray-500">dark:text-gray-500</span>
+                                    <span class="text-base-600 dark:text-base-400">text-base-500</span>
+                                    <span class="text-base-500">dark:text-base-500</span>
                                 </div>
                             </div>
                             <div class="p-5 flex flex-col sm:flex-row sm:items-center gap-4">
                                 <div class="sm:w-32">
-                                    <span class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Accent</span>
+                                    <span class="text-xs font-medium text-base-500 dark:text-base-400 uppercase tracking-wider">Accent</span>
                                 </div>
                                 <div class="flex-1">
-                                    <p class="text-lg text-violet-600 dark:text-violet-400">강조에 사용합니다</p>
+                                    <p class="text-lg text-primary-600 dark:text-primary-400">강조에 사용합니다</p>
                                 </div>
                                 <div class="flex flex-col gap-1 text-sm font-mono">
-                                    <span class="text-gray-600 dark:text-gray-400">text-violet-600</span>
-                                    <span class="text-gray-500">dark:text-violet-400</span>
+                                    <span class="text-base-600 dark:text-base-400">text-primary-600</span>
+                                    <span class="text-base-500">dark:text-primary-400</span>
                                 </div>
                             </div>
                         </div>

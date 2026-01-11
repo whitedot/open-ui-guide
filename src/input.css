@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind v4: 소스 파일 경로 설정 */
+@source "../**/*.html";
+
 /* Tailwind v4: class 기반 다크모드 설정 */
 @variant dark (&:where(.dark, .dark *));
 
