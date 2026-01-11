@@ -4,6 +4,69 @@
 @variant dark (&:where(.dark, .dark *));
 
 /* ============================================
+   Design Token - Color Aliases
+   베이스/프라이머리 색상을 변경하려면 여기만 수정
+
+   사용법:
+   - bg-base-100, text-base-900, border-base-200
+   - bg-primary-600, text-primary-400, border-primary-300
+   ============================================ */
+
+@theme {
+  /* Base Color = Gray (Tailwind gray 팔레트 사용) */
+  --color-base-50: #f9fafb;
+  --color-base-100: #f3f4f6;
+  --color-base-200: #e5e7eb;
+  --color-base-300: #d1d5db;
+  --color-base-400: #9ca3af;
+  --color-base-500: #6b7280;
+  --color-base-600: #4b5563;
+  --color-base-700: #374151;
+  --color-base-800: #1f2937;
+  --color-base-900: #111827;
+  --color-base-950: #030712;
+
+  /* Primary Color = Violet (Tailwind violet 팔레트 사용) */
+  --color-primary-50: #f5f3ff;
+  --color-primary-100: #ede9fe;
+  --color-primary-200: #ddd6fe;
+  --color-primary-300: #c4b5fd;
+  --color-primary-400: #a78bfa;
+  --color-primary-500: #8b5cf6;
+  --color-primary-600: #7c3aed;
+  --color-primary-700: #6d28d9;
+  --color-primary-800: #5b21b6;
+  --color-primary-900: #4c1d95;
+  --color-primary-950: #2e1065;
+}
+
+/* ============================================
+   Semantic Color Variables
+   시맨틱 컬러를 변경하려면 여기만 수정
+   ============================================ */
+:root {
+  /* Success = Emerald */
+  --semantic-success: theme(colors.emerald.500);
+  --semantic-success-light: theme(colors.emerald.600);
+  --semantic-success-dark: theme(colors.emerald.400);
+
+  /* Warning = Amber */
+  --semantic-warning: theme(colors.amber.500);
+  --semantic-warning-light: theme(colors.amber.600);
+  --semantic-warning-dark: theme(colors.amber.400);
+
+  /* Error = Red */
+  --semantic-error: theme(colors.red.500);
+  --semantic-error-light: theme(colors.red.600);
+  --semantic-error-dark: theme(colors.red.400);
+
+  /* Info = Blue */
+  --semantic-info: theme(colors.blue.500);
+  --semantic-info-light: theme(colors.blue.600);
+  --semantic-info-dark: theme(colors.blue.400);
+}
+
+/* ============================================
    Open UI Guide - Component Classes
    ============================================ */
 
@@ -116,6 +179,35 @@
   }
 
   /* ============================================
+     Semantic Color Utilities
+     :root의 시맨틱 변수를 사용하는 유틸리티 클래스
+     ============================================ */
+
+  /* === Success === */
+  .text-success { color: var(--semantic-success-light); }
+  .dark .text-success { color: var(--semantic-success-dark); }
+  .bg-success { background-color: var(--semantic-success); }
+  .border-success { border-color: var(--semantic-success); }
+
+  /* === Warning === */
+  .text-warning { color: var(--semantic-warning-light); }
+  .dark .text-warning { color: var(--semantic-warning-dark); }
+  .bg-warning { background-color: var(--semantic-warning); }
+  .border-warning { border-color: var(--semantic-warning); }
+
+  /* === Error === */
+  .text-error { color: var(--semantic-error-light); }
+  .dark .text-error { color: var(--semantic-error-dark); }
+  .bg-error { background-color: var(--semantic-error); }
+  .border-error { border-color: var(--semantic-error); }
+
+  /* === Info === */
+  .text-info { color: var(--semantic-info-light); }
+  .dark .text-info { color: var(--semantic-info-dark); }
+  .bg-info { background-color: var(--semantic-info); }
+  .border-info { border-color: var(--semantic-info); }
+
+  /* ============================================
      Link Component
      ============================================ */
 
@@ -147,9 +239,12 @@
   .input-xl { @apply h-12 px-4 text-lg rounded-xl; }
 
   /* === Input States === */
-  .input-error { @apply border-red-500 focus:ring-red-500; }
-  .input-success { @apply border-emerald-500 focus:ring-emerald-500; }
-  .input-warning { @apply border-amber-500 focus:ring-amber-500; }
+  .input-error { border-color: var(--semantic-error); }
+  .input-error:focus { --tw-ring-color: var(--semantic-error); }
+  .input-success { border-color: var(--semantic-success); }
+  .input-success:focus { --tw-ring-color: var(--semantic-success); }
+  .input-warning { border-color: var(--semantic-warning); }
+  .input-warning:focus { --tw-ring-color: var(--semantic-warning); }
   .input-disabled { @apply bg-gray-50 dark:bg-gray-900 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50; }
 
   /* === Input Label === */
@@ -157,8 +252,10 @@
 
   /* === Input Helper === */
   .input-helper { @apply mt-1.5 text-sm text-gray-500 dark:text-gray-400; }
-  .input-helper-error { @apply mt-1.5 text-sm text-red-600 dark:text-red-400; }
-  .input-helper-success { @apply mt-1.5 text-sm text-emerald-600 dark:text-emerald-400; }
+  .input-helper-error { @apply mt-1.5 text-sm; color: var(--semantic-error-light); }
+  .dark .input-helper-error { color: var(--semantic-error-dark); }
+  .input-helper-success { @apply mt-1.5 text-sm; color: var(--semantic-success-light); }
+  .dark .input-helper-success { color: var(--semantic-success-dark); }
 
   /* === Input Full Width === */
   .input-full { @apply w-full; }
@@ -213,4 +310,20 @@
   /* === Input Rounded Overrides === */
   .input-rounded-l-none { @apply rounded-l-none; }
   .input-rounded-r-none { @apply rounded-r-none; }
+
+  /* === Input Icon Colors === */
+  .input-icon-success { color: var(--semantic-success); }
+  .input-icon-error { color: var(--semantic-error); }
+  .input-icon-warning { color: var(--semantic-warning); }
+  .input-icon-btn { @apply hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer; }
+
+  /* === Input Helper Warning === */
+  .input-helper-warning { @apply mt-1.5 text-sm; color: var(--semantic-warning-light); }
+  .dark .input-helper-warning { color: var(--semantic-warning-dark); }
+  .input-helper-with-icon { @apply flex items-center gap-1; }
+
+  /* === Label Modifiers === */
+  .input-label-required { color: var(--semantic-error); }
+  .input-label-optional { @apply text-gray-400 dark:text-gray-500 font-normal; }
+
 }
