@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comment Section - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Organisms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Comment Section</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Comment Section</h1>
+                    <p class="text-gray-600 dark:text-gray-400">사용자 간 의견 교환을 위한 댓글 영역 컴포넌트입니다. 블로그, 게시판, 소셜 미디어 등에서 활용됩니다.</p>
+                </div>
+
+                <!-- Anatomy -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Anatomy</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Comment Section은 댓글 작성 영역과 댓글 목록으로 구성됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-4">
+                            <!-- Comment Input Area -->
+                            <div class="border-2 border-dashed border-violet-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-xs font-medium rounded">
+                                    1. Comment Input
+                                </span>
+                                <div class="flex gap-3">
+                                    <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex-shrink-0"></div>
+                                    <div class="flex-1">
+                                        <div class="h-20 bg-gray-100 dark:bg-gray-700 rounded-lg mb-3"></div>
+                                        <div class="flex justify-end">
+                                            <div class="w-20 h-8 bg-violet-200 dark:bg-violet-900/30 rounded-lg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Comment Item -->
+                            <div class="border-2 border-dashed border-blue-400 rounded-lg p-4 relative">
+                                <span class="absolute -top-3 left-4 px-2 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded">
+                                    2. Comment Item
+                                </span>
+                                <div class="flex gap-3">
+                                    <!-- Avatar -->
+                                    <div class="border-2 border-dashed border-emerald-400 rounded-full p-1 relative">
+                                        <span class="absolute -top-5 left-0 px-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-[10px] font-medium rounded whitespace-nowrap">
+                                            2a. Avatar
+                                        </span>
+                                        <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <!-- Header -->
+                                        <div class="border-2 border-dashed border-amber-400 rounded p-2 mb-2 relative">
+                                            <span class="absolute -top-3 left-2 px-1 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-[10px] font-medium rounded">
+                                                2b. Meta
+                                            </span>
+                                            <div class="flex items-center gap-2">
+                                                <div class="w-20 h-4 bg-gray-300 dark:bg-gray-600 rounded"></div>
+                                                <div class="w-16 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            </div>
+                                        </div>
+                                        <!-- Content -->
+                                        <div class="border-2 border-dashed border-pink-400 rounded p-2 mb-2 relative">
+                                            <span class="absolute -top-3 left-2 px-1 bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400 text-[10px] font-medium rounded">
+                                                2c. Content
+                                            </span>
+                                            <div class="space-y-1">
+                                                <div class="w-full h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                                <div class="w-3/4 h-3 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            </div>
+                                        </div>
+                                        <!-- Actions -->
+                                        <div class="border-2 border-dashed border-cyan-400 rounded p-2 relative">
+                                            <span class="absolute -top-3 left-2 px-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-600 dark:text-cyan-400 text-[10px] font-medium rounded">
+                                                2d. Actions
+                                            </span>
+                                            <div class="flex items-center gap-4">
+                                                <div class="w-12 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                                <div class="w-12 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                                <div class="w-12 h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                            <div class="p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
+                                <h4 class="font-medium text-violet-700 dark:text-violet-300 mb-1">1. Comment Input</h4>
+                                <p class="text-violet-600/80 dark:text-violet-400/80">새 댓글 작성 영역</p>
+                            </div>
+                            <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                                <h4 class="font-medium text-emerald-700 dark:text-emerald-300 mb-1">2a. Avatar</h4>
+                                <p class="text-emerald-600/80 dark:text-emerald-400/80">작성자 프로필 이미지</p>
+                            </div>
+                            <div class="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                                <h4 class="font-medium text-amber-700 dark:text-amber-300 mb-1">2b. Meta</h4>
+                                <p class="text-amber-600/80 dark:text-amber-400/80">작성자명, 작성 시간</p>
+                            </div>
+                            <div class="p-4 bg-pink-50 dark:bg-pink-900/20 rounded-lg">
+                                <h4 class="font-medium text-pink-700 dark:text-pink-300 mb-1">2c. Content</h4>
+                                <p class="text-pink-600/80 dark:text-pink-400/80">댓글 본문 내용</p>
+                            </div>
+                            <div class="p-4 bg-cyan-50 dark:bg-cyan-900/20 rounded-lg">
+                                <h4 class="font-medium text-cyan-700 dark:text-cyan-300 mb-1">2d. Actions</h4>
+                                <p class="text-cyan-600/80 dark:text-cyan-400/80">좋아요, 답글, 더보기</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Basic Comment Section -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic Comment Section</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">기본적인 댓글 섹션 구조입니다. 댓글 입력과 댓글 목록을 포함합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="max-w-2xl mx-auto">
+                                <!-- Comment Count -->
+                                <div class="flex items-center gap-2 mb-6">
+                                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">댓글</h3>
+                                    <span class="px-2 py-0.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 text-sm font-medium rounded-full">3</span>
+                                </div>
+
+                                <!-- Comment Input -->
+                                <div class="flex gap-3 mb-8">
+                                    <img src="https://i.pravatar.cc/40?img=1" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                    <div class="flex-1">
+                                        <textarea placeholder="댓글을 입력하세요..." class="w-full px-4 py-3 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 resize-none focus:ring-2 focus:ring-violet-500 focus:border-transparent" rows="3"></textarea>
+                                        <div class="flex justify-end mt-3">
+                                            <button class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                                댓글 작성
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Comment List -->
+                                <div class="space-y-6">
+                                    <!-- Comment 1 -->
+                                    <div class="flex gap-3">
+                                        <img src="https://i.pravatar.cc/40?img=12" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="font-medium text-gray-900 dark:text-white">김민수</span>
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">2시간 전</span>
+                                            </div>
+                                            <p class="text-gray-600 dark:text-gray-400 mb-2">정말 유용한 가이드네요! 디자인 시스템 구축할 때 많은 도움이 될 것 같습니다.</p>
+                                            <div class="flex items-center gap-4 text-sm">
+                                                <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                    </svg>
+                                                    <span>12</span>
+                                                </button>
+                                                <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    답글
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Comment 2 -->
+                                    <div class="flex gap-3">
+                                        <img src="https://i.pravatar.cc/40?img=25" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="font-medium text-gray-900 dark:text-white">이지은</span>
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">5시간 전</span>
+                                            </div>
+                                            <p class="text-gray-600 dark:text-gray-400 mb-2">Tailwind CSS와 함께 사용하니까 개발 속도가 확 빨라졌어요.</p>
+                                            <div class="flex items-center gap-4 text-sm">
+                                                <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                    </svg>
+                                                    <span>8</span>
+                                                </button>
+                                                <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    답글
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Comment 3 -->
+                                    <div class="flex gap-3">
+                                        <img src="https://i.pravatar.cc/40?img=33" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                        <div class="flex-1">
+                                            <div class="flex items-center gap-2 mb-1">
+                                                <span class="font-medium text-gray-900 dark:text-white">박정호</span>
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">1일 전</span>
+                                            </div>
+                                            <p class="text-gray-600 dark:text-gray-400 mb-2">다크모드 지원도 깔끔하게 되어있네요. 👍</p>
+                                            <div class="flex items-center gap-4 text-sm">
+                                                <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                    </svg>
+                                                    <span>5</span>
+                                                </button>
+                                                <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                    답글
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Comment Section --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"space-y-6"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Comment Input --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">src</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar.jpg"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-10 h-10 rounded-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full px-4 py-3 border rounded-lg ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"px-4 py-2 bg-violet-600 text-white rounded-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>댓글 작성<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Comment Item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">src</span>=<span class="text-emerald-600 dark:text-emerald-400">"user.jpg"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-10 h-10 rounded-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-2 mb-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"font-medium text-gray-900"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>사용자명<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>2시간 전<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-600 mb-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>댓글 내용<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-4 text-sm"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;button&gt;</span>좋아요<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;button&gt;</span>답글<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Nested Comments (Replies) -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Nested Comments (Replies)</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">답글 기능이 포함된 중첩 댓글 구조입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="max-w-2xl mx-auto space-y-6">
+                                <!-- Parent Comment -->
+                                <div class="flex gap-3">
+                                    <img src="https://i.pravatar.cc/40?img=15" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                    <div class="flex-1">
+                                        <div class="flex items-center gap-2 mb-1">
+                                            <span class="font-medium text-gray-900 dark:text-white">최영희</span>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">3시간 전</span>
+                                        </div>
+                                        <p class="text-gray-600 dark:text-gray-400 mb-2">컴포넌트 구조가 정말 잘 정리되어 있네요. 한 가지 질문이 있는데, 모바일 반응형은 어떻게 처리하나요?</p>
+                                        <div class="flex items-center gap-4 text-sm mb-4">
+                                            <button class="flex items-center gap-1 text-violet-600 dark:text-violet-400">
+                                                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                                                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                                </svg>
+                                                <span>24</span>
+                                            </button>
+                                            <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                답글 2개
+                                            </button>
+                                        </div>
+
+                                        <!-- Replies -->
+                                        <div class="space-y-4 pl-4 border-l-2 border-gray-200 dark:border-gray-700">
+                                            <!-- Reply 1 -->
+                                            <div class="flex gap-3">
+                                                <img src="https://i.pravatar.cc/32?img=8" alt="User" class="w-8 h-8 rounded-full flex-shrink-0">
+                                                <div class="flex-1">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <span class="font-medium text-gray-900 dark:text-white text-sm">관리자</span>
+                                                        <span class="px-1.5 py-0.5 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-xs font-medium rounded">Author</span>
+                                                        <span class="text-xs text-gray-500 dark:text-gray-400">2시간 전</span>
+                                                    </div>
+                                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">좋은 질문이에요! Tailwind의 반응형 유틸리티 클래스(sm:, md:, lg:)를 활용하면 됩니다. 각 컴포넌트 페이지에서 반응형 예시도 확인해보세요.</p>
+                                                    <div class="flex items-center gap-4 text-sm">
+                                                        <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                            </svg>
+                                                            <span>15</span>
+                                                        </button>
+                                                        <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                            답글
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Reply 2 -->
+                                            <div class="flex gap-3">
+                                                <img src="https://i.pravatar.cc/32?img=15" alt="User" class="w-8 h-8 rounded-full flex-shrink-0">
+                                                <div class="flex-1">
+                                                    <div class="flex items-center gap-2 mb-1">
+                                                        <span class="font-medium text-gray-900 dark:text-white text-sm">최영희</span>
+                                                        <span class="text-xs text-gray-500 dark:text-gray-400">1시간 전</span>
+                                                    </div>
+                                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">감사합니다! 바로 확인해볼게요 😊</p>
+                                                    <div class="flex items-center gap-4 text-sm">
+                                                        <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                            </svg>
+                                                            <span>3</span>
+                                                        </button>
+                                                        <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                            답글
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Nested Structure</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Parent Comment --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-10 h-10 rounded-full"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Comment content --&gt;</span>
+
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Replies container --&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"space-y-4 pl-4 border-l-2 border-gray-200 dark:border-gray-700"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-gray-500 dark:text-gray-400">&lt;!-- Reply (smaller avatar) --&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-8 h-8 rounded-full"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Comment with Actions Menu -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Comment with Actions Menu</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">수정, 삭제 등의 추가 액션이 포함된 댓글입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="max-w-2xl mx-auto">
+                                <div class="flex gap-3">
+                                    <img src="https://i.pravatar.cc/40?img=1" alt="User" class="w-10 h-10 rounded-full flex-shrink-0">
+                                    <div class="flex-1">
+                                        <div class="flex items-center justify-between mb-1">
+                                            <div class="flex items-center gap-2">
+                                                <span class="font-medium text-gray-900 dark:text-white">나</span>
+                                                <span class="text-sm text-gray-500 dark:text-gray-400">방금 전</span>
+                                            </div>
+                                            <!-- Actions Menu -->
+                                            <div class="relative">
+                                                <button onclick="toggleDropdown('commentMenu1')" class="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"/>
+                                                    </svg>
+                                                </button>
+                                                <!-- Dropdown -->
+                                                <div id="commentMenu1" class="hidden absolute right-0 mt-1 w-32 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-10">
+                                                    <button class="w-full px-4 py-2 text-left text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                        수정
+                                                    </button>
+                                                    <button class="w-full px-4 py-2 text-left text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                                        삭제
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="text-gray-600 dark:text-gray-400 mb-2">내가 작성한 댓글입니다. 수정하거나 삭제할 수 있습니다.</p>
+                                        <div class="flex items-center gap-4 text-sm">
+                                            <button class="flex items-center gap-1 text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                </svg>
+                                                <span>0</span>
+                                            </button>
+                                            <button class="text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors">
+                                                답글
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Actions Menu</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Actions Menu Button --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"p-1 text-gray-400 hover:bg-gray-100 rounded"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Dots icon --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Dropdown Menu --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute right-0 mt-1 w-32 bg-white rounded-lg shadow-lg border py-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full px-4 py-2 text-left text-sm hover:bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>수정<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>삭제<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Compact Style -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Compact Style</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">공간이 제한된 환경에서 사용하는 간결한 댓글 스타일입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-4">
+                                <h4 class="text-sm font-medium text-gray-900 dark:text-white mb-3">댓글 (5)</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-start gap-2">
+                                        <img src="https://i.pravatar.cc/24?img=5" alt="User" class="w-6 h-6 rounded-full flex-shrink-0">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                <span class="font-medium text-gray-900 dark:text-white">user1</span>
+                                                좋은 글이네요!
+                                            </p>
+                                        </div>
+                                        <span class="text-xs text-gray-400 flex-shrink-0">1h</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <img src="https://i.pravatar.cc/24?img=10" alt="User" class="w-6 h-6 rounded-full flex-shrink-0">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                <span class="font-medium text-gray-900 dark:text-white">designer_kim</span>
+                                                참고하겠습니다 👍
+                                            </p>
+                                        </div>
+                                        <span class="text-xs text-gray-400 flex-shrink-0">2h</span>
+                                    </div>
+                                    <div class="flex items-start gap-2">
+                                        <img src="https://i.pravatar.cc/24?img=20" alt="User" class="w-6 h-6 rounded-full flex-shrink-0">
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                                <span class="font-medium text-gray-900 dark:text-white">dev_park</span>
+                                                유용한 정보 감사합니다
+                                            </p>
+                                        </div>
+                                        <span class="text-xs text-gray-400 flex-shrink-0">3h</span>
+                                    </div>
+                                </div>
+                                <div class="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                    <div class="flex gap-2">
+                                        <input type="text" placeholder="댓글 추가..." class="flex-1 px-3 py-1.5 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent">
+                                        <button class="px-3 py-1.5 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                            게시
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Empty & Loading States -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Empty & Loading States</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">댓글이 없거나 로딩 중일 때의 상태입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <!-- Empty State -->
+                                <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-8">
+                                    <div class="text-center">
+                                        <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-4">
+                                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                            </svg>
+                                        </div>
+                                        <h4 class="font-medium text-gray-900 dark:text-white mb-1">아직 댓글이 없습니다</h4>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400">첫 번째 댓글을 작성해보세요!</p>
+                                    </div>
+                                </div>
+
+                                <!-- Loading State -->
+                                <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                                    <div class="space-y-4 animate-pulse">
+                                        <div class="flex gap-3">
+                                            <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                                            </div>
+                                        </div>
+                                        <div class="flex gap-3">
+                                            <div class="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full"></div>
+                                            <div class="flex-1 space-y-2">
+                                                <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3"></div>
+                                                <div class="h-3 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Labels -->
+                        <div class="border-t border-gray-200 dark:border-gray-700 p-4 bg-gray-50 dark:bg-gray-900">
+                            <div class="grid grid-cols-2 gap-4 text-sm text-center">
+                                <span class="text-gray-600 dark:text-gray-400">Empty State</span>
+                                <span class="text-gray-600 dark:text-gray-400">Loading State (Skeleton)</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 작성자 정보와 시간을 명확히 표시하세요</li>
+                                    <li>• 답글은 시각적 계층을 통해 구분하세요</li>
+                                    <li>• 좋아요, 답글 등 기본 인터랙션을 제공하세요</li>
+                                    <li>• 작성자 본인에게만 수정/삭제 옵션을 표시하세요</li>
+                                    <li>• 빈 상태에서 행동을 유도하는 메시지를 표시하세요</li>
+                                    <li>• 로딩 중에는 스켈레톤 UI를 사용하세요</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 답글을 너무 깊게 중첩하지 마세요 (2~3단계 권장)</li>
+                                    <li>• 모든 사용자에게 수정/삭제 권한을 주지 마세요</li>
+                                    <li>• 긴 댓글을 잘라서 표시할 때 "더보기"를 생략하지 마세요</li>
+                                    <li>• 아바타 이미지 없이 텍스트만 표시하지 마세요</li>
+                                    <li>• 작성 시간을 생략하지 마세요</li>
+                                    <li>• 댓글 수를 표시하지 않으면 참여도 파악이 어렵습니다</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Dropdown Toggle Script -->
+    <script>
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            const isHidden = dropdown.classList.contains('hidden');
+
+            // Close all dropdowns first
+            document.querySelectorAll('[id^="commentMenu"]').forEach(el => {
+                el.classList.add('hidden');
+            });
+
+            // Toggle the clicked dropdown
+            if (isHidden) {
+                dropdown.classList.remove('hidden');
+            }
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.relative')) {
+                document.querySelectorAll('[id^="commentMenu"]').forEach(el => {
+                    el.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+
+    <!-- Dark Mode & Sidebar Scripts -->
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
+
+    <!-- Menu Script -->
+    <script src="../js/menu.js"></script>
+</body>
+</html>
