@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Tailwind v4: class 기반 다크모드 설정 */
+@variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   Open UI Guide - Component Classes
+   ============================================ */
+
+@layer components {
+  /* ============================================
+     Button Component
+     ============================================ */
+
+  /* === Button Base === */
+  .btn {
+    @apply inline-flex items-center justify-center font-medium transition-colors;
+  }
+
+  /* === Button Sizes === */
+  .btn-xs { @apply h-7 px-2.5 text-xs rounded; }
+  .btn-sm { @apply h-8 px-3 text-sm rounded-md; }
+  .btn-md { @apply h-10 px-4 text-sm rounded-lg; }
+  .btn-lg { @apply h-11 px-5 text-base rounded-lg; }
+  .btn-xl { @apply h-12 px-6 text-lg rounded-xl; }
+
+  /* === Base Color (권장 기본값) === */
+  .btn-base-primary {
+    @apply bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white;
+  }
+  .btn-base-secondary {
+    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white;
+  }
+  .btn-base-tertiary {
+    @apply hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300;
+  }
+  .btn-base-outline {
+    @apply border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300;
+  }
+  .btn-base-ghost {
+    @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white;
+  }
+
+  /* === Primary Color (CTA용) === */
+  .btn-primary-primary {
+    @apply bg-violet-600 hover:bg-violet-700 text-white;
+  }
+  .btn-primary-secondary {
+    @apply bg-violet-100 hover:bg-violet-200 dark:bg-violet-900/30 dark:hover:bg-violet-900/50 text-violet-700 dark:text-violet-300;
+  }
+  .btn-primary-tertiary {
+    @apply hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400;
+  }
+  .btn-primary-outline {
+    @apply border border-violet-300 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400;
+  }
+  .btn-primary-ghost {
+    @apply text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300;
+  }
+
+  /* === Semantic Colors === */
+  .btn-success { @apply bg-emerald-600 hover:bg-emerald-700 text-white; }
+  .btn-danger { @apply bg-red-600 hover:bg-red-700 text-white; }
+
+  /* === Icon Only === */
+  .btn-icon { @apply w-10 justify-center px-0; }
+  .btn-icon-xs { @apply w-7; }
+  .btn-icon-sm { @apply w-8; }
+  .btn-icon-lg { @apply w-11; }
+  .btn-icon-xl { @apply w-12; }
+  .btn-icon-circle { @apply rounded-full; }
+
+  /* === States === */
+  .btn-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  .btn-loading {
+    @apply cursor-wait;
+  }
+
+  /* === Full Width === */
+  .btn-full {
+    @apply w-full;
+  }
+}

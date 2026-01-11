@@ -1,0 +1,14 @@
+{
+  "name": "open-ui-guide",
+  "version": "1.0.0",
+  "description": "Tailwind CSS 기반의 UI 디자인 시스템 가이드",
+  "scripts": {
+    "build:css": "tailwindcss -i ./src/input.css -o ./dist/output.css",
+    "watch:css": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch",
+    "build:css:min": "tailwindcss -i ./src/input.css -o ./dist/output.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "^4.0.0",
+    "@tailwindcss/cli": "^4.0.0"
+  }
+}
