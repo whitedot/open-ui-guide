@@ -5,45 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Input - Open UI Guide</title>
 
-    <!-- Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {}
-            }
-        }
-    </script>
+    <!-- Tailwind CSS v4 빌드 출력 -->
+    <link rel="stylesheet" href="../dist/output.css">
 
     <!-- Pretendard 폰트 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
     <style>
         body {
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-    </style>
-    <style type="text/tailwindcss">
-        @layer components {
-            /* Input Base */
-            .input { @apply bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors; }
-            /* Input Sizes */
-            .input-xs { @apply h-7 px-2.5 text-xs rounded; }
-            .input-sm { @apply h-8 px-3 text-sm rounded-md; }
-            .input-md { @apply h-10 px-3 text-sm rounded-lg; }
-            .input-lg { @apply h-11 px-4 text-base rounded-lg; }
-            .input-xl { @apply h-12 px-4 text-lg rounded-xl; }
-            /* Input States */
-            .input-error { @apply border-red-500 focus:ring-red-500; }
-            .input-success { @apply border-emerald-500 focus:ring-emerald-500; }
-            .input-warning { @apply border-amber-500 focus:ring-amber-500; }
-            .input-disabled { @apply bg-gray-50 dark:bg-gray-900 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50; }
-            /* Input Label */
-            .input-label { @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2; }
-            /* Input Helper */
-            .input-helper { @apply mt-1.5 text-sm text-gray-500 dark:text-gray-400; }
-            .input-helper-error { @apply mt-1.5 text-sm text-red-600 dark:text-red-400; }
-            .input-helper-success { @apply mt-1.5 text-sm text-emerald-600 dark:text-emerald-400; }
         }
     </style>
 
@@ -212,43 +181,43 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Text -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Text</label>
-                                <input type="text" placeholder="일반 텍스트 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Text</label>
+                                <input type="text" placeholder="일반 텍스트 입력" class="input input-md input-full">
                             </div>
                             <!-- Email -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                                <input type="email" placeholder="example@email.com" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Email</label>
+                                <input type="email" placeholder="example@email.com" class="input input-md input-full">
                             </div>
                             <!-- Password -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
-                                <input type="password" placeholder="비밀번호 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Password</label>
+                                <input type="password" placeholder="비밀번호 입력" class="input input-md input-full">
                             </div>
                             <!-- Number -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Number</label>
-                                <input type="number" placeholder="숫자 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Number</label>
+                                <input type="number" placeholder="숫자 입력" class="input input-md input-full">
                             </div>
                             <!-- Tel -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tel</label>
-                                <input type="tel" placeholder="010-1234-5678" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Tel</label>
+                                <input type="tel" placeholder="010-1234-5678" class="input input-md input-full">
                             </div>
                             <!-- URL -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">URL</label>
-                                <input type="url" placeholder="https://example.com" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">URL</label>
+                                <input type="url" placeholder="https://example.com" class="input input-md input-full">
                             </div>
                             <!-- Search -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search</label>
-                                <input type="search" placeholder="검색어 입력" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Search</label>
+                                <input type="search" placeholder="검색어 입력" class="input input-md input-full">
                             </div>
                             <!-- Date -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Date</label>
-                                <input type="date" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Date</label>
+                                <input type="date" class="input input-md input-full">
                             </div>
                         </div>
                         <!-- Code Reference -->
@@ -261,16 +230,18 @@
                                     <span class="w-3 h-3 rounded-full bg-green-400"></span>
                                 </div>
                             </div>
-                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"text"</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">"..."</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Label + Input 기본 패턴 --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-label"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>Text<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"text"</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">"..."</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- 다른 타입들 --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"email"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"password"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"number"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"tel"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"url"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"search"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"date"</span> ...<span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"email"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"password"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"number"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"tel"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"url"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"search"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">type</span>=<span class="text-emerald-600 dark:text-emerald-400">"date"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
                         </div>
                     </div>
                 </section>
@@ -284,27 +255,27 @@
                             <!-- XS -->
                             <div class="flex items-center gap-4">
                                 <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">xs</span>
-                                <input type="text" placeholder="Extra Small" class="flex-1 max-w-xs h-7 px-2.5 text-xs bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="Extra Small" class="input input-xs flex-1 max-w-xs">
                             </div>
                             <!-- SM -->
                             <div class="flex items-center gap-4">
                                 <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">sm</span>
-                                <input type="text" placeholder="Small" class="flex-1 max-w-xs h-8 px-3 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-md text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="Small" class="input input-sm flex-1 max-w-xs">
                             </div>
                             <!-- MD -->
                             <div class="flex items-center gap-4">
                                 <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">md</span>
-                                <input type="text" placeholder="Medium (Default)" class="flex-1 max-w-xs h-10 px-3 text-sm bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="Medium (Default)" class="input input-md flex-1 max-w-xs">
                             </div>
                             <!-- LG -->
                             <div class="flex items-center gap-4">
                                 <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">lg</span>
-                                <input type="text" placeholder="Large" class="flex-1 max-w-xs h-11 px-4 text-base bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="Large" class="input input-lg flex-1 max-w-xs">
                             </div>
                             <!-- XL -->
                             <div class="flex items-center gap-4">
                                 <span class="w-20 text-sm font-medium text-gray-500 dark:text-gray-400">xl</span>
-                                <input type="text" placeholder="Extra Large" class="flex-1 max-w-xs h-12 px-4 text-lg bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-xl text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="Extra Large" class="input input-xl flex-1 max-w-xs">
                             </div>
                         </div>
                         <!-- Size Specs Table -->
@@ -369,33 +340,33 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
                             <!-- Default -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default</label>
-                                <input type="text" placeholder="기본 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Default</label>
+                                <input type="text" placeholder="기본 상태" class="input input-md input-full">
                             </div>
                             <!-- Hover (simulated) -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Hover</label>
-                                <input type="text" placeholder="호버 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-400 dark:border-gray-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 transition-colors">
+                                <label class="input-label">Hover</label>
+                                <input type="text" placeholder="호버 상태" class="input input-md input-full border-gray-400 dark:border-gray-500">
                             </div>
                             <!-- Focus (simulated) -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Focus</label>
-                                <input type="text" placeholder="포커스 상태" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border-transparent rounded-lg text-gray-900 dark:text-white placeholder-gray-400 ring-2 ring-violet-500">
+                                <label class="input-label">Focus</label>
+                                <input type="text" placeholder="포커스 상태" class="input input-md input-full border-transparent ring-2 ring-violet-500">
                             </div>
                             <!-- Filled -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filled</label>
-                                <input type="text" value="입력된 값" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Filled</label>
+                                <input type="text" value="입력된 값" class="input input-md input-full">
                             </div>
                             <!-- Disabled -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disabled</label>
-                                <input type="text" placeholder="비활성화" disabled class="w-full h-10 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-400 dark:text-gray-500 placeholder-gray-300 dark:placeholder-gray-600 cursor-not-allowed opacity-50">
+                                <label class="input-label">Disabled</label>
+                                <input type="text" placeholder="비활성화" disabled class="input input-md input-disabled input-full">
                             </div>
                             <!-- Read-only -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Read-only</label>
-                                <input type="text" value="읽기 전용 값" readonly class="w-full h-10 px-3 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-700 dark:text-gray-300 cursor-default">
+                                <label class="input-label">Read-only</label>
+                                <input type="text" value="읽기 전용 값" readonly class="input input-md input-full bg-gray-50 dark:bg-gray-900 text-gray-700 dark:text-gray-300 cursor-default">
                             </div>
                         </div>
                         <!-- Code Reference -->
@@ -431,9 +402,9 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                             <!-- Error -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Error</label>
-                                <input type="text" value="잘못된 값" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-red-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors">
-                                <p class="mt-1.5 text-sm text-red-600 dark:text-red-400 flex items-center gap-1">
+                                <label class="input-label">Error</label>
+                                <input type="text" value="잘못된 값" class="input input-md input-error input-full">
+                                <p class="input-helper-error flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
@@ -442,19 +413,19 @@
                             </div>
                             <!-- Success -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Success</label>
+                                <label class="input-label">Success</label>
                                 <div class="relative">
-                                    <input type="text" value="올바른 값" class="w-full h-10 px-3 pr-10 bg-white dark:bg-gray-900 border border-emerald-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <input type="text" value="올바른 값" class="input input-md input-success input-full pr-10">
                                     <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                 </div>
-                                <p class="mt-1.5 text-sm text-emerald-600 dark:text-emerald-400">확인되었습니다</p>
+                                <p class="input-helper-success">확인되었습니다</p>
                             </div>
                             <!-- Warning -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Warning</label>
-                                <input type="text" value="주의 필요" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-amber-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-colors">
+                                <label class="input-label">Warning</label>
+                                <input type="text" value="주의 필요" class="input input-md input-warning input-full">
                                 <p class="mt-1.5 text-sm text-amber-600 dark:text-amber-400 flex items-center gap-1">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
@@ -474,14 +445,15 @@
                                 </div>
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Error State --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-red-500 focus:ring-red-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-red-600"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>에러 메시지<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md <span class="text-amber-600 dark:text-amber-400 font-bold">input-error</span> input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-helper-error</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>에러 메시지<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Success State --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-emerald-500 focus:ring-emerald-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md <span class="text-amber-600 dark:text-amber-400 font-bold">input-success</span> input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-helper-success</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>성공 메시지<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Warning State --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">border-amber-500 focus:ring-amber-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md <span class="text-amber-600 dark:text-amber-400 font-bold">input-warning</span> input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span></code></pre>
                         </div>
                     </div>
                 </section>
@@ -497,28 +469,28 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Basic Label -->
                             <div>
-                                <label for="basic-input" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">이름</label>
-                                <input type="text" id="basic-input" placeholder="홍길동" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <label for="basic-input" class="input-label">이름</label>
+                                <input type="text" id="basic-input" placeholder="홍길동" class="input input-md input-full">
                             </div>
                             <!-- Required Label -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label class="input-label">
                                     이메일 <span class="text-red-500">*</span>
                                 </label>
-                                <input type="email" placeholder="example@email.com" required class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="email" placeholder="example@email.com" required class="input input-md input-full">
                             </div>
                             <!-- With Helper Text -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">비밀번호</label>
-                                <input type="password" placeholder="••••••••" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
-                                <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">8자 이상, 영문/숫자/특수문자 포함</p>
+                                <label class="input-label">비밀번호</label>
+                                <input type="password" placeholder="••••••••" class="input input-md input-full">
+                                <p class="input-helper">8자 이상, 영문/숫자/특수문자 포함</p>
                             </div>
                             <!-- Optional Label -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                                <label class="input-label">
                                     닉네임 <span class="text-gray-400 dark:text-gray-500 font-normal">(선택)</span>
                                 </label>
-                                <input type="text" placeholder="닉네임을 입력하세요" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="닉네임을 입력하세요" class="input input-md input-full">
                             </div>
                         </div>
                         <!-- Code Reference -->
@@ -532,16 +504,17 @@
                                 </div>
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Label --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">for</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-id"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block text-sm font-medium text-gray-700 mb-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">for</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-id"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-label</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input input-md input-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Required --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>이메일 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">text-red-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>*<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-label"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이메일 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">text-red-500</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>*<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Optional --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;label&gt;</span>닉네임 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-400 font-normal"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>(선택)<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"input-label"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>닉네임 <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-gray-400 font-normal"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>(선택)<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;&lt;/label&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Helper Text --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"mt-1.5 text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>도움말 텍스트<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span></code></pre>
+<span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-helper</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>도움말 텍스트<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span></code></pre>
                         </div>
                     </div>
 
@@ -553,20 +526,20 @@
                             <!-- Basic Inline -->
                             <div class="flex items-center gap-4">
                                 <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0">이름</label>
-                                <input type="text" placeholder="홍길동" class="flex-1 max-w-xs h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="text" placeholder="홍길동" class="input input-md flex-1 max-w-xs">
                             </div>
                             <!-- Inline with Required -->
                             <div class="flex items-center gap-4">
                                 <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0">
                                     이메일 <span class="text-red-500">*</span>
                                 </label>
-                                <input type="email" placeholder="example@email.com" class="flex-1 max-w-xs h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                <input type="email" placeholder="example@email.com" class="input input-md flex-1 max-w-xs">
                             </div>
                             <!-- Inline with Helper -->
                             <div class="flex items-start gap-4">
                                 <label class="w-24 text-sm font-medium text-gray-700 dark:text-gray-300 text-right flex-shrink-0 pt-2.5">비밀번호</label>
                                 <div class="flex-1 max-w-xs">
-                                    <input type="password" placeholder="••••••••" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="password" placeholder="••••••••" class="input input-md input-full">
                                     <p class="mt-1.5 text-xs text-gray-500 dark:text-gray-400">8자 이상 입력하세요</p>
                                 </div>
                             </div>
@@ -584,7 +557,7 @@
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Inline Layout --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">flex items-center gap-4</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-24 text-sm font-medium <span class="text-amber-600 dark:text-amber-400 font-bold">text-right flex-shrink-0</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이름<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 max-w-xs ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-md</span> flex-1 max-w-xs"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>
                     </div>
@@ -595,16 +568,16 @@
                         <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm">입력 시 레이블이 위로 이동하는 플로팅 레이블 패턴입니다.</p>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Floating Label - Empty -->
-                            <div class="relative">
-                                <input type="text" id="floatingInput1" placeholder=" " class="peer w-full h-12 px-3 pt-4 pb-1 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
-                                <label for="floatingInput1" class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:text-xs peer-focus:text-violet-600 peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-xs pointer-events-none">
+                            <div class="input-floating-wrap">
+                                <input type="text" id="floatingInput1" placeholder=" " class="peer input input-floating input-full">
+                                <label for="floatingInput1" class="input-floating-label">
                                     이메일
                                 </label>
                             </div>
                             <!-- Floating Label - Filled -->
-                            <div class="relative">
-                                <input type="text" id="floatingInput2" placeholder=" " value="example@email.com" class="peer w-full h-12 px-3 pt-4 pb-1 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
-                                <label for="floatingInput2" class="absolute left-3 top-3 text-xs text-gray-500 dark:text-gray-400 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-sm peer-focus:top-3 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-violet-600 pointer-events-none">
+                            <div class="input-floating-wrap">
+                                <input type="text" id="floatingInput2" placeholder=" " value="example@email.com" class="peer input input-floating input-full">
+                                <label for="floatingInput2" class="input-floating-label">
                                     이메일
                                 </label>
                             </div>
@@ -619,15 +592,9 @@
                                     <span class="w-3 h-3 rounded-full bg-green-400"></span>
                                 </div>
                             </div>
-                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">" "</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">peer</span> w-full h-12 px-3 pt-4 pb-1 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm transition-all
-         <span class="text-amber-600 dark:text-amber-400 font-bold">peer-placeholder-shown:top-1/2 peer-placeholder-shown:text-sm
-         peer-focus:top-3 peer-focus:text-xs peer-focus:text-violet-600
-         peer-[:not(:placeholder-shown)]:top-3 peer-[:not(:placeholder-shown)]:text-xs</span>
-         pointer-events-none"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-    레이블
-  <span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-floating-wrap</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">placeholder</span>=<span class="text-emerald-600 dark:text-emerald-400">" "</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">peer input input-floating input-full</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;label</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input-floating-label</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>레이블<span class="text-blue-600 dark:text-blue-400">&lt;/label&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>
                     </div>
@@ -641,19 +608,19 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Leading Icon -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Leading Icon</label>
+                                <label class="input-label">Leading Icon</label>
                                 <div class="relative">
                                     <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
-                                    <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="search" placeholder="검색어를 입력하세요" class="input input-md input-full pl-10">
                                 </div>
                             </div>
                             <!-- Trailing Icon -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trailing Icon</label>
+                                <label class="input-label">Trailing Icon</label>
                                 <div class="relative">
-                                    <input type="email" placeholder="이메일 주소" class="w-full h-10 pl-3 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="email" placeholder="이메일 주소" class="input input-md input-full pr-10">
                                     <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
                                     </svg>
@@ -661,12 +628,12 @@
                             </div>
                             <!-- Both Icons -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Both Icons</label>
+                                <label class="input-label">Both Icons</label>
                                 <div class="relative">
                                     <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
-                                    <input type="text" value="사용자명" class="w-full h-10 pl-10 pr-10 bg-white dark:bg-gray-900 border border-emerald-500 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent transition-colors">
+                                    <input type="text" value="사용자명" class="input input-md input-success input-full pl-10 pr-10">
                                     <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
@@ -674,9 +641,9 @@
                             </div>
                             <!-- Password Toggle -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password Toggle</label>
+                                <label class="input-label">Password Toggle</label>
                                 <div class="relative">
-                                    <input type="password" id="passwordInput" placeholder="비밀번호" class="w-full h-10 pl-3 pr-10 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="password" id="passwordInput" placeholder="비밀번호" class="input input-md input-full pr-10">
                                     <button type="button" onclick="togglePassword()" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                         <svg id="eyeIcon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -702,12 +669,12 @@
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Leading Icon --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">pl-10</span> pr-3 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-md</span> input-full <span class="text-amber-600 dark:text-amber-400 font-bold">pl-10</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Trailing Icon --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pl-3 <span class="text-amber-600 dark:text-amber-400 font-bold">pr-10</span> ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-md</span> input-full <span class="text-amber-600 dark:text-amber-400 font-bold">pr-10</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>
@@ -722,55 +689,55 @@
                         <div class="space-y-6 mb-6">
                             <!-- Prefix Text -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Prefix Text</label>
+                                <label class="input-label">Prefix Text</label>
                                 <div class="flex">
                                     <span class="inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg">https://</span>
-                                    <input type="text" placeholder="example.com" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-r-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="text" placeholder="example.com" class="input input-md flex-1 rounded-l-none">
                                 </div>
                             </div>
                             <!-- Suffix Text -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Suffix Text</label>
+                                <label class="input-label">Suffix Text</label>
                                 <div class="flex">
-                                    <input type="text" placeholder="username" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="text" placeholder="username" class="input input-md flex-1 rounded-r-none">
                                     <span class="inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-l-0 border-gray-300 dark:border-gray-600 rounded-r-lg">@gmail.com</span>
                                 </div>
                             </div>
                             <!-- With Button -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Button</label>
+                                <label class="input-label">With Button</label>
                                 <div class="flex">
-                                    <input type="email" placeholder="이메일 주소 입력" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
-                                    <button class="h-10 px-4 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-r-lg transition-colors">
+                                    <input type="email" placeholder="이메일 주소 입력" class="input input-md flex-1 rounded-r-none">
+                                    <button class="btn btn-md btn-primary rounded-l-none">
                                         구독하기
                                     </button>
                                 </div>
                             </div>
                             <!-- Search with Button -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search with Button</label>
+                                <label class="input-label">Search with Button</label>
                                 <div class="flex">
                                     <div class="relative flex-1">
                                         <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
-                                        <input type="search" placeholder="검색어를 입력하세요" class="w-full h-10 pl-10 pr-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                        <input type="search" placeholder="검색어를 입력하세요" class="input input-md input-full pl-10 rounded-r-none">
                                     </div>
-                                    <button class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white font-medium rounded-r-lg transition-colors">
+                                    <button class="btn btn-md btn-base-primary rounded-l-none">
                                         검색
                                     </button>
                                 </div>
                             </div>
                             <!-- With Select -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Select</label>
+                                <label class="input-label">With Select</label>
                                 <div class="flex">
                                     <select class="h-10 px-3 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent">
                                         <option>KRW</option>
                                         <option>USD</option>
                                         <option>EUR</option>
                                     </select>
-                                    <input type="number" placeholder="금액 입력" class="flex-1 h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-r-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                    <input type="number" placeholder="금액 입력" class="input input-md flex-1 rounded-l-none">
                                 </div>
                             </div>
                         </div>
@@ -787,13 +754,13 @@
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Prefix Text --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex items-center px-3 ... border-r-0 rounded-l-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>https://<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 ... rounded-r-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-md</span> flex-1 <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-l-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- With Button --&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex-1 ... rounded-l-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... rounded-r-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>버튼<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;input</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-md</span> flex-1 <span class="text-amber-600 dark:text-amber-400 font-bold">rounded-r-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">btn btn-md btn-primary rounded-l-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>버튼<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>
                     </div>
@@ -807,24 +774,24 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                             <!-- Default -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Default</label>
-                                <textarea rows="4" placeholder="내용을 입력하세요" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-y"></textarea>
+                                <label class="input-label">Default</label>
+                                <textarea rows="4" placeholder="내용을 입력하세요" class="input input-full px-3 py-2 rounded-lg resize-y"></textarea>
                             </div>
                             <!-- With Counter -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">With Counter</label>
-                                <textarea id="textareaCounter" rows="4" maxlength="200" placeholder="최대 200자까지 입력 가능합니다" oninput="updateCounter()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-y"></textarea>
-                                <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400 text-right"><span id="charCount">0</span>/200</p>
+                                <label class="input-label">With Counter</label>
+                                <textarea id="textareaCounter" rows="4" maxlength="200" placeholder="최대 200자까지 입력 가능합니다" oninput="updateCounter()" class="input input-full px-3 py-2 rounded-lg resize-y"></textarea>
+                                <p class="input-helper text-right"><span id="charCount">0</span>/200</p>
                             </div>
                             <!-- No Resize -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">No Resize</label>
-                                <textarea rows="4" placeholder="크기 조절 불가" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors resize-none"></textarea>
+                                <label class="input-label">No Resize</label>
+                                <textarea rows="4" placeholder="크기 조절 불가" class="input input-full px-3 py-2 rounded-lg resize-none"></textarea>
                             </div>
                             <!-- Disabled -->
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disabled</label>
-                                <textarea rows="4" placeholder="비활성화된 텍스트 영역" disabled class="w-full px-3 py-2 bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-400 dark:text-gray-500 placeholder-gray-300 dark:placeholder-gray-600 cursor-not-allowed opacity-50 resize-none"></textarea>
+                                <label class="input-label">Disabled</label>
+                                <textarea rows="4" placeholder="비활성화된 텍스트 영역" disabled class="input input-disabled input-full px-3 py-2 rounded-lg resize-none"></textarea>
                             </div>
                         </div>
                         <!-- Code Reference -->
@@ -838,13 +805,13 @@
                                 </div>
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Default (resize-y) --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">rows</span>=<span class="text-emerald-600 dark:text-emerald-400">"4"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full px-3 py-2 ... <span class="text-amber-600 dark:text-amber-400 font-bold">resize-y</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">rows</span>=<span class="text-emerald-600 dark:text-emerald-400">"4"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input</span> input-full px-3 py-2 rounded-lg <span class="text-amber-600 dark:text-amber-400 font-bold">resize-y</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- No Resize --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">resize-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input</span> input-full px-3 py-2 rounded-lg <span class="text-amber-600 dark:text-amber-400 font-bold">resize-none</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span>
 
-<span class="text-gray-500 dark:text-gray-400">&lt;!-- Both directions --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"... <span class="text-amber-600 dark:text-amber-400 font-bold">resize</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span></code></pre>
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Disabled --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;textarea</span> <span class="text-violet-600 dark:text-violet-400">disabled</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">input input-disabled</span> input-full px-3 py-2 rounded-lg resize-none"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/textarea&gt;</span></code></pre>
                         </div>
                     </div>
                 </section>
@@ -858,22 +825,22 @@
                             <!-- Preview -->
                             <div class="flex items-center justify-center min-h-[200px] bg-gray-50 dark:bg-gray-900 rounded-xl p-8">
                                 <div class="w-full max-w-xs">
-                                    <label id="previewLabel" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Label</label>
+                                    <label id="previewLabel" class="input-label">Label</label>
                                     <div class="relative">
                                         <svg id="previewLeadingIcon" class="hidden absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                         </svg>
-                                        <input type="text" id="previewInput" placeholder="Placeholder" class="w-full h-10 px-3 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors">
+                                        <input type="text" id="previewInput" placeholder="Placeholder" class="input input-md input-full">
                                     </div>
-                                    <p id="previewHelperText" class="hidden mt-1.5 text-sm text-gray-500 dark:text-gray-400">Helper text</p>
+                                    <p id="previewHelperText" class="hidden input-helper">Helper text</p>
                                 </div>
                             </div>
                             <!-- Controls -->
                             <div class="space-y-4">
                                 <!-- Size -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Size</label>
-                                    <select id="inputSizeSelect" onchange="updateInputPreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                    <label class="input-label">Size</label>
+                                    <select id="inputSizeSelect" onchange="updateInputPreview()" class="input input-md input-full">
                                         <option value="xs">Extra Small</option>
                                         <option value="sm">Small</option>
                                         <option value="md" selected>Medium</option>
@@ -883,8 +850,8 @@
                                 </div>
                                 <!-- State -->
                                 <div>
-                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">State</label>
-                                    <select id="inputStateSelect" onchange="updateInputPreview()" class="w-full px-3 py-2 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white">
+                                    <label class="input-label">State</label>
+                                    <select id="inputStateSelect" onchange="updateInputPreview()" class="input input-md input-full">
                                         <option value="default" selected>Default</option>
                                         <option value="error">Error</option>
                                         <option value="success">Success</option>
@@ -1011,36 +978,20 @@
             counter.textContent = textarea.value.length;
         }
 
-        // Input Playground
-        const inputSizes = {
-            xs: { height: 'h-7', padding: 'px-2.5', paddingIcon: 'pl-8 pr-2.5', text: 'text-xs', radius: 'rounded' },
-            sm: { height: 'h-8', padding: 'px-3', paddingIcon: 'pl-9 pr-3', text: 'text-sm', radius: 'rounded-md' },
-            md: { height: 'h-10', padding: 'px-3', paddingIcon: 'pl-10 pr-3', text: 'text-sm', radius: 'rounded-lg' },
-            lg: { height: 'h-11', padding: 'px-4', paddingIcon: 'pl-11 pr-4', text: 'text-base', radius: 'rounded-lg' },
-            xl: { height: 'h-12', padding: 'px-4', paddingIcon: 'pl-12 pr-4', text: 'text-lg', radius: 'rounded-xl' }
+        // Input Playground - Utility Class Based
+        const inputSizeClasses = {
+            xs: 'input-xs',
+            sm: 'input-sm',
+            md: 'input-md',
+            lg: 'input-lg',
+            xl: 'input-xl'
         };
 
-        const inputStates = {
-            default: {
-                border: 'border-gray-300 dark:border-gray-600',
-                focus: 'focus:ring-violet-500',
-                text: 'text-gray-500 dark:text-gray-400'
-            },
-            error: {
-                border: 'border-red-500',
-                focus: 'focus:ring-red-500',
-                text: 'text-red-600 dark:text-red-400'
-            },
-            success: {
-                border: 'border-emerald-500',
-                focus: 'focus:ring-emerald-500',
-                text: 'text-emerald-600 dark:text-emerald-400'
-            },
-            disabled: {
-                border: 'border-gray-300 dark:border-gray-600',
-                focus: '',
-                text: 'text-gray-400'
-            }
+        const inputStateClasses = {
+            default: { input: '', helper: 'input-helper' },
+            error: { input: 'input-error', helper: 'input-helper-error' },
+            success: { input: 'input-success', helper: 'input-helper-success' },
+            disabled: { input: 'input-disabled', helper: 'input-helper' }
         };
 
         function updateInputPreview() {
@@ -1060,7 +1011,7 @@
 
             // Update helper visibility and text
             helper.classList.toggle('hidden', !showHelper);
-            helper.className = `mt-1.5 text-sm ${inputStates[state].text}`;
+            helper.className = inputStateClasses[state].helper;
             if (state === 'error') {
                 helper.textContent = '필수 항목입니다';
             } else if (state === 'success') {
@@ -1073,54 +1024,43 @@
             // Update icon visibility
             leadingIcon.classList.toggle('hidden', !showIcon);
 
-            // Build input classes
-            const sizeConfig = inputSizes[size];
-            const stateConfig = inputStates[state];
-
-            let padding = showIcon ? sizeConfig.paddingIcon : sizeConfig.padding;
-            let baseClasses = `w-full ${sizeConfig.height} ${padding} ${sizeConfig.text} ${sizeConfig.radius} bg-white dark:bg-gray-900 border ${stateConfig.border} text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 ${stateConfig.focus} focus:border-transparent transition-colors`;
-
-            if (state === 'disabled') {
-                baseClasses += ' opacity-50 cursor-not-allowed bg-gray-50';
-                input.disabled = true;
-            } else {
-                input.disabled = false;
+            // Build input classes using utility classes
+            let classes = ['input', inputSizeClasses[size], 'input-full'];
+            if (inputStateClasses[state].input) {
+                classes.push(inputStateClasses[state].input);
             }
 
-            input.className = baseClasses;
+            input.className = classes.join(' ');
+            input.disabled = (state === 'disabled');
 
             // Update generated code
             updateGeneratedInputCode(size, state, showLabel, showHelper, showIcon);
         }
 
         function updateGeneratedInputCode(size, state, showLabel, showHelper, showIcon) {
-            const sizeConfig = inputSizes[size];
-            const stateConfig = inputStates[state];
-
-            let padding = showIcon ? sizeConfig.paddingIcon : sizeConfig.padding;
-            let inputClasses = `w-full ${sizeConfig.height} ${padding} ${sizeConfig.text} ${sizeConfig.radius} bg-white dark:bg-gray-900 border ${stateConfig.border} text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 ${stateConfig.focus} focus:border-transparent`;
-
-            if (state === 'disabled') {
-                inputClasses += ' opacity-50 cursor-not-allowed';
+            let inputClasses = ['input', inputSizeClasses[size], 'input-full'];
+            if (inputStateClasses[state].input) {
+                inputClasses.push(inputStateClasses[state].input);
             }
+            const inputClassStr = inputClasses.join(' ');
 
             let code = '';
 
             if (showLabel) {
-                code += `<label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Label</label>\n`;
+                code += `<label class="input-label">Label</label>\n`;
             }
 
             if (showIcon) {
                 code += `<div class="relative">\n`;
                 code += `  <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400">...</svg>\n`;
-                code += `  <input type="text" placeholder="Placeholder" class="${inputClasses}"${state === 'disabled' ? ' disabled' : ''}>\n`;
+                code += `  <input type="text" placeholder="Placeholder" class="${inputClassStr}"${state === 'disabled' ? ' disabled' : ''}>\n`;
                 code += `</div>`;
             } else {
-                code += `<input type="text" placeholder="Placeholder" class="${inputClasses}"${state === 'disabled' ? ' disabled' : ''}>`;
+                code += `<input type="text" placeholder="Placeholder" class="${inputClassStr}"${state === 'disabled' ? ' disabled' : ''}>`;
             }
 
             if (showHelper) {
-                code += `\n<p class="mt-1.5 text-sm ${stateConfig.text}">Helper text</p>`;
+                code += `\n<p class="${inputStateClasses[state].helper}">Helper text</p>`;
             }
 
             document.getElementById('generatedInputCode').textContent = code;
