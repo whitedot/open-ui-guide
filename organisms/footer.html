@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Footer - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Organisms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Footer</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Footer</h1>
+                    <p class="text-gray-600 dark:text-gray-400">페이지 하단에 위치하여 사이트 정보, 링크, 법적 고지 등을 제공하는 컴포넌트입니다.</p>
+                </div>
+
+                <!-- Anatomy -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Anatomy</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">Footer는 일반적으로 다음 요소들로 구성됩니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="space-y-3 p-6 bg-gray-50 dark:bg-gray-900 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600">
+                            <!-- Top Section -->
+                            <div class="flex flex-wrap gap-3">
+                                <div class="px-3 py-1.5 bg-violet-100 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400 text-xs font-medium rounded">
+                                    1. Logo / Brand
+                                </div>
+                                <div class="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 text-xs font-medium rounded">
+                                    2. Link Columns
+                                </div>
+                                <div class="px-3 py-1.5 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 text-xs font-medium rounded">
+                                    3. Newsletter / CTA
+                                </div>
+                            </div>
+                            <!-- Divider -->
+                            <div class="border-t border-gray-300 dark:border-gray-600"></div>
+                            <!-- Bottom Section -->
+                            <div class="flex flex-wrap gap-3">
+                                <div class="px-3 py-1.5 bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-xs font-medium rounded">
+                                    4. Copyright
+                                </div>
+                                <div class="px-3 py-1.5 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-medium rounded">
+                                    5. Legal Links
+                                </div>
+                                <div class="px-3 py-1.5 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 text-xs font-medium rounded">
+                                    6. Social Icons
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-6 grid grid-cols-2 md:grid-cols-3 gap-4 text-sm">
+                            <div class="p-4 bg-violet-50 dark:bg-violet-900/20 rounded-lg">
+                                <h4 class="font-medium text-violet-700 dark:text-violet-300 mb-1">1. Logo / Brand</h4>
+                                <p class="text-violet-600/80 dark:text-violet-400/80">로고, 브랜드 설명</p>
+                            </div>
+                            <div class="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+                                <h4 class="font-medium text-blue-700 dark:text-blue-300 mb-1">2. Link Columns</h4>
+                                <p class="text-blue-600/80 dark:text-blue-400/80">카테고리별 링크 그룹</p>
+                            </div>
+                            <div class="p-4 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg">
+                                <h4 class="font-medium text-emerald-700 dark:text-emerald-300 mb-1">3. Newsletter</h4>
+                                <p class="text-emerald-600/80 dark:text-emerald-400/80">뉴스레터 구독 폼</p>
+                            </div>
+                            <div class="p-4 bg-amber-50 dark:bg-amber-900/20 rounded-lg">
+                                <h4 class="font-medium text-amber-700 dark:text-amber-300 mb-1">4. Copyright</h4>
+                                <p class="text-amber-600/80 dark:text-amber-400/80">저작권 표시</p>
+                            </div>
+                            <div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg">
+                                <h4 class="font-medium text-red-700 dark:text-red-300 mb-1">5. Legal Links</h4>
+                                <p class="text-red-600/80 dark:text-red-400/80">이용약관, 개인정보처리방침</p>
+                            </div>
+                            <div class="p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
+                                <h4 class="font-medium text-gray-700 dark:text-gray-300 mb-1">6. Social Icons</h4>
+                                <p class="text-gray-600/80 dark:text-gray-400/80">소셜 미디어 링크</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Simple Footer -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Simple Footer</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">가장 기본적인 형태의 푸터입니다. 저작권과 필수 링크만 포함합니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <footer class="py-6 px-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        © 2024 Brand. All rights reserved.
+                                    </p>
+                                    <div class="flex items-center gap-6">
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">이용약관</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">개인정보처리방침</a>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;footer</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"py-6 px-6 bg-white dark:bg-gray-800 border-t border-gray-200"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex flex-col sm:flex-row items-center justify-between gap-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;p</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      © 2024 Brand. All rights reserved.
+    <span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-6"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/terms"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500 hover:text-gray-700"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>이용약관<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/privacy"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500 hover:text-gray-700"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>개인정보처리방침<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/footer&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer with Links -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Link Columns</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">카테고리별 링크 그룹이 포함된 푸터입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <footer class="py-12 px-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                                    <!-- Column 1 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">제품</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">기능</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">가격</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">보안</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">로드맵</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 2 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">회사</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">소개</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">블로그</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">채용</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">언론보도</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 3 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">리소스</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">문서</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">가이드</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">API</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">커뮤니티</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 4 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">지원</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">고객센터</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">FAQ</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">문의하기</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">상태</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Bottom -->
+                                <div class="pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        © 2024 Brand. All rights reserved.
+                                    </p>
+                                    <div class="flex items-center gap-4">
+                                        <a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                        </a>
+                                        <a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        </a>
+                                        <a href="#" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;footer</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"py-12 px-6 bg-white border-t border-gray-200"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Link Columns --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"grid grid-cols-2 md:grid-cols-4 gap-8 mb-8"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;h3</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm font-semibold text-gray-900 uppercase tracking-wider mb-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>제품<span class="text-blue-600 dark:text-blue-400">&lt;/h3&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;ul</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"space-y-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;li&gt;&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-500 hover:text-gray-700"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>기능<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;&lt;/li&gt;</span>
+        ...
+      <span class="text-blue-600 dark:text-blue-400">&lt;/ul&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+    ...
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Bottom --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pt-8 border-t border-gray-200 flex ... justify-between"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    ...
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/footer&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Footer with Logo and Newsletter -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">With Logo & Newsletter</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">로고, 설명, 뉴스레터 구독 폼이 포함된 완전한 형태의 푸터입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <footer class="py-12 px-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <div class="grid grid-cols-1 lg:grid-cols-6 gap-8 mb-8">
+                                    <!-- Logo & Description -->
+                                    <div class="lg:col-span-2">
+                                        <a href="#" class="flex items-center gap-3 mb-4">
+                                            <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                                </svg>
+                                            </div>
+                                            <span class="text-xl font-bold text-gray-900 dark:text-white">Brand</span>
+                                        </a>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                            더 나은 사용자 경험을 위한 디자인 시스템을 제공합니다. 일관된 UI로 개발 속도를 높이세요.
+                                        </p>
+                                        <!-- Social Icons -->
+                                        <div class="flex items-center gap-3">
+                                            <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                            </a>
+                                            <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                            </a>
+                                            <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Link Columns -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">제품</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">기능</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">가격</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">보안</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">회사</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">소개</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">블로그</a></li>
+                                            <li><a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">채용</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Newsletter -->
+                                    <div class="lg:col-span-2">
+                                        <h3 class="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider mb-4">뉴스레터 구독</h3>
+                                        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">
+                                            최신 업데이트와 소식을 받아보세요.
+                                        </p>
+                                        <form class="flex gap-2">
+                                            <input type="email" placeholder="이메일 주소" class="flex-1 h-10 px-4 text-sm bg-gray-100 dark:bg-gray-700 border-0 rounded-lg text-gray-900 dark:text-white placeholder-gray-500 focus:ring-2 focus:ring-violet-500">
+                                            <button type="submit" class="h-10 px-4 bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white text-sm font-medium rounded-lg transition-colors">
+                                                구독
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- Bottom -->
+                                <div class="pt-8 border-t border-gray-200 dark:border-gray-700 flex flex-col md:flex-row items-center justify-between gap-4">
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        © 2024 Brand. All rights reserved.
+                                    </p>
+                                    <div class="flex flex-wrap items-center gap-6">
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">이용약관</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">개인정보처리방침</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">쿠키 설정</a>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dark Footer -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dark Footer</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">어두운 배경의 푸터입니다. 브랜드 강조나 시각적 구분에 효과적입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <footer class="py-12 px-6 bg-gray-900 rounded-lg">
+                                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                                    <!-- Column 1 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">제품</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">기능</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">가격</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">보안</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 2 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">회사</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">소개</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">블로그</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">채용</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 3 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">지원</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">문서</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">문의</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- Column 4 -->
+                                    <div>
+                                        <h3 class="text-sm font-semibold text-white uppercase tracking-wider mb-4">법적 고지</h3>
+                                        <ul class="space-y-3">
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">이용약관</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">개인정보처리방침</a></li>
+                                            <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">쿠키 정책</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Bottom -->
+                                <div class="pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-sm text-gray-400">© 2024 Brand. All rights reserved.</span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                        </a>
+                                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        </a>
+                                        <a href="#" class="text-gray-500 hover:text-white transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </footer>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">CSS Classes</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Dark Footer */</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;footer</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"py-12 px-6 <span class="text-amber-600 dark:text-amber-400 font-bold">bg-gray-900</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Headings */</span>
+<span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm font-semibold <span class="text-amber-600 dark:text-amber-400 font-bold">text-white</span> uppercase tracking-wider"</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Links */</span>
+<span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm <span class="text-amber-600 dark:text-amber-400 font-bold">text-gray-400 hover:text-white</span> transition-colors"</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Border */</span>
+<span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pt-8 <span class="text-amber-600 dark:text-amber-400 font-bold">border-t border-gray-800</span>"</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Centered Footer -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Centered Footer</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">중앙 정렬된 미니멀한 푸터입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <footer class="py-12 px-6 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <div class="text-center">
+                                    <!-- Logo -->
+                                    <a href="#" class="inline-flex items-center gap-3 mb-6">
+                                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center">
+                                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                            </svg>
+                                        </div>
+                                        <span class="text-xl font-bold text-gray-900 dark:text-white">Brand</span>
+                                    </a>
+                                    <!-- Nav Links -->
+                                    <nav class="flex flex-wrap justify-center gap-x-8 gap-y-2 mb-6">
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">소개</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">기능</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">가격</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">블로그</a>
+                                        <a href="#" class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">문의</a>
+                                    </nav>
+                                    <!-- Social Icons -->
+                                    <div class="flex justify-center gap-4 mb-6">
+                                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                                        </a>
+                                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        </a>
+                                        <a href="#" class="w-9 h-9 inline-flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                                        </a>
+                                    </div>
+                                    <!-- Copyright -->
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        © 2024 Brand. All rights reserved.
+                                    </p>
+                                </div>
+                            </footer>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Sticky Footer (Page Layout) -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Sticky Footer Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">콘텐츠가 적어도 푸터가 항상 화면 하단에 위치하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
+                            <div class="flex gap-3">
+                                <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div class="text-sm text-amber-700 dark:text-amber-300">
+                                    <p class="font-medium mb-1">Flexbox를 활용한 Sticky Footer</p>
+                                    <p class="text-amber-600/90 dark:text-amber-400/90">콘텐츠 양에 관계없이 푸터가 항상 뷰포트 하단에 위치합니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML Structure</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;body</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">min-h-screen flex flex-col</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;header&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/header&gt;</span>
+
+  <span class="text-blue-600 dark:text-blue-400">&lt;main</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">flex-1</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- 메인 콘텐츠 --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/main&gt;</span>
+
+  <span class="text-blue-600 dark:text-blue-400">&lt;footer&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- 푸터는 자동으로 하단에 위치 --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/footer&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/body&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* 핵심 클래스:
+   - body: min-h-screen flex flex-col
+   - main: flex-1 (남은 공간을 모두 차지)
+   - footer: 자동으로 하단에 배치됨
+*/</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 이용약관, 개인정보처리방침 등 법적 링크를 포함하세요</li>
+                                    <li>• 저작권 표시에 현재 연도를 사용하세요</li>
+                                    <li>• 링크를 논리적인 카테고리로 그룹화하세요</li>
+                                    <li>• 소셜 미디어 아이콘은 <code class="px-1 bg-gray-100 dark:bg-gray-700 rounded text-xs">target="_blank"</code>로 새 탭에서 열리게 하세요</li>
+                                    <li>• 모바일에서 링크 그룹이 잘 표시되는지 확인하세요</li>
+                                    <li>• Sticky footer 레이아웃으로 콘텐츠가 적어도 푸터가 하단에 위치하게 하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 많은 링크로 푸터를 복잡하게 만들지 마세요</li>
+                                    <li>• 중요한 CTA를 푸터에만 배치하지 마세요</li>
+                                    <li>• 헤더와 동일한 네비게이션을 푸터에 반복하지 마세요</li>
+                                    <li>• 소셜 아이콘 없이 텍스트 링크만 사용하지 마세요</li>
+                                    <li>• 뉴스레터 폼에 너무 많은 필드를 요구하지 마세요</li>
+                                    <li>• 다크 푸터에서 대비가 낮은 색상을 사용하지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
