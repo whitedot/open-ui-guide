@@ -22,6 +22,90 @@
         body {
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
+        /* Table Responsive - Card Layout */
+        @media (max-width: 768px) {
+            .responsive-table thead {
+                display: none;
+            }
+            .responsive-table tbody {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                padding: 0;
+            }
+            .responsive-table tbody tr {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 0.5rem 1rem;
+                background: white;
+                border: none !important;
+                border-bottom: 1px solid #e5e7eb !important;
+                border-radius: 0;
+                padding: 1rem;
+            }
+            .responsive-table tbody tr:last-child {
+                border-bottom: none !important;
+            }
+            .dark .responsive-table tbody tr {
+                background: #1f2937;
+                border-bottom-color: #374151 !important;
+            }
+            .responsive-table tbody td {
+                padding: 0 !important;
+                white-space: normal !important;
+            }
+            .responsive-table tbody td::before {
+                display: none;
+            }
+            /* 주문번호 */
+            .responsive-table tbody td:nth-child(1) {
+                grid-column: 1;
+                grid-row: 1;
+                font-weight: 600;
+            }
+            /* 상태 배지 */
+            .responsive-table tbody td:nth-child(5) {
+                grid-column: 2;
+                grid-row: 1;
+                text-align: right;
+            }
+            /* 고객명 */
+            .responsive-table tbody td:nth-child(2) {
+                grid-column: 1;
+                grid-row: 2;
+                font-weight: 500;
+                font-size: 0.9375rem;
+            }
+            /* 금액 */
+            .responsive-table tbody td:nth-child(4) {
+                grid-column: 2;
+                grid-row: 2;
+                text-align: right;
+                font-weight: 600;
+            }
+            /* 상품명 */
+            .responsive-table tbody td:nth-child(3) {
+                grid-column: 1;
+                grid-row: 3;
+                font-size: 0.875rem;
+                color: #6b7280;
+            }
+            .dark .responsive-table tbody td:nth-child(3) {
+                color: #9ca3af;
+            }
+            /* 날짜 */
+            .responsive-table tbody td:nth-child(6) {
+                grid-column: 2;
+                grid-row: 3;
+                text-align: right;
+                font-size: 0.75rem;
+                color: #9ca3af;
+                align-self: end;
+            }
+            .dark .responsive-table tbody td:nth-child(6) {
+                color: #6b7280;
+            }
+        }
     </style>
 
     <script>
@@ -511,8 +595,8 @@
                                 </div>
 
                                 <!-- Table -->
-                                <div class="overflow-x-auto">
-                                    <table class="w-full">
+                                <div class="overflow-x-auto md:overflow-visible">
+                                    <table class="w-full responsive-table">
                                         <thead class="bg-gray-50 dark:bg-gray-900">
                                             <tr>
                                                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">주문번호</th>
@@ -523,36 +607,36 @@
                                                 <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">날짜</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700 md:divide-y">
                                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-001</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">김민수</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">프리미엄 플랜</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩99,000</td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                <td data-label="주문번호" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-001</td>
+                                                <td data-label="고객" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">김민수</td>
+                                                <td data-label="상품" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">프리미엄 플랜</td>
+                                                <td data-label="금액" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩99,000</td>
+                                                <td data-label="상태" class="px-6 py-4 whitespace-nowrap">
                                                     <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full">완료</span>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-15</td>
+                                                <td data-label="날짜" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-15</td>
                                             </tr>
                                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-002</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">이지은</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">스타터 플랜</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩29,000</td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                <td data-label="주문번호" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-002</td>
+                                                <td data-label="고객" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">이지은</td>
+                                                <td data-label="상품" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">스타터 플랜</td>
+                                                <td data-label="금액" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩29,000</td>
+                                                <td data-label="상태" class="px-6 py-4 whitespace-nowrap">
                                                     <span class="px-2.5 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-xs font-medium rounded-full">처리중</span>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-14</td>
+                                                <td data-label="날짜" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-14</td>
                                             </tr>
                                             <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-003</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">박정호</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">엔터프라이즈 플랜</td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩299,000</td>
-                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                <td data-label="주문번호" class="px-6 py-4 whitespace-nowrap text-sm font-medium text-violet-600 dark:text-violet-400">#ORD-003</td>
+                                                <td data-label="고객" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">박정호</td>
+                                                <td data-label="상품" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">엔터프라이즈 플랜</td>
+                                                <td data-label="금액" class="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">₩299,000</td>
+                                                <td data-label="상태" class="px-6 py-4 whitespace-nowrap">
                                                     <span class="px-2.5 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-medium rounded-full">취소</span>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-13</td>
+                                                <td data-label="날짜" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-right">2024-01-13</td>
                                             </tr>
                                         </tbody>
                                     </table>
