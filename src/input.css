@@ -329,4 +329,33 @@
   .input-label-required { color: var(--semantic-error); }
   .input-label-optional { @apply text-gray-400 dark:text-gray-500 font-normal; }
 
+  /* ============================================
+     Icon Component (Material Symbols)
+     ============================================ */
+
+  /* === Icon Sizes === */
+  .icon-sm { font-size: 18px !important; }
+  .icon-md { font-size: 24px !important; }
+  .icon-lg { font-size: 36px !important; }
+  .icon-xl { font-size: 48px !important; }
+
+  /* === Icon Weights === */
+  .icon-light { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
+  .icon-regular { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .icon-medium { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
+  .icon-bold { font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24; }
+
+  /* === Icon Fill === */
+  .icon-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+
+  /* === Icon Card (Gallery) === */
+  .icon-card {
+    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 flex flex-col items-center gap-2 cursor-pointer transition-all duration-200;
+    @apply hover:border-violet-500 dark:hover:border-violet-500 hover:shadow-md;
+  }
+  .icon-card:hover {
+    transform: translateY(-2px);
+  }
+
 }

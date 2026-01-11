@@ -33,25 +33,7 @@
             opacity: 1;
         }
 
-        /* Icon Sizes */
-        .icon-sm { font-size: 18px; }
-        .icon-md { font-size: 24px; }
-        .icon-lg { font-size: 36px; }
-        .icon-xl { font-size: 48px; }
-
-        /* Icon Weights */
-        .icon-light { font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24; }
-        .icon-regular { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .icon-medium { font-variation-settings: 'FILL' 0, 'wght' 500, 'GRAD' 0, 'opsz' 24; }
-        .icon-bold { font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 24; }
-
-        /* Icon Fill */
-        .icon-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-        .icon-filled { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
-
-        .icon-card:hover {
-            transform: translateY(-2px);
-        }
+        /* Icon Sizes, Weights, Fill - src/input.css로 이동됨 */
         .copy-toast {
             animation: fadeInOut 2s ease-in-out;
         }
@@ -88,23 +70,23 @@
         }, 2000);
     </script>
 </head>
-<body class="h-full bg-white dark:bg-gray-900">
+<body class="h-full bg-white dark:bg-base-900">
     <!-- 모바일 헤더 -->
-    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
-        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-base-800 border-b border-base-200 dark:border-base-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-base-600 dark:text-base-300 hover:bg-base-100 dark:hover:bg-base-700 rounded-lg">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </button>
         <a href="../index.html" class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+            <div class="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
                 <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                 </svg>
             </div>
-            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+            <span class="font-bold text-base-900 dark:text-white">Open UI Guide</span>
         </a>
-        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-base-600 dark:text-base-300 hover:bg-base-100 dark:hover:bg-base-700 rounded-lg">
             <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
             </svg>
@@ -117,22 +99,22 @@
     <!-- 모바일 사이드바 오버레이 -->
     <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
         <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
-        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-base-800 border-r border-base-200 dark:border-base-700 overflow-y-auto">
             <div class="h-full flex flex-col">
                 <!-- Logo & Title -->
-                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <div class="p-5 border-b border-base-200 dark:border-base-700 flex items-center justify-between">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                        <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                            <h1 class="text-base font-bold text-base-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-base-500 dark:text-base-400">Design System v1.0</p>
                         </div>
                     </a>
-                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-base-400 hover:text-base-600 dark:hover:text-base-300 hover:bg-base-100 dark:hover:bg-base-700 rounded-lg">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                         </svg>
@@ -145,17 +127,17 @@
                 </nav>
 
                 <!-- Dark Mode Toggle -->
-                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                <div class="border-t border-base-200 dark:border-base-700 p-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-8 h-8 bg-base-100 dark:bg-base-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-base-600 dark:text-base-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            <span class="text-sm font-medium text-base-700 dark:text-base-300">Dark Mode</span>
                         </div>
-                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-base-200 dark:bg-primary-600" role="switch">
                             <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
                         </button>
                     </div>
@@ -167,29 +149,29 @@
     <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
         <!-- Desktop Sidebar -->
         <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
-            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+            <div class="bg-white dark:bg-base-800 border-r border-base-200 dark:border-base-700 overflow-hidden h-full flex flex-col">
                 <!-- Logo & Title -->
-                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                <div class="p-5 border-b border-base-200 dark:border-base-700">
                     <a href="../index.html" class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                        <div class="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center shadow-md">
                             <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
                             </svg>
                         </div>
                         <div>
-                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                            <h1 class="text-base font-bold text-base-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-base-500 dark:text-base-400">Design System v1.0</p>
                         </div>
                     </a>
                 </div>
 
                 <!-- Search -->
-                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="p-4 border-b border-base-200 dark:border-base-700">
                     <div class="relative">
-                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
-                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-base-50 dark:bg-base-900 border border-base-200 dark:border-base-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base-900 dark:text-white placeholder-gray-400">
                     </div>
                 </div>
 
@@ -199,17 +181,17 @@
                 </nav>
 
                 <!-- Dark Mode Toggle -->
-                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                <div class="border-t border-base-200 dark:border-base-700 p-4">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="w-8 h-8 bg-base-100 dark:bg-base-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-base-600 dark:text-base-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                                 </svg>
                             </div>
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                            <span class="text-sm font-medium text-base-700 dark:text-base-300">Dark Mode</span>
                         </div>
-                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-base-200 dark:bg-primary-600" role="switch">
                             <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
                         </button>
                     </div>
@@ -218,12 +200,12 @@
         </aside>
 
         <!-- Main Content -->
-        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+        <main class="flex-1 overflow-y-auto bg-base-50 dark:bg-base-950">
             <div id="icons-content" class="max-w-5xl mx-auto p-6 lg:p-8">
                 <!-- Page Header -->
                 <div class="mb-8">
-                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
-                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                    <div class="flex items-center gap-2 text-sm text-base-500 dark:text-base-400 mb-2">
+                        <a href="../index.html" class="hover:text-primary-600 dark:hover:text-primary-400">Home</a>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
@@ -231,50 +213,50 @@
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                         </svg>
-                        <span class="text-gray-900 dark:text-white">Icons</span>
+                        <span class="text-base-900 dark:text-white">Icons</span>
                     </div>
-                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Icons</h1>
-                    <p class="text-gray-600 dark:text-gray-400">Google Material Symbols를 사용한 아이콘 시스템입니다. 일관된 아이콘 사용으로 직관적인 UI를 구축합니다.</p>
+                    <h1 class="text-3xl font-bold text-base-900 dark:text-white mb-2">Icons</h1>
+                    <p class="text-base-600 dark:text-base-400">Google Material Symbols를 사용한 아이콘 시스템입니다. 일관된 아이콘 사용으로 직관적인 UI를 구축합니다.</p>
                 </div>
 
                 <!-- Icon System -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Icon System</h2>
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Icon System</h2>
+                    <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-6">
                         <div class="flex flex-col lg:flex-row lg:items-start gap-6">
                             <div class="flex-1">
-                                <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-3">
-                                    <span class="material-symbols-outlined text-4xl text-violet-600">category</span>
+                                <h3 class="text-2xl font-bold text-base-900 dark:text-white mb-4 flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-4xl text-primary-600">category</span>
                                     Material Symbols
                                 </h3>
-                                <p class="text-gray-600 dark:text-gray-400 mb-4">
+                                <p class="text-base-600 dark:text-base-400 mb-4">
                                     Material Symbols는 Google에서 제공하는 2,500개 이상의 아이콘 세트입니다. Variable Font 기술을 사용하여 Fill, Weight, Grade, Optical Size를 자유롭게 조절할 수 있습니다.
                                 </p>
-                                <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 font-mono text-sm text-gray-700 dark:text-gray-300">
-                                    <p class="mb-2 text-gray-500 dark:text-gray-400">/* CDN */</p>
+                                <div class="bg-base-50 dark:bg-base-900 rounded-lg p-4 font-mono text-sm text-base-700 dark:text-base-300">
+                                    <p class="mb-2 text-base-500 dark:text-base-400">/* CDN */</p>
                                     <p class="text-xs break-all">&lt;link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" /&gt;</p>
-                                    <p class="mt-3 mb-2 text-gray-500 dark:text-gray-400">/* HTML Usage */</p>
+                                    <p class="mt-3 mb-2 text-base-500 dark:text-base-400">/* HTML Usage */</p>
                                     <p>&lt;span class="material-symbols-outlined"&gt;home&lt;/span&gt;</p>
                                 </div>
                             </div>
-                            <div class="lg:w-72 bg-gray-50 dark:bg-gray-900 rounded-lg p-5">
-                                <h4 class="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">스타일 옵션</h4>
-                                <ul class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                            <div class="lg:w-72 bg-base-50 dark:bg-base-900 rounded-lg p-5">
+                                <h4 class="text-sm font-medium text-base-500 dark:text-base-400 mb-3">스타일 옵션</h4>
+                                <ul class="space-y-3 text-sm text-base-700 dark:text-base-300">
                                     <li class="flex items-center gap-3">
-                                        <span class="material-symbols-outlined text-violet-500">radio_button_unchecked</span>
+                                        <span class="material-symbols-outlined text-primary-500">radio_button_unchecked</span>
                                         Outlined (기본)
                                     </li>
                                     <li class="flex items-center gap-3">
-                                        <span class="material-symbols-outlined text-violet-500" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
+                                        <span class="material-symbols-outlined text-primary-500" style="font-variation-settings: 'FILL' 1;">radio_button_checked</span>
                                         Filled
                                     </li>
                                     <li class="flex items-center gap-3">
-                                        <span class="material-symbols-outlined text-violet-500" style="font-variation-settings: 'wght' 700;">format_bold</span>
+                                        <span class="material-symbols-outlined text-primary-500" style="font-variation-settings: 'wght' 700;">format_bold</span>
                                         Weight 조절 가능
                                     </li>
                                     <li class="flex items-center gap-3">
-                                        <span class="material-symbols-outlined text-violet-500">open_in_new</span>
-                                        <a href="https://fonts.google.com/icons" target="_blank" class="text-violet-600 dark:text-violet-400 hover:underline">아이콘 검색</a>
+                                        <span class="material-symbols-outlined text-primary-500">open_in_new</span>
+                                        <a href="https://fonts.google.com/icons" target="_blank" class="text-primary-600 dark:text-primary-400 hover:underline">아이콘 검색</a>
                                     </li>
                                 </ul>
                             </div>
@@ -284,14 +266,14 @@
 
                 <!-- Icon Customization -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Icon Customization</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">슬라이더를 조절하여 아이콘 스타일을 실시간으로 확인하세요.</p>
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Icon Customization</h2>
+                    <p class="text-base-600 dark:text-base-400 mb-6">슬라이더를 조절하여 아이콘 스타일을 실시간으로 확인하세요.</p>
+                    <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 overflow-hidden">
                         <div class="grid grid-cols-1 lg:grid-cols-2">
                             <!-- Preview -->
-                            <div class="p-8 flex flex-col items-center justify-center bg-gray-50 dark:bg-gray-900 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700">
-                                <span id="previewIcon" class="material-symbols-outlined text-8xl text-gray-900 dark:text-white mb-4">home</span>
-                                <select id="previewIconSelect" onchange="updatePreviewIcon()" class="px-3 py-2 text-sm bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 text-gray-900 dark:text-white">
+                            <div class="p-8 flex flex-col items-center justify-center bg-base-50 dark:bg-base-900 border-b lg:border-b-0 lg:border-r border-base-200 dark:border-base-700">
+                                <span id="previewIcon" class="material-symbols-outlined text-8xl text-base-900 dark:text-white mb-4">home</span>
+                                <select id="previewIconSelect" onchange="updatePreviewIcon()" class="px-3 py-2 text-sm bg-white dark:bg-base-800 border border-base-200 dark:border-base-600 rounded-lg focus:ring-2 focus:ring-primary-500 text-base-900 dark:text-white">
                                     <option value="home">home</option>
                                     <option value="search">search</option>
                                     <option value="settings">settings</option>
@@ -306,35 +288,35 @@
                             <div class="p-6 space-y-5">
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Fill</label>
-                                        <span id="fillValue" class="text-sm text-gray-500 dark:text-gray-400">0</span>
+                                        <label class="text-sm font-medium text-base-700 dark:text-base-300">Fill</label>
+                                        <span id="fillValue" class="text-sm text-base-500 dark:text-base-400">0</span>
                                     </div>
-                                    <input type="range" id="fillSlider" min="0" max="1" step="1" value="0" oninput="updateIconStyle()" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-600">
+                                    <input type="range" id="fillSlider" min="0" max="1" step="1" value="0" oninput="updateIconStyle()" class="w-full h-2 bg-base-200 dark:bg-base-700 rounded-lg appearance-none cursor-pointer accent-primary-600">
                                 </div>
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Weight</label>
-                                        <span id="weightValue" class="text-sm text-gray-500 dark:text-gray-400">400</span>
+                                        <label class="text-sm font-medium text-base-700 dark:text-base-300">Weight</label>
+                                        <span id="weightValue" class="text-sm text-base-500 dark:text-base-400">400</span>
                                     </div>
-                                    <input type="range" id="weightSlider" min="100" max="700" step="100" value="400" oninput="updateIconStyle()" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-600">
+                                    <input type="range" id="weightSlider" min="100" max="700" step="100" value="400" oninput="updateIconStyle()" class="w-full h-2 bg-base-200 dark:bg-base-700 rounded-lg appearance-none cursor-pointer accent-primary-600">
                                 </div>
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Grade</label>
-                                        <span id="gradeValue" class="text-sm text-gray-500 dark:text-gray-400">0</span>
+                                        <label class="text-sm font-medium text-base-700 dark:text-base-300">Grade</label>
+                                        <span id="gradeValue" class="text-sm text-base-500 dark:text-base-400">0</span>
                                     </div>
-                                    <input type="range" id="gradeSlider" min="-50" max="200" step="25" value="0" oninput="updateIconStyle()" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-600">
+                                    <input type="range" id="gradeSlider" min="-50" max="200" step="25" value="0" oninput="updateIconStyle()" class="w-full h-2 bg-base-200 dark:bg-base-700 rounded-lg appearance-none cursor-pointer accent-primary-600">
                                 </div>
                                 <div>
                                     <div class="flex items-center justify-between mb-2">
-                                        <label class="text-sm font-medium text-gray-700 dark:text-gray-300">Optical Size</label>
-                                        <span id="opszValue" class="text-sm text-gray-500 dark:text-gray-400">24</span>
+                                        <label class="text-sm font-medium text-base-700 dark:text-base-300">Optical Size</label>
+                                        <span id="opszValue" class="text-sm text-base-500 dark:text-base-400">24</span>
                                     </div>
-                                    <input type="range" id="opszSlider" min="20" max="48" step="4" value="24" oninput="updateIconStyle()" class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-lg appearance-none cursor-pointer accent-violet-600">
+                                    <input type="range" id="opszSlider" min="20" max="48" step="4" value="24" oninput="updateIconStyle()" class="w-full h-2 bg-base-200 dark:bg-base-700 rounded-lg appearance-none cursor-pointer accent-primary-600">
                                 </div>
-                                <div class="pt-4 border-t border-gray-200 dark:border-gray-700">
-                                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-2">CSS Code</p>
-                                    <div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-3 font-mono text-xs text-gray-700 dark:text-gray-300">
+                                <div class="pt-4 border-t border-base-200 dark:border-base-700">
+                                    <p class="text-xs text-base-500 dark:text-base-400 mb-2">CSS Code</p>
+                                    <div class="bg-base-50 dark:bg-base-900 rounded-lg p-3 font-mono text-xs text-base-700 dark:text-base-300">
                                         <code id="cssCode">font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;</code>
                                     </div>
                                 </div>
@@ -345,83 +327,83 @@
 
                 <!-- Icon Sizes -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Icon Sizes</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">권장되는 아이콘 크기입니다. CSS 클래스를 사용하여 일관된 크기를 적용하세요.</p>
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Icon Sizes</h2>
+                    <p class="text-base-600 dark:text-base-400 mb-6">권장되는 아이콘 크기입니다. CSS 클래스를 사용하여 일관된 크기를 적용하세요.</p>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 text-center">
-                            <span class="material-symbols-outlined icon-sm text-gray-900 dark:text-white mb-3 block">home</span>
-                            <p class="text-lg font-semibold text-gray-900 dark:text-white">18px</p>
-                            <code class="text-xs font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-0.5 rounded">.icon-sm</code>
-                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">인라인 텍스트</p>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5 text-center">
+                            <span class="material-symbols-outlined icon-sm text-base-900 dark:text-white mb-3 block">home</span>
+                            <p class="text-lg font-semibold text-base-900 dark:text-white">18px</p>
+                            <code class="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded">.icon-sm</code>
+                            <p class="text-xs text-base-400 dark:text-base-500 mt-2">인라인 텍스트</p>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 text-center">
-                            <span class="material-symbols-outlined icon-md text-gray-900 dark:text-white mb-3 block">home</span>
-                            <p class="text-lg font-semibold text-gray-900 dark:text-white">24px</p>
-                            <code class="text-xs font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-0.5 rounded">.icon-md</code>
-                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">버튼, 메뉴</p>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5 text-center">
+                            <span class="material-symbols-outlined icon-md text-base-900 dark:text-white mb-3 block">home</span>
+                            <p class="text-lg font-semibold text-base-900 dark:text-white">24px</p>
+                            <code class="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded">.icon-md</code>
+                            <p class="text-xs text-base-400 dark:text-base-500 mt-2">버튼, 메뉴</p>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 text-center">
-                            <span class="material-symbols-outlined icon-lg text-gray-900 dark:text-white mb-3 block">home</span>
-                            <p class="text-lg font-semibold text-gray-900 dark:text-white">36px</p>
-                            <code class="text-xs font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-0.5 rounded">.icon-lg</code>
-                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">강조 영역</p>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5 text-center">
+                            <span class="material-symbols-outlined icon-lg text-base-900 dark:text-white mb-3 block">home</span>
+                            <p class="text-lg font-semibold text-base-900 dark:text-white">36px</p>
+                            <code class="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded">.icon-lg</code>
+                            <p class="text-xs text-base-400 dark:text-base-500 mt-2">강조 영역</p>
                         </div>
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5 text-center">
-                            <span class="material-symbols-outlined icon-xl text-gray-900 dark:text-white mb-3 block">home</span>
-                            <p class="text-lg font-semibold text-gray-900 dark:text-white">48px</p>
-                            <code class="text-xs font-mono text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 px-2 py-0.5 rounded">.icon-xl</code>
-                            <p class="text-xs text-gray-400 dark:text-gray-500 mt-2">빈 상태, 히어로</p>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5 text-center">
+                            <span class="material-symbols-outlined icon-xl text-base-900 dark:text-white mb-3 block">home</span>
+                            <p class="text-lg font-semibold text-base-900 dark:text-white">48px</p>
+                            <code class="text-xs font-mono text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded">.icon-xl</code>
+                            <p class="text-xs text-base-400 dark:text-base-500 mt-2">빈 상태, 히어로</p>
                         </div>
                     </div>
 
                     <!-- CSS Classes Reference -->
-                    <div class="mt-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                        <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
-                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">CSS Classes</span>
+                    <div class="mt-6 bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 overflow-hidden">
+                        <div class="flex items-center justify-between px-4 py-3 bg-base-50 dark:bg-base-900 border-b border-base-200 dark:border-base-700">
+                            <span class="text-sm font-medium text-base-700 dark:text-base-300">CSS Classes</span>
                             <div class="flex items-center gap-1.5">
                                 <span class="w-3 h-3 rounded-full bg-red-400"></span>
                                 <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
                                 <span class="w-3 h-3 rounded-full bg-green-400"></span>
                             </div>
                         </div>
-                        <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Icon Sizes */</span>
-<span class="text-violet-600 dark:text-violet-400">.icon-sm</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">18px</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-md</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">24px</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-lg</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">36px</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-xl</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">48px</span>; }
+                        <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-base-500 dark:text-base-400">/* Icon Sizes */</span>
+<span class="text-primary-600 dark:text-primary-400">.icon-sm</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">18px</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-md</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">24px</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-lg</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">36px</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-xl</span> { <span class="text-blue-600 dark:text-blue-400">font-size</span>: <span class="text-amber-600 dark:text-amber-400">48px</span>; }
 
-<span class="text-gray-500 dark:text-gray-400">/* Icon Weights */</span>
-<span class="text-violet-600 dark:text-violet-400">.icon-light</span>   { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">300</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-regular</span> { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-medium</span>  { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">500</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-bold</span>    { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">700</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
+<span class="text-base-500 dark:text-base-400">/* Icon Weights */</span>
+<span class="text-primary-600 dark:text-primary-400">.icon-light</span>   { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">300</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-regular</span> { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-medium</span>  { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">500</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-bold</span>    { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">700</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
 
-<span class="text-gray-500 dark:text-gray-400">/* Icon Fill */</span>
-<span class="text-violet-600 dark:text-violet-400">.icon-outlined</span> { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
-<span class="text-violet-600 dark:text-violet-400">.icon-filled</span>   { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">1</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }</code></pre>
+<span class="text-base-500 dark:text-base-400">/* Icon Fill */</span>
+<span class="text-primary-600 dark:text-primary-400">.icon-outlined</span> { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }
+<span class="text-primary-600 dark:text-primary-400">.icon-filled</span>   { <span class="text-blue-600 dark:text-blue-400">font-variation-settings</span>: <span class="text-emerald-600 dark:text-emerald-400">'FILL'</span> <span class="text-amber-600 dark:text-amber-400">1</span>, <span class="text-emerald-600 dark:text-emerald-400">'wght'</span> <span class="text-amber-600 dark:text-amber-400">400</span>, <span class="text-emerald-600 dark:text-emerald-400">'GRAD'</span> <span class="text-amber-600 dark:text-amber-400">0</span>, <span class="text-emerald-600 dark:text-emerald-400">'opsz'</span> <span class="text-amber-600 dark:text-amber-400">24</span>; }</code></pre>
                     </div>
                 </section>
 
                 <!-- Icon Gallery -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Icon Gallery</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">자주 사용하는 아이콘 모음입니다. 클릭하면 아이콘 이름이 복사됩니다.</p>
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Icon Gallery</h2>
+                    <p class="text-base-600 dark:text-base-400 mb-6">자주 사용하는 아이콘 모음입니다. 클릭하면 아이콘 이름이 복사됩니다.</p>
 
                     <!-- Search & Filter -->
                     <div class="flex flex-col sm:flex-row gap-4 mb-6">
                         <div class="relative flex-1">
-                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-base-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                             </svg>
-                            <input type="text" id="iconSearch" placeholder="아이콘 검색..." oninput="searchIcons()" class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                            <input type="text" id="iconSearch" placeholder="아이콘 검색..." oninput="searchIcons()" class="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-base-800 border border-base-200 dark:border-base-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent text-base-900 dark:text-white placeholder-gray-400">
                         </div>
                         <div class="flex gap-2 flex-wrap">
-                            <button onclick="filterByCategory('all')" class="category-btn active px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-violet-600 text-white" data-category="all">All</button>
-                            <button onclick="filterByCategory('action')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700" data-category="action">Action</button>
-                            <button onclick="filterByCategory('navigation')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700" data-category="navigation">Navigation</button>
-                            <button onclick="filterByCategory('content')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700" data-category="content">Content</button>
-                            <button onclick="filterByCategory('communication')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700" data-category="communication">Communication</button>
-                            <button onclick="filterByCategory('toggle')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-700" data-category="toggle">Toggle</button>
+                            <button onclick="filterByCategory('all')" class="category-btn active px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-primary-600 text-white" data-category="all">All</button>
+                            <button onclick="filterByCategory('action')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-400 hover:bg-base-200 dark:hover:bg-base-700" data-category="action">Action</button>
+                            <button onclick="filterByCategory('navigation')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-400 hover:bg-base-200 dark:hover:bg-base-700" data-category="navigation">Navigation</button>
+                            <button onclick="filterByCategory('content')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-400 hover:bg-base-200 dark:hover:bg-base-700" data-category="content">Content</button>
+                            <button onclick="filterByCategory('communication')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-400 hover:bg-base-200 dark:hover:bg-base-700" data-category="communication">Communication</button>
+                            <button onclick="filterByCategory('toggle')" class="category-btn px-4 py-2 text-sm font-medium rounded-lg transition-colors bg-base-100 dark:bg-base-800 text-base-600 dark:text-base-400 hover:bg-base-200 dark:hover:bg-base-700" data-category="toggle">Toggle</button>
                         </div>
                     </div>
 
@@ -433,37 +415,37 @@
 
                 <!-- Emoji Section -->
                 <section class="mb-12">
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Emoji</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">UI에서 자주 사용하는 이모지입니다. 클릭하면 복사됩니다.</p>
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Emoji</h2>
+                    <p class="text-base-600 dark:text-base-400 mb-6">UI에서 자주 사용하는 이모지입니다. 클릭하면 복사됩니다.</p>
 
                     <div class="space-y-6">
                         <!-- Status/Feedback -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Status / Feedback</h3>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5">
+                            <h3 class="text-sm font-medium text-base-500 dark:text-base-400 uppercase tracking-wider mb-4">Status / Feedback</h3>
                             <div id="emojiStatus" class="flex flex-wrap gap-2">
                                 <!-- Generated by JS -->
                             </div>
                         </div>
 
                         <!-- Gestures -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Gestures</h3>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5">
+                            <h3 class="text-sm font-medium text-base-500 dark:text-base-400 uppercase tracking-wider mb-4">Gestures</h3>
                             <div id="emojiGestures" class="flex flex-wrap gap-2">
                                 <!-- Generated by JS -->
                             </div>
                         </div>
 
                         <!-- Objects -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Objects</h3>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5">
+                            <h3 class="text-sm font-medium text-base-500 dark:text-base-400 uppercase tracking-wider mb-4">Objects</h3>
                             <div id="emojiObjects" class="flex flex-wrap gap-2">
                                 <!-- Generated by JS -->
                             </div>
                         </div>
 
                         <!-- Symbols -->
-                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
-                            <h3 class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Symbols</h3>
+                        <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-5">
+                            <h3 class="text-sm font-medium text-base-500 dark:text-base-400 uppercase tracking-wider mb-4">Symbols</h3>
                             <div id="emojiSymbols" class="flex flex-wrap gap-2">
                                 <!-- Generated by JS -->
                             </div>
@@ -473,17 +455,17 @@
 
                 <!-- Usage Guidelines -->
                 <section>
-                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
-                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                    <h2 class="text-xl font-semibold text-base-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-base-800 rounded-xl border border-base-200 dark:border-base-700 p-6">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                <h3 class="font-medium text-base-900 dark:text-white mb-3 flex items-center gap-2">
                                     <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
                                     </svg>
                                     Do
                                 </h3>
-                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <ul class="space-y-2 text-sm text-base-600 dark:text-base-400">
                                     <li>• 일관된 아이콘 스타일을 사용하세요 (Outlined 권장)</li>
                                     <li>• 아이콘과 함께 텍스트 레이블을 제공하세요</li>
                                     <li>• 권장 크기(18, 24, 36, 48px)를 사용하세요</li>
@@ -492,13 +474,13 @@
                                 </ul>
                             </div>
                             <div>
-                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                <h3 class="font-medium text-base-900 dark:text-white mb-3 flex items-center gap-2">
                                     <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                                     </svg>
                                     Don't
                                 </h3>
-                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                <ul class="space-y-2 text-sm text-base-600 dark:text-base-400">
                                     <li>• 여러 아이콘 스타일을 혼합하지 마세요</li>
                                     <li>• 아이콘만으로 중요한 정보를 전달하지 마세요</li>
                                     <li>• 너무 작은 크기(16px 미만)를 사용하지 마세요</li>
@@ -514,7 +496,7 @@
     </div>
 
     <!-- Copy Toast -->
-    <div id="copyToast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 text-sm font-medium rounded-lg shadow-lg copy-toast">
+    <div id="copyToast" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-50 px-4 py-2 bg-base-900 dark:bg-base-100 text-white dark:text-base-900 text-sm font-medium rounded-lg shadow-lg copy-toast">
         Copied!
     </div>
 
@@ -595,17 +577,17 @@
 
             iconsToRender.forEach(icon => {
                 const card = document.createElement('div');
-                card.className = 'icon-card bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 flex flex-col items-center gap-2 cursor-pointer hover:border-violet-500 dark:hover:border-violet-500 hover:shadow-md transition-all duration-200';
+                card.className = 'icon-card';
                 card.onclick = () => copyToClipboard(icon);
                 card.innerHTML = `
-                    <span class="material-symbols-outlined text-2xl text-gray-700 dark:text-gray-300">${icon}</span>
-                    <span class="text-xs text-gray-500 dark:text-gray-400 truncate w-full text-center">${icon}</span>
+                    <span class="material-symbols-outlined text-2xl text-base-700 dark:text-base-300">${icon}</span>
+                    <span class="text-xs text-base-500 dark:text-base-400 truncate w-full text-center">${icon}</span>
                 `;
                 grid.appendChild(card);
             });
 
             if (iconsToRender.length === 0) {
-                grid.innerHTML = '<p class="col-span-full text-center text-gray-500 dark:text-gray-400 py-8">검색 결과가 없습니다.</p>';
+                grid.innerHTML = '<p class="col-span-full text-center text-base-500 dark:text-base-400 py-8">검색 결과가 없습니다.</p>';
             }
         }
 
@@ -621,11 +603,11 @@
 
             document.querySelectorAll('.category-btn').forEach(btn => {
                 if (btn.dataset.category === category) {
-                    btn.classList.remove('bg-gray-100', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-200', 'dark:hover:bg-gray-700');
-                    btn.classList.add('bg-violet-600', 'text-white', 'active');
+                    btn.classList.remove('bg-base-100', 'dark:bg-base-800', 'text-base-600', 'dark:text-base-400', 'hover:bg-base-200', 'dark:hover:bg-base-700');
+                    btn.classList.add('bg-primary-600', 'text-white', 'active');
                 } else {
-                    btn.classList.add('bg-gray-100', 'dark:bg-gray-800', 'text-gray-600', 'dark:text-gray-400', 'hover:bg-gray-200', 'dark:hover:bg-gray-700');
-                    btn.classList.remove('bg-violet-600', 'text-white', 'active');
+                    btn.classList.add('bg-base-100', 'dark:bg-base-800', 'text-base-600', 'dark:text-base-400', 'hover:bg-base-200', 'dark:hover:bg-base-700');
+                    btn.classList.remove('bg-primary-600', 'text-white', 'active');
                 }
             });
 
@@ -641,7 +623,7 @@
                 container.innerHTML = '';
                 EMOJIS[category].forEach(emoji => {
                     const btn = document.createElement('button');
-                    btn.className = 'w-12 h-12 flex items-center justify-center text-2xl bg-gray-50 dark:bg-gray-900 rounded-lg hover:bg-violet-100 dark:hover:bg-violet-900/30 transition-colors';
+                    btn.className = 'w-12 h-12 flex items-center justify-center text-2xl bg-base-50 dark:bg-base-900 rounded-lg hover:bg-primary-100 dark:hover:bg-primary-900/30 transition-colors';
                     btn.textContent = emoji;
                     btn.onclick = () => copyToClipboard(emoji);
                     container.appendChild(btn);
