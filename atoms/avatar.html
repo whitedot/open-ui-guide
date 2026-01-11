@@ -23,6 +23,35 @@
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
     </style>
+    <style type="text/tailwindcss">
+        @layer components {
+            /* Avatar Base */
+            .avatar { @apply relative inline-flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700 overflow-hidden; }
+            /* Avatar Sizes */
+            .avatar-xs { @apply w-6 h-6 text-xs; }
+            .avatar-sm { @apply w-8 h-8 text-sm; }
+            .avatar-md { @apply w-10 h-10 text-sm; }
+            .avatar-lg { @apply w-12 h-12 text-base; }
+            .avatar-xl { @apply w-16 h-16 text-lg; }
+            .avatar-2xl { @apply w-20 h-20 text-xl; }
+            /* Avatar Image */
+            .avatar-img { @apply w-full h-full object-cover; }
+            /* Avatar Initials */
+            .avatar-initials { @apply font-medium text-gray-600 dark:text-gray-300; }
+            /* Avatar Status */
+            .avatar-status { @apply absolute bottom-0 right-0 block rounded-full ring-2 ring-white dark:ring-gray-800; }
+            .avatar-status-sm { @apply w-2 h-2; }
+            .avatar-status-md { @apply w-3 h-3; }
+            .avatar-status-lg { @apply w-3.5 h-3.5; }
+            .avatar-status-online { @apply bg-emerald-500; }
+            .avatar-status-offline { @apply bg-gray-400; }
+            .avatar-status-busy { @apply bg-red-500; }
+            .avatar-status-away { @apply bg-amber-500; }
+            /* Avatar Group */
+            .avatar-group { @apply flex -space-x-2; }
+            .avatar-group > .avatar { @apply ring-2 ring-white dark:ring-gray-800; }
+        }
+    </style>
 
     <script>
         // 다크모드 초기화
@@ -189,21 +218,21 @@
                         <div class="flex flex-wrap items-center gap-6 mb-6">
                             <!-- Image Avatar -->
                             <div class="flex flex-col items-center gap-2">
-                                <div class="w-12 h-12 rounded-full overflow-hidden bg-gray-200 dark:bg-gray-700">
-                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="User" class="w-full h-full object-cover">
+                                <div class="avatar avatar-lg">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face" alt="User" class="avatar-img">
                                 </div>
                                 <span class="text-xs text-gray-500 dark:text-gray-400">Image</span>
                             </div>
                             <!-- Initials Avatar -->
                             <div class="flex flex-col items-center gap-2">
-                                <div class="w-12 h-12 rounded-full bg-violet-100 dark:bg-violet-900/30 flex items-center justify-center">
-                                    <span class="text-sm font-medium text-violet-600 dark:text-violet-400">JD</span>
+                                <div class="avatar avatar-lg bg-violet-100 dark:bg-violet-900/30">
+                                    <span class="avatar-initials text-violet-600 dark:text-violet-400">JD</span>
                                 </div>
                                 <span class="text-xs text-gray-500 dark:text-gray-400">Initials</span>
                             </div>
                             <!-- Icon Avatar -->
                             <div class="flex flex-col items-center gap-2">
-                                <div class="w-12 h-12 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                <div class="avatar avatar-lg bg-gray-100 dark:bg-gray-700">
                                     <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
                                     </svg>
@@ -222,17 +251,17 @@
                                 </div>
                             </div>
                             <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Image Avatar --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-12 h-12 rounded-full overflow-hidden"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">src</span>=<span class="text-emerald-600 dark:text-emerald-400">"..."</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full h-full object-cover"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar avatar-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;img</span> <span class="text-violet-600 dark:text-violet-400">src</span>=<span class="text-emerald-600 dark:text-emerald-400">"..."</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar-img"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Initials Avatar --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-12 h-12 rounded-full <span class="text-amber-600 dark:text-amber-400 font-bold">bg-violet-100</span> flex items-center justify-center"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
-  <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm font-medium text-violet-600"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>JD<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar avatar-lg bg-violet-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar-initials text-violet-600"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>JD<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
 
 <span class="text-gray-500 dark:text-gray-400">&lt;!-- Icon Avatar --&gt;</span>
-<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-12 h-12 rounded-full <span class="text-amber-600 dark:text-amber-400 font-bold">bg-gray-100</span> flex items-center justify-center"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"avatar avatar-lg bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
   <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-6 h-6 text-gray-500"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
 <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                         </div>

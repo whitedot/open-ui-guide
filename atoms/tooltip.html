@@ -23,6 +23,32 @@
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
     </style>
+    <style type="text/tailwindcss">
+        @layer components {
+            /* Tooltip Wrapper */
+            .tooltip-wrapper { @apply relative group; }
+            /* Tooltip Base */
+            .tooltip { @apply absolute px-3 py-1.5 text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10; }
+            /* Tooltip Variants */
+            .tooltip-dark { @apply bg-gray-900 dark:bg-gray-700 text-white; }
+            .tooltip-light { @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-lg border border-gray-200 dark:border-gray-600; }
+            .tooltip-primary { @apply bg-violet-600 text-white; }
+            .tooltip-success { @apply bg-emerald-600 text-white; }
+            .tooltip-warning { @apply bg-amber-500 text-white; }
+            .tooltip-danger { @apply bg-red-600 text-white; }
+            /* Tooltip Positions */
+            .tooltip-top { @apply bottom-full left-1/2 -translate-x-1/2 mb-2; }
+            .tooltip-bottom { @apply top-full left-1/2 -translate-x-1/2 mt-2; }
+            .tooltip-left { @apply right-full top-1/2 -translate-y-1/2 mr-2; }
+            .tooltip-right { @apply left-full top-1/2 -translate-y-1/2 ml-2; }
+            /* Tooltip Arrows */
+            .tooltip-arrow { @apply absolute border-4 border-transparent; }
+            .tooltip-arrow-top { @apply top-full left-1/2 -translate-x-1/2 border-t-gray-900 dark:border-t-gray-700; }
+            .tooltip-arrow-bottom { @apply bottom-full left-1/2 -translate-x-1/2 border-b-gray-900 dark:border-b-gray-700; }
+            .tooltip-arrow-left { @apply left-full top-1/2 -translate-y-1/2 border-l-gray-900 dark:border-l-gray-700; }
+            .tooltip-arrow-right { @apply right-full top-1/2 -translate-y-1/2 border-r-gray-900 dark:border-r-gray-700; }
+        }
+    </style>
 
     <script>
         // 다크모드 초기화
