@@ -92,36 +92,36 @@
 
   /* === Base Color (권장 기본값) === */
   .btn-base-primary {
-    @apply bg-gray-600 hover:bg-gray-700 dark:bg-gray-500 dark:hover:bg-gray-400 text-white;
+    @apply bg-base-600 hover:bg-base-700 dark:bg-base-500 dark:hover:bg-base-400 text-white;
   }
   .btn-base-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-white;
+    @apply bg-base-200 hover:bg-base-300 dark:bg-base-700 dark:hover:bg-base-600 text-base-900 dark:text-white;
   }
   .btn-base-tertiary {
-    @apply hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300;
+    @apply hover:bg-base-100 dark:hover:bg-base-700 text-base-700 dark:text-base-300;
   }
   .btn-base-outline {
-    @apply border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300;
+    @apply border border-base-300 dark:border-base-600 hover:bg-base-50 dark:hover:bg-base-700 text-base-700 dark:text-base-300;
   }
   .btn-base-ghost {
-    @apply text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white;
+    @apply text-base-600 dark:text-base-400 hover:text-base-900 dark:hover:text-white;
   }
 
   /* === Primary Color (CTA용) === */
   .btn-primary {
-    @apply bg-violet-600 hover:bg-violet-700 text-white;
+    @apply bg-primary-600 hover:bg-primary-700 text-white;
   }
   .btn-primary-secondary {
-    @apply bg-violet-100 hover:bg-violet-200 dark:bg-violet-900/30 dark:hover:bg-violet-900/50 text-violet-700 dark:text-violet-300;
+    @apply bg-primary-100 hover:bg-primary-200 dark:bg-primary-900/30 dark:hover:bg-primary-900/50 text-primary-700 dark:text-primary-300;
   }
   .btn-primary-tertiary {
-    @apply hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400;
+    @apply hover:bg-primary-50 dark:hover:bg-primary-900/20 text-primary-600 dark:text-primary-400;
   }
   .btn-primary-outline {
-    @apply border border-violet-300 dark:border-violet-700 hover:bg-violet-50 dark:hover:bg-violet-900/20 text-violet-600 dark:text-violet-400;
+    @apply border border-primary-300 dark:border-primary-700 hover:bg-primary-50 dark:hover:bg-primary-900/20 text-primary-600 dark:text-primary-400;
   }
   .btn-primary-ghost {
-    @apply text-violet-600 dark:text-violet-400 hover:text-violet-700 dark:hover:text-violet-300;
+    @apply text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300;
   }
 
   /* === Semantic Colors === */
@@ -154,13 +154,13 @@
 
   /* === Button Group === */
   .btn-group {
-    @apply inline-flex h-10 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-700;
+    @apply inline-flex h-10 rounded-lg overflow-hidden border border-base-200 dark:border-base-700;
   }
   .btn-group-item {
-    @apply inline-flex items-center justify-center font-medium transition-colors px-4 border-r border-gray-200 dark:border-gray-700 rounded-none last:border-r-0;
+    @apply inline-flex items-center justify-center font-medium transition-colors px-4 border-r border-base-200 dark:border-base-700 rounded-none last:border-r-0;
   }
   .btn-group-item-active {
-    @apply bg-gray-600 dark:bg-gray-500 text-white border-r-gray-500 dark:border-r-gray-400;
+    @apply bg-base-600 dark:bg-base-500 text-white border-r-base-500 dark:border-r-base-400;
   }
 
   /* === Full Width === */
@@ -216,10 +216,10 @@
 
   /* === Link Base === */
   .link {
-    @apply text-violet-600 dark:text-violet-400 hover:underline;
+    @apply text-primary-600 dark:text-primary-400 hover:underline;
   }
   .link-muted {
-    @apply text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:underline;
+    @apply text-base-500 dark:text-base-400 hover:text-base-700 dark:hover:text-base-300 hover:underline;
   }
   .link-with-icon {
     @apply inline-flex items-center gap-1;
@@ -231,7 +231,7 @@
 
   /* === Input Base === */
   .input {
-    @apply bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white placeholder-gray-400 focus:ring-2 focus:ring-violet-500 focus:border-transparent transition-colors;
+    @apply bg-white dark:bg-base-900 border border-base-300 dark:border-base-600 text-base-900 dark:text-white placeholder-base-400 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-colors;
   }
 
   /* === Input Sizes === */
@@ -248,13 +248,13 @@
   .input-success:focus { --tw-ring-color: var(--semantic-success); }
   .input-warning { border-color: var(--semantic-warning); }
   .input-warning:focus { --tw-ring-color: var(--semantic-warning); }
-  .input-disabled { @apply bg-gray-50 dark:bg-gray-900 text-gray-400 dark:text-gray-500 cursor-not-allowed opacity-50; }
+  .input-disabled { @apply bg-base-50 dark:bg-base-900 text-base-400 dark:text-base-500 cursor-not-allowed opacity-50; }
 
   /* === Input Label === */
-  .input-label { @apply block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2; }
+  .input-label { @apply block text-sm font-medium text-base-700 dark:text-base-300 mb-2; }
 
   /* === Input Helper === */
-  .input-helper { @apply mt-1.5 text-sm text-gray-500 dark:text-gray-400; }
+  .input-helper { @apply mt-1.5 text-sm text-base-500 dark:text-base-400; }
   .input-helper-error { @apply mt-1.5 text-sm; color: var(--semantic-error-light); }
   .dark .input-helper-error { color: var(--semantic-error-dark); }
   .input-helper-success { @apply mt-1.5 text-sm; color: var(--semantic-success-light); }
@@ -271,9 +271,9 @@
     @apply h-14 pt-5 pb-2 px-3 text-sm rounded-lg;
   }
   .input-floating-label {
-    @apply absolute left-3 top-1/2 -translate-y-1/2 text-sm text-gray-400 dark:text-gray-500 transition-all duration-200 pointer-events-none;
-    @apply peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-violet-600 dark:peer-focus:text-violet-400;
-    @apply peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-500 dark:peer-[:not(:placeholder-shown)]:text-gray-400;
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-sm text-base-400 dark:text-base-500 transition-all duration-200 pointer-events-none;
+    @apply peer-focus:top-2 peer-focus:translate-y-0 peer-focus:text-xs peer-focus:text-primary-600 dark:peer-focus:text-primary-400;
+    @apply peer-[:not(:placeholder-shown)]:top-2 peer-[:not(:placeholder-shown)]:translate-y-0 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-base-500 dark:peer-[:not(:placeholder-shown)]:text-base-400;
   }
 
   /* === Textarea === */
@@ -288,7 +288,7 @@
     @apply relative;
   }
   .input-icon {
-    @apply absolute top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400;
+    @apply absolute top-1/2 -translate-y-1/2 w-5 h-5 text-base-400;
   }
   .input-icon-left { @apply left-3; }
   .input-icon-right { @apply right-3; }
@@ -298,7 +298,7 @@
     @apply flex;
   }
   .input-group-addon {
-    @apply inline-flex items-center px-3 text-sm text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600;
+    @apply inline-flex items-center px-3 text-sm text-base-600 dark:text-base-400 bg-base-100 dark:bg-base-700 border border-base-300 dark:border-base-600;
   }
   .input-group-addon-left {
     @apply border-r-0 rounded-l-lg;
@@ -307,7 +307,7 @@
     @apply border-l-0 rounded-r-lg;
   }
   .input-group-select {
-    @apply h-10 px-3 bg-gray-100 dark:bg-gray-700 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-violet-500 focus:border-transparent;
+    @apply h-10 px-3 bg-base-100 dark:bg-base-700 border border-r-0 border-base-300 dark:border-base-600 rounded-l-lg text-base-900 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent;
   }
 
   /* === Input Rounded Overrides === */
@@ -318,7 +318,7 @@
   .input-icon-success { color: var(--semantic-success); }
   .input-icon-error { color: var(--semantic-error); }
   .input-icon-warning { color: var(--semantic-warning); }
-  .input-icon-btn { @apply hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer; }
+  .input-icon-btn { @apply hover:text-base-600 dark:hover:text-base-300 cursor-pointer; }
 
   /* === Input Helper Warning === */
   .input-helper-warning { @apply mt-1.5 text-sm; color: var(--semantic-warning-light); }
@@ -327,7 +327,7 @@
 
   /* === Label Modifiers === */
   .input-label-required { color: var(--semantic-error); }
-  .input-label-optional { @apply text-gray-400 dark:text-gray-500 font-normal; }
+  .input-label-optional { @apply text-base-400 dark:text-base-500 font-normal; }
 
   /* ============================================
      Icon Component (Material Symbols)
@@ -351,8 +351,8 @@
 
   /* === Icon Card (Gallery) === */
   .icon-card {
-    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3 flex flex-col items-center gap-2 cursor-pointer transition-all duration-200;
-    @apply hover:border-violet-500 dark:hover:border-violet-500 hover:shadow-md;
+    @apply bg-white dark:bg-base-800 rounded-lg border border-base-200 dark:border-base-700 p-3 flex flex-col items-center gap-2 cursor-pointer transition-all duration-200;
+    @apply hover:border-primary-500 dark:hover:border-primary-500 hover:shadow-md;
   }
   .icon-card:hover {
     transform: translateY(-2px);
@@ -377,24 +377,24 @@
 
   /* === Badge Variants - Base Color (Solid) === */
   .badge-base {
-    @apply bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300;
+    @apply bg-base-100 dark:bg-base-700 text-base-700 dark:text-base-300;
   }
   .badge-base-outline {
-    @apply bg-transparent border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300;
+    @apply bg-transparent border border-base-300 dark:border-base-600 text-base-700 dark:text-base-300;
   }
   .badge-base-filled {
-    @apply bg-gray-600 text-white;
+    @apply bg-base-600 text-white;
   }
 
   /* === Badge Variants - Primary Color (Solid) === */
   .badge-primary {
-    @apply bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-300;
+    @apply bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300;
   }
   .badge-primary-outline {
-    @apply bg-transparent border border-violet-300 dark:border-violet-700 text-violet-700 dark:text-violet-300;
+    @apply bg-transparent border border-primary-300 dark:border-primary-700 text-primary-700 dark:text-primary-300;
   }
   .badge-primary-filled {
-    @apply bg-violet-600 text-white;
+    @apply bg-primary-600 text-white;
   }
 
   /* === Badge Variants - Semantic Colors (Solid) === */
@@ -450,8 +450,8 @@
   .badge-dot {
     @apply w-1.5 h-1.5 rounded-full;
   }
-  .badge-dot-base { @apply bg-gray-500; }
-  .badge-dot-primary { @apply bg-violet-500; }
+  .badge-dot-base { @apply bg-base-500; }
+  .badge-dot-primary { @apply bg-primary-500; }
   .badge-dot-success { @apply bg-emerald-500; }
   .badge-dot-warning { @apply bg-amber-500; }
   .badge-dot-error { @apply bg-red-500; }
@@ -462,7 +462,7 @@
     @apply flex-shrink-0 ml-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center focus:outline-none;
   }
   .badge-remove-primary {
-    @apply text-violet-500 hover:bg-violet-200 dark:hover:bg-violet-800 hover:text-violet-600;
+    @apply text-primary-500 hover:bg-primary-200 dark:hover:bg-primary-800 hover:text-primary-600;
   }
   .badge-remove-success {
     @apply text-emerald-500 hover:bg-emerald-200 dark:hover:bg-emerald-800 hover:text-emerald-600;
@@ -482,10 +482,10 @@
 
   /* === Tag Variants === */
   .tag-base {
-    @apply bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300;
+    @apply bg-base-100 dark:bg-base-700 text-base-800 dark:text-base-300;
   }
   .tag-primary {
-    @apply bg-violet-100 dark:bg-violet-900/30 text-violet-800 dark:text-violet-400;
+    @apply bg-primary-100 dark:bg-primary-900/30 text-primary-800 dark:text-primary-400;
   }
   .tag-success {
     @apply bg-emerald-100 dark:bg-emerald-900/30 text-emerald-800 dark:text-emerald-400;
@@ -499,10 +499,10 @@
 
   /* === Tag Clickable === */
   .tag-clickable {
-    @apply hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer;
+    @apply hover:bg-base-200 dark:hover:bg-base-600 transition-colors cursor-pointer;
   }
   .tag-active {
-    @apply bg-violet-600 text-white hover:bg-violet-700;
+    @apply bg-primary-600 text-white hover:bg-primary-700;
   }
 
   /* === Tag With Remove === */
@@ -513,10 +513,10 @@
     @apply flex-shrink-0 h-4 w-4 rounded inline-flex items-center justify-center focus:outline-none;
   }
   .tag-remove-base {
-    @apply text-gray-500 hover:bg-gray-200 dark:hover:bg-gray-600;
+    @apply text-base-500 hover:bg-base-200 dark:hover:bg-base-600;
   }
   .tag-remove-primary {
-    @apply text-violet-500 hover:bg-violet-200 dark:hover:bg-violet-800 hover:text-violet-600;
+    @apply text-primary-500 hover:bg-primary-200 dark:hover:bg-primary-800 hover:text-primary-600;
   }
 
   /* ============================================
@@ -544,10 +544,10 @@
 
   /* === Status Indicator (for avatars) === */
   .status-indicator {
-    @apply absolute bottom-0 right-0 w-3 h-3 border-2 border-white dark:border-gray-800 rounded-full;
+    @apply absolute bottom-0 right-0 w-3 h-3 border-2 border-white dark:border-base-800 rounded-full;
   }
   .status-online { @apply bg-emerald-500; }
-  .status-offline { @apply bg-gray-400; }
+  .status-offline { @apply bg-base-400; }
   .status-busy { @apply bg-red-500; }
   .status-away { @apply bg-amber-500; }
 
