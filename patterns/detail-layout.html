@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Detail Layout - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Breadcrumb -->
+                <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                    <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span>Patterns</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    </svg>
+                    <span class="text-gray-900 dark:text-white">Detail Layout</span>
+                </div>
+
+                <!-- Page Title -->
+                <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Detail Layout</h1>
+                <p class="text-gray-600 dark:text-gray-400 mb-8">개별 항목의 상세 정보를 표시하는 레이아웃 패턴입니다. 프로필, 상품, 주문 상세 등에 활용됩니다.</p>
+
+                <!-- Profile Detail -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Profile Detail</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">사용자 프로필 상세 정보를 표시하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Cover & Avatar -->
+                                <div class="relative">
+                                    <div class="h-32 bg-gradient-to-r from-violet-500 to-purple-600"></div>
+                                    <div class="absolute -bottom-12 left-6">
+                                        <img src="https://i.pravatar.cc/96?img=1" alt="Profile" class="w-24 h-24 rounded-full border-4 border-white dark:border-gray-800 shadow-lg">
+                                    </div>
+                                </div>
+
+                                <!-- Profile Info -->
+                                <div class="pt-16 pb-6 px-6">
+                                    <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                                        <div>
+                                            <h2 class="text-xl font-bold text-gray-900 dark:text-white">김민수</h2>
+                                            <p class="text-gray-500 dark:text-gray-400">@minsu.kim</p>
+                                            <p class="mt-2 text-gray-600 dark:text-gray-300">프론트엔드 개발자 | 서울, 대한민국</p>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <button class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium rounded-lg transition-colors">
+                                                팔로우
+                                            </button>
+                                            <button class="px-4 py-2 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm font-medium rounded-lg transition-colors">
+                                                메시지
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stats -->
+                                    <div class="mt-6 flex gap-6">
+                                        <div class="text-center">
+                                            <p class="text-xl font-bold text-gray-900 dark:text-white">1,234</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">팔로워</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-xl font-bold text-gray-900 dark:text-white">567</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">팔로잉</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <p class="text-xl font-bold text-gray-900 dark:text-white">89</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">게시물</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Product Detail -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Product Detail</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">상품 상세 정보를 표시하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <div class="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                                    <!-- Image Gallery -->
+                                    <div class="p-6 border-b lg:border-b-0 lg:border-r border-gray-200 dark:border-gray-700">
+                                        <div class="aspect-square bg-gray-100 dark:bg-gray-700 rounded-xl flex items-center justify-center">
+                                            <svg class="w-24 h-24 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                            </svg>
+                                        </div>
+                                        <div class="mt-4 flex gap-2">
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg border-2 border-violet-500"></div>
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"></div>
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"></div>
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600"></div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Product Info -->
+                                    <div class="p-6">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="px-2 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded">판매중</span>
+                                            <span class="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-medium rounded">30% 할인</span>
+                                        </div>
+                                        <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-2">프리미엄 무선 헤드폰</h2>
+                                        <div class="flex items-center gap-2 mb-4">
+                                            <div class="flex items-center">
+                                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                <svg class="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                                <svg class="w-4 h-4 text-gray-300 dark:text-gray-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                            </div>
+                                            <span class="text-sm text-gray-500 dark:text-gray-400">4.0 (128 리뷰)</span>
+                                        </div>
+
+                                        <div class="mb-6">
+                                            <span class="text-sm text-gray-500 dark:text-gray-400 line-through">₩199,000</span>
+                                            <p class="text-3xl font-bold text-gray-900 dark:text-white">₩139,000</p>
+                                        </div>
+
+                                        <!-- Options -->
+                                        <div class="space-y-4 mb-6">
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">색상</label>
+                                                <div class="flex gap-2">
+                                                    <button class="w-8 h-8 rounded-full bg-gray-900 ring-2 ring-offset-2 ring-violet-500"></button>
+                                                    <button class="w-8 h-8 rounded-full bg-white border border-gray-200 dark:border-gray-600"></button>
+                                                    <button class="w-8 h-8 rounded-full bg-violet-500"></button>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">수량</label>
+                                                <div class="flex items-center gap-2">
+                                                    <button class="w-10 h-10 flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400">-</button>
+                                                    <span class="w-12 text-center font-medium text-gray-900 dark:text-white">1</span>
+                                                    <button class="w-10 h-10 flex items-center justify-center border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-400">+</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Actions -->
+                                        <div class="flex gap-3">
+                                            <button class="flex-1 px-6 py-3 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                                장바구니 담기
+                                            </button>
+                                            <button class="px-4 py-3 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Order Detail -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Order Detail</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">주문 상세 정보를 표시하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Header -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                        <div>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">주문번호</p>
+                                            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">#ORD-2024-001234</h2>
+                                        </div>
+                                        <span class="inline-flex items-center px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-sm font-medium rounded-full">
+                                            <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                            </svg>
+                                            배송 완료
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Progress -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-8 h-8 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <span class="mt-2 text-xs text-gray-600 dark:text-gray-400">주문 확인</span>
+                                        </div>
+                                        <div class="flex-1 h-0.5 bg-violet-600 mx-2"></div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-8 h-8 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <span class="mt-2 text-xs text-gray-600 dark:text-gray-400">결제 완료</span>
+                                        </div>
+                                        <div class="flex-1 h-0.5 bg-violet-600 mx-2"></div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-8 h-8 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <span class="mt-2 text-xs text-gray-600 dark:text-gray-400">배송 중</span>
+                                        </div>
+                                        <div class="flex-1 h-0.5 bg-violet-600 mx-2"></div>
+                                        <div class="flex flex-col items-center">
+                                            <div class="w-8 h-8 bg-violet-600 rounded-full flex items-center justify-center text-white text-sm">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                                </svg>
+                                            </div>
+                                            <span class="mt-2 text-xs text-gray-600 dark:text-gray-400">배송 완료</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Items -->
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <h3 class="font-medium text-gray-900 dark:text-white mb-4">주문 상품</h3>
+                                    <div class="space-y-4">
+                                        <div class="flex gap-4">
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">프리미엄 무선 헤드폰</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">블랙 / 1개</p>
+                                            </div>
+                                            <p class="font-medium text-gray-900 dark:text-white">₩139,000</p>
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-lg flex-shrink-0"></div>
+                                            <div class="flex-1 min-w-0">
+                                                <p class="font-medium text-gray-900 dark:text-white">무선 충전 케이스</p>
+                                                <p class="text-sm text-gray-500 dark:text-gray-400">화이트 / 1개</p>
+                                            </div>
+                                            <p class="font-medium text-gray-900 dark:text-white">₩29,000</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Summary -->
+                                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-900">
+                                    <div class="space-y-2">
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500 dark:text-gray-400">상품 금액</span>
+                                            <span class="text-gray-900 dark:text-white">₩168,000</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500 dark:text-gray-400">배송비</span>
+                                            <span class="text-gray-900 dark:text-white">무료</span>
+                                        </div>
+                                        <div class="flex justify-between text-sm">
+                                            <span class="text-gray-500 dark:text-gray-400">할인</span>
+                                            <span class="text-red-500">-₩10,000</span>
+                                        </div>
+                                        <div class="pt-2 border-t border-gray-200 dark:border-gray-700 flex justify-between">
+                                            <span class="font-medium text-gray-900 dark:text-white">총 결제 금액</span>
+                                            <span class="text-xl font-bold text-violet-600 dark:text-violet-400">₩158,000</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Article Detail -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Article Detail</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">블로그 포스트나 뉴스 기사를 표시하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <!-- Article Header -->
+                                <div class="p-6">
+                                    <div class="flex items-center gap-2 mb-4">
+                                        <span class="px-2.5 py-1 bg-violet-100 dark:bg-violet-900/30 text-violet-700 dark:text-violet-400 text-xs font-medium rounded-full">개발</span>
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">2024년 1월 15일</span>
+                                    </div>
+                                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                                        Tailwind CSS로 반응형 디자인 시스템 구축하기
+                                    </h1>
+                                    <div class="flex items-center gap-4">
+                                        <img src="https://i.pravatar.cc/40?img=1" alt="Author" class="w-10 h-10 rounded-full">
+                                        <div>
+                                            <p class="font-medium text-gray-900 dark:text-white">김민수</p>
+                                            <p class="text-sm text-gray-500 dark:text-gray-400">프론트엔드 개발자</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Featured Image -->
+                                <div class="aspect-video bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-gray-300 dark:text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                    </svg>
+                                </div>
+
+                                <!-- Article Content Preview -->
+                                <div class="p-6">
+                                    <div class="prose dark:prose-invert max-w-none">
+                                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                                            Tailwind CSS는 유틸리티 우선 CSS 프레임워크로, 빠르고 일관된 UI를 구축할 수 있게 해줍니다. 이 글에서는 Tailwind CSS를 활용하여 확장 가능한 디자인 시스템을 구축하는 방법을 알아보겠습니다.
+                                        </p>
+                                        <p class="text-gray-600 dark:text-gray-300 leading-relaxed mt-4">
+                                            디자인 시스템은 재사용 가능한 컴포넌트와 명확한 표준을 통해 일관된 사용자 경험을 제공합니다...
+                                        </p>
+                                    </div>
+
+                                    <!-- Actions -->
+                                    <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                                        <div class="flex items-center gap-4">
+                                            <button class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-red-500 transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                                </svg>
+                                                <span class="text-sm">128</span>
+                                            </button>
+                                            <button class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-violet-500 transition-colors">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                                </svg>
+                                                <span class="text-sm">24</span>
+                                            </button>
+                                        </div>
+                                        <button class="flex items-center gap-2 text-gray-500 dark:text-gray-400 hover:text-violet-500 transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                                            </svg>
+                                            <span class="text-sm">공유</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Info Card Layout -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Info Card Layout</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">키-값 형태의 정보를 표시하는 레이아웃입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                                    <h3 class="font-semibold text-gray-900 dark:text-white">기본 정보</h3>
+                                </div>
+                                <div class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">이름</dt>
+                                        <dd class="sm:w-2/3 text-sm font-medium text-gray-900 dark:text-white">김민수</dd>
+                                    </div>
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">이메일</dt>
+                                        <dd class="sm:w-2/3 text-sm font-medium text-gray-900 dark:text-white">minsu.kim@example.com</dd>
+                                    </div>
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">전화번호</dt>
+                                        <dd class="sm:w-2/3 text-sm font-medium text-gray-900 dark:text-white">010-1234-5678</dd>
+                                    </div>
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">가입일</dt>
+                                        <dd class="sm:w-2/3 text-sm font-medium text-gray-900 dark:text-white">2024년 1월 15일</dd>
+                                    </div>
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">상태</dt>
+                                        <dd class="sm:w-2/3">
+                                            <span class="px-2.5 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-xs font-medium rounded-full">활성</span>
+                                        </dd>
+                                    </div>
+                                    <div class="px-6 py-4 flex flex-col sm:flex-row sm:items-start gap-1 sm:gap-0">
+                                        <dt class="sm:w-1/3 text-sm text-gray-500 dark:text-gray-400">주소</dt>
+                                        <dd class="sm:w-2/3 text-sm font-medium text-gray-900 dark:text-white">서울특별시 강남구 테헤란로 123<br>디자인 빌딩 5층</dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Do -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 정보를 논리적인 그룹으로 구분하세요</li>
+                                    <li>• 가장 중요한 정보를 상단에 배치하세요</li>
+                                    <li>• 명확한 시각적 계층 구조를 만드세요</li>
+                                    <li>• 관련 액션 버튼을 쉽게 접근할 수 있게 배치하세요</li>
+                                    <li>• 진행 상태를 시각적으로 표시하세요</li>
+                                    <li>• 모바일에서도 읽기 쉽게 구성하세요</li>
+                                </ul>
+                            </div>
+                            <!-- Don't -->
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 너무 많은 정보를 한 화면에 표시하지 마세요</li>
+                                    <li>• 중요하지 않은 정보를 강조하지 마세요</li>
+                                    <li>• 긴 텍스트를 줄바꿈 없이 표시하지 마세요</li>
+                                    <li>• 관련 없는 정보를 함께 그룹화하지 마세요</li>
+                                    <li>• 액션 버튼을 너무 멀리 배치하지 마세요</li>
+                                    <li>• 상태 정보 없이 데이터만 나열하지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Dark Mode & Sidebar Scripts -->
+    <script>
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    </script>
+
+    <!-- Menu Script -->
+    <script src="../js/menu.js"></script>
+</body>
+</html>
