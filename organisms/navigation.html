@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Navigation - Open UI Guide</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {}
+            }
+        }
+    </script>
+
+    <!-- Pretendard 폰트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+    <style>
+        body {
+            font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
+
+    <script>
+        // 다크모드 초기화
+        if (localStorage.getItem('darkMode') === 'true' ||
+            (!('darkMode' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+</head>
+<body class="h-full bg-white dark:bg-gray-900">
+    <!-- 모바일 헤더 -->
+    <header class="lg:hidden fixed top-0 left-0 right-0 z-40 h-14 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between px-4">
+        <button type="button" onclick="toggleMobileSidebar()" class="p-2 -ml-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+        </button>
+        <a href="../index.html" class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-violet-600 rounded-lg flex items-center justify-center">
+                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                </svg>
+            </div>
+            <span class="font-bold text-gray-900 dark:text-white">Open UI Guide</span>
+        </a>
+        <button type="button" onclick="toggleDarkMode()" class="p-2 -mr-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+            <svg class="w-6 h-6 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg class="w-6 h-6 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+        </button>
+    </header>
+
+    <!-- 모바일 사이드바 오버레이 -->
+    <div id="mobileSidebarOverlay" class="hidden lg:hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeMobileSidebar()"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-y-auto">
+            <div class="h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                    <button type="button" onclick="closeMobileSidebar()" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Navigation (Mobile) -->
+                <nav id="mobile-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="flex h-screen overflow-hidden pt-14 lg:pt-0">
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-72 flex-shrink-0 h-screen">
+            <div class="bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 overflow-hidden h-full flex flex-col">
+                <!-- Logo & Title -->
+                <div class="p-5 border-b border-gray-200 dark:border-gray-700">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-violet-600 rounded-lg flex items-center justify-center shadow-md">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-base font-bold text-gray-900 dark:text-white">Open UI Guide</h1>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">Design System v1.0</p>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Search -->
+                <div class="p-4 border-b border-gray-200 dark:border-gray-700">
+                    <div class="relative">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                        <input type="text" placeholder="Search..." class="w-full pl-9 pr-4 py-2 text-sm bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-violet-500 focus:border-transparent text-gray-900 dark:text-white placeholder-gray-400">
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav id="desktop-nav" class="flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- 메뉴가 JavaScript로 동적 생성됩니다 -->
+                </nav>
+
+                <!-- Dark Mode Toggle -->
+                <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-gray-100 dark:bg-gray-700 rounded-lg flex items-center justify-center">
+                                <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                                </svg>
+                            </div>
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Dark Mode</span>
+                        </div>
+                        <button type="button" onclick="toggleDarkMode()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out bg-gray-200 dark:bg-violet-600" role="switch">
+                            <span class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0 dark:translate-x-5"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950">
+            <div class="max-w-5xl mx-auto p-6 lg:p-8">
+                <!-- Page Header -->
+                <div class="mb-8">
+                    <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-2">
+                        <a href="../index.html" class="hover:text-violet-600 dark:hover:text-violet-400">Home</a>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span>Organisms</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        <span class="text-gray-900 dark:text-white">Navigation</span>
+                    </div>
+                    <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Navigation</h1>
+                    <p class="text-gray-600 dark:text-gray-400">사용자가 애플리케이션 내에서 이동할 수 있도록 도와주는 네비게이션 패턴 모음입니다.</p>
+                </div>
+
+                <!-- Navigation Types Overview -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Navigation Types</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">용도와 화면 크기에 따라 다양한 네비게이션 패턴을 사용할 수 있습니다.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                            <div class="w-10 h-10 bg-violet-100 dark:bg-violet-900/30 rounded-lg flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5 text-violet-600 dark:text-violet-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Horizontal Nav</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">헤더에 위치하는 수평 네비게이션. 주요 섹션 이동에 적합</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                            <div class="w-10 h-10 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Vertical Nav</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">사이드바 형태의 수직 네비게이션. 많은 메뉴 항목에 적합</p>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-5">
+                            <div class="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/30 rounded-lg flex items-center justify-center mb-3">
+                                <svg class="w-5 h-5 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                </svg>
+                            </div>
+                            <h3 class="font-semibold text-gray-900 dark:text-white mb-1">Bottom Nav</h3>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">모바일 하단 고정 네비게이션. 터치 접근성이 좋음</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Horizontal Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Horizontal Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">헤더 영역에 수평으로 배치되는 기본 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <nav class="flex items-center gap-1 p-1 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-white bg-violet-600 rounded-md">
+                                    홈
+                                </a>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    제품
+                                </a>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    서비스
+                                </a>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    회사소개
+                                </a>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    문의
+                                </a>
+                            </nav>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Active item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"px-4 py-2 text-sm font-medium <span class="text-amber-600 dark:text-amber-400 font-bold">text-white bg-violet-600</span> rounded-md"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    홈
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Default item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"/products"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"px-4 py-2 text-sm font-medium <span class="text-amber-600 dark:text-amber-400 font-bold">text-gray-600 hover:bg-gray-100</span> rounded-md"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    제품
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+  ...
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Underline Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Underline Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">활성 상태를 밑줄로 표시하는 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <nav class="flex gap-8 border-b border-gray-200 dark:border-gray-700">
+                                <a href="#" class="pb-3 text-sm font-medium text-violet-600 dark:text-violet-400 border-b-2 border-violet-600 dark:border-violet-400 -mb-px">
+                                    개요
+                                </a>
+                                <a href="#" class="pb-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border-b-2 border-transparent hover:border-gray-300 -mb-px transition-colors">
+                                    기능
+                                </a>
+                                <a href="#" class="pb-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border-b-2 border-transparent hover:border-gray-300 -mb-px transition-colors">
+                                    가격
+                                </a>
+                                <a href="#" class="pb-3 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 border-b-2 border-transparent hover:border-gray-300 -mb-px transition-colors">
+                                    리뷰
+                                </a>
+                            </nav>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex gap-8 border-b border-gray-200"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Active item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pb-3 text-sm font-medium <span class="text-amber-600 dark:text-amber-400 font-bold">text-violet-600 border-b-2 border-violet-600</span> -mb-px"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    개요
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Default item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"pb-3 text-sm font-medium text-gray-500 <span class="text-amber-600 dark:text-amber-400 font-bold">border-b-2 border-transparent hover:border-gray-300</span> -mb-px"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    기능
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Pill Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Pill Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">둥근 pill 형태의 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900 space-y-4">
+                            <!-- Filled -->
+                            <nav class="inline-flex gap-1 p-1 bg-gray-100 dark:bg-gray-700 rounded-full">
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-white bg-violet-600 rounded-full">
+                                    전체
+                                </a>
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-full transition-colors">
+                                    디자인
+                                </a>
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-full transition-colors">
+                                    개발
+                                </a>
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-full transition-colors">
+                                    마케팅
+                                </a>
+                            </nav>
+                            <!-- Outline -->
+                            <nav class="flex gap-2">
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 border border-violet-200 dark:border-violet-800 rounded-full">
+                                    전체
+                                </a>
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 rounded-full transition-colors">
+                                    디자인
+                                </a>
+                                <a href="#" class="px-4 py-1.5 text-sm font-medium text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500 rounded-full transition-colors">
+                                    개발
+                                </a>
+                            </nav>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Filled Pill</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"inline-flex gap-1 p-1 <span class="text-amber-600 dark:text-amber-400 font-bold">bg-gray-100 rounded-full</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Active --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"px-4 py-1.5 text-sm font-medium text-white <span class="text-amber-600 dark:text-amber-400 font-bold">bg-violet-600 rounded-full</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>전체<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Default --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"px-4 py-1.5 text-sm font-medium text-gray-600 rounded-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>디자인<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Vertical Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Vertical Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">사이드바에서 사용하는 수직 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="w-64 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                                <nav class="space-y-1">
+                                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 rounded-lg">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                        </svg>
+                                        대시보드
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        </svg>
+                                        사용자
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                        </svg>
+                                        분석
+                                    </a>
+                                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                        </svg>
+                                        설정
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"space-y-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Active item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-3 px-3 py-2 text-sm font-medium
+    <span class="text-amber-600 dark:text-amber-400 font-bold">text-violet-600 bg-violet-50</span> rounded-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-5 h-5"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+    대시보드
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Default item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-3 px-3 py-2 text-sm font-medium
+    <span class="text-amber-600 dark:text-amber-400 font-bold">text-gray-600 hover:bg-gray-100</span> rounded-lg"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-5 h-5"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+    사용자
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Collapsible Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Collapsible Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">하위 메뉴를 펼치고 접을 수 있는 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="w-64 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-3">
+                                <nav class="space-y-1">
+                                    <!-- Expanded item -->
+                                    <div>
+                                        <button onclick="toggleSubmenu('submenu1')" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <span class="flex items-center gap-3">
+                                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                                                </svg>
+                                                제품
+                                            </span>
+                                            <svg id="submenu1-icon" class="w-4 h-4 text-gray-400 transition-transform rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </button>
+                                        <div id="submenu1" class="mt-1 ml-8 space-y-1">
+                                            <a href="#" class="block px-3 py-2 text-sm text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 rounded-lg">
+                                                전체 제품
+                                            </a>
+                                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                카테고리
+                                            </a>
+                                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                재고 관리
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Collapsed item -->
+                                    <div>
+                                        <button onclick="toggleSubmenu('submenu2')" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                            <span class="flex items-center gap-3">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                                                </svg>
+                                                주문
+                                            </span>
+                                            <svg id="submenu2-icon" class="w-4 h-4 text-gray-400 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                            </svg>
+                                        </button>
+                                        <div id="submenu2" class="hidden mt-1 ml-8 space-y-1">
+                                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                전체 주문
+                                            </a>
+                                            <a href="#" class="block px-3 py-2 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                                배송 중
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <!-- Simple item -->
+                                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+                                        </svg>
+                                        고객
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Parent button --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">onclick</span>=<span class="text-emerald-600 dark:text-emerald-400">"toggleSubmenu('id')"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-full flex items-center justify-between ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;svg&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+      제품
+    <span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Chevron icon with rotate-180 when open --&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-4 h-4 <span class="text-amber-600 dark:text-amber-400 font-bold">transition-transform rotate-180</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Submenu (toggle hidden class) --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"mt-1 <span class="text-amber-600 dark:text-amber-400 font-bold">ml-8</span> space-y-1"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block px-3 py-2 text-sm ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>전체 제품<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block px-3 py-2 text-sm ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>카테고리<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Bottom Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Bottom Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">모바일 앱에서 화면 하단에 고정되는 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="max-w-sm mx-auto">
+                                <nav class="flex items-center justify-around h-16 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg">
+                                    <a href="#" class="flex flex-col items-center gap-1 text-violet-600 dark:text-violet-400">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                                        </svg>
+                                        <span class="text-xs font-medium">홈</span>
+                                    </a>
+                                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                        </svg>
+                                        <span class="text-xs font-medium">검색</span>
+                                    </a>
+                                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                        <div class="relative">
+                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+                                            </svg>
+                                            <span class="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">3</span>
+                                        </div>
+                                        <span class="text-xs font-medium">알림</span>
+                                    </a>
+                                    <a href="#" class="flex flex-col items-center gap-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                                        </svg>
+                                        <span class="text-xs font-medium">프로필</span>
+                                    </a>
+                                </nav>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">fixed bottom-0 left-0 right-0</span> h-16 flex items-center justify-around
+  bg-white border-t border-gray-200 <span class="text-amber-600 dark:text-amber-400 font-bold">safe-area-pb</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Active item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex flex-col items-center gap-1 <span class="text-amber-600 dark:text-amber-400 font-bold">text-violet-600</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-6 h-6"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-xs font-medium"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>홈<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Default item --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex flex-col items-center gap-1 <span class="text-amber-600 dark:text-amber-400 font-bold">text-gray-400</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    ...
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Item with badge --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex flex-col items-center gap-1 text-gray-400"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;svg&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;span</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">absolute -top-1 -right-1</span> w-4 h-4 bg-red-500 text-white text-xs rounded-full"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>3<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;span&gt;</span>알림<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dropdown Navigation -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Dropdown Navigation</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">호버 또는 클릭 시 하위 메뉴가 나타나는 드롭다운 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <nav class="flex items-center gap-1 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-1">
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    홈
+                                </a>
+                                <!-- Dropdown -->
+                                <div class="relative" id="dropdownNav">
+                                    <button onclick="toggleDropdown('dropdownMenu')" class="flex items-center gap-1 px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                        제품
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                        </svg>
+                                    </button>
+                                    <div id="dropdownMenu" class="hidden absolute top-full left-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-lg py-1 z-10">
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            전체 제품
+                                        </a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            신제품
+                                        </a>
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            베스트셀러
+                                        </a>
+                                        <hr class="my-1 border-gray-200 dark:border-gray-700">
+                                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                            할인 상품
+                                        </a>
+                                    </div>
+                                </div>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    서비스
+                                </a>
+                                <a href="#" class="px-4 py-2 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md transition-colors">
+                                    문의
+                                </a>
+                            </nav>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"relative"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Trigger button --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"flex items-center gap-1 px-4 py-2 ..."</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    제품
+    <span class="text-blue-600 dark:text-blue-400">&lt;svg</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"w-4 h-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/svg&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Dropdown menu --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">absolute top-full left-0 mt-1</span> w-48
+    bg-white rounded-lg border shadow-lg py-1 z-10"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block px-4 py-2 text-sm hover:bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>전체 제품<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block px-4 py-2 text-sm hover:bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>신제품<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;hr</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"my-1 border-gray-200"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"block px-4 py-2 text-sm hover:bg-gray-100"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>할인 상품<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mega Menu -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mega Menu</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">많은 양의 네비게이션 링크를 그룹화하여 보여주는 대형 드롭다운입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 p-6">
+                                <div class="grid grid-cols-4 gap-8">
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">제품</h4>
+                                        <ul class="space-y-2">
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">전체 제품</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">신제품</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">베스트셀러</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">할인 상품</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">카테고리</h4>
+                                        <ul class="space-y-2">
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">전자기기</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">의류</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">가구</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">식품</a></li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-3">지원</h4>
+                                        <ul class="space-y-2">
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">고객센터</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">FAQ</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">배송 안내</a></li>
+                                            <li><a href="#" class="text-sm text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400">반품/교환</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                                        <h4 class="text-sm font-semibold text-gray-900 dark:text-white mb-2">프로모션</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">최대 50% 할인 이벤트 진행 중!</p>
+                                        <a href="#" class="text-sm font-medium text-violet-600 dark:text-violet-400 hover:underline">자세히 보기 →</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">HTML</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">absolute left-0 right-0 top-full</span> bg-white shadow-lg border-t z-50"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"max-w-7xl mx-auto p-6"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">grid grid-cols-4 gap-8</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-gray-500 dark:text-gray-400">&lt;!-- Column 1 --&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;div&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;h4</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm font-semibold text-gray-900 mb-3"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>제품<span class="text-blue-600 dark:text-blue-400">&lt;/h4&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;ul</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"space-y-2"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+          <span class="text-blue-600 dark:text-blue-400">&lt;li&gt;&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"text-sm text-gray-600 hover:text-violet-600"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>전체 제품<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;&lt;/li&gt;</span>
+          ...
+        <span class="text-blue-600 dark:text-blue-400">&lt;/ul&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+      <span class="text-gray-500 dark:text-gray-400">&lt;!-- Promotional card --&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">bg-gray-50 rounded-lg p-4</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;h4&gt;</span>프로모션<span class="text-blue-600 dark:text-blue-400">&lt;/h4&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;p&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/p&gt;</span>
+        <span class="text-blue-600 dark:text-blue-400">&lt;a</span> <span class="text-violet-600 dark:text-violet-400">href</span>=<span class="text-emerald-600 dark:text-emerald-400">"#"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>자세히 보기 →<span class="text-blue-600 dark:text-blue-400">&lt;/a&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Mobile Navigation Menu -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Mobile Slide-out Menu</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">모바일에서 햄버거 메뉴 클릭 시 슬라이드되어 나타나는 네비게이션입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                        <!-- Preview -->
+                        <div class="p-6 bg-gray-50 dark:bg-gray-900">
+                            <div class="flex justify-center">
+                                <button onclick="openModal('mobileMenuDemo')" class="px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white font-medium rounded-lg transition-colors">
+                                    Open Mobile Menu Demo
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Code -->
+                        <div class="border-t border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Structure</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Overlay --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"fixed inset-0 z-50"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"fixed inset-0 bg-black/50"</span> <span class="text-violet-600 dark:text-violet-400">onclick</span>=<span class="text-emerald-600 dark:text-emerald-400">"closeMenu()"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/div&gt;</span>
+
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Slide-out panel --&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;aside</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"fixed <span class="text-amber-600 dark:text-amber-400 font-bold">left-0 top-0 bottom-0 w-72</span>
+    bg-white transform <span class="text-amber-600 dark:text-amber-400 font-bold">transition-transform duration-300</span>
+    <span class="text-amber-600 dark:text-amber-400 font-bold">-translate-x-full</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span> <span class="text-gray-500 dark:text-gray-400">&lt;!-- Closed state --&gt;</span>
+
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Header with close button --&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"h-14 px-4 border-b flex items-center justify-between"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;span&gt;</span>Menu<span class="text-blue-600 dark:text-blue-400">&lt;/span&gt;</span>
+      <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">onclick</span>=<span class="text-emerald-600 dark:text-emerald-400">"closeMenu()"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>×<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Navigation links --&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"p-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/aside&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Open state: remove -translate-x-full or add translate-x-0 */</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Responsive Navigation Pattern -->
+                <section class="mb-12">
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Responsive Pattern</h2>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">화면 크기에 따라 네비게이션 형태가 변하는 반응형 패턴입니다.</p>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-6">
+                            <div class="flex gap-3">
+                                <svg class="w-5 h-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <div class="text-sm text-amber-700 dark:text-amber-300">
+                                    <p class="font-medium mb-2">반응형 네비게이션 전략</p>
+                                    <ul class="space-y-1 text-amber-600/90 dark:text-amber-400/90">
+                                        <li>• <strong>Desktop (lg+)</strong>: 수평 네비게이션 또는 사이드바</li>
+                                        <li>• <strong>Tablet (md)</strong>: 축소된 아이콘 사이드바 또는 햄버거 메뉴</li>
+                                        <li>• <strong>Mobile (sm-)</strong>: 하단 네비게이션 또는 슬라이드 메뉴</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Code Reference -->
+                        <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
+                            <div class="flex items-center justify-between px-4 py-3 bg-gray-50 dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
+                                <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Responsive Classes</span>
+                                <div class="flex items-center gap-1.5">
+                                    <span class="w-3 h-3 rounded-full bg-red-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-yellow-400"></span>
+                                    <span class="w-3 h-3 rounded-full bg-green-400"></span>
+                                </div>
+                            </div>
+                            <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed"><code><span class="text-gray-500 dark:text-gray-400">/* Desktop: 수평 네비게이션 표시 */</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">hidden lg:flex</span> items-center gap-4"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Horizontal links --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Mobile: 햄버거 버튼 표시 */</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">lg:hidden</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Hamburger icon --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Mobile: 하단 네비게이션 */</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;nav</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">lg:hidden</span> fixed bottom-0 left-0 right-0"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Bottom nav items --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/nav&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">/* Desktop: 사이드바 */</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;aside</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">hidden lg:block</span> w-64"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-gray-500 dark:text-gray-400">&lt;!-- Sidebar content --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/aside&gt;</span></code></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Usage Guidelines -->
+                <section>
+                    <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Usage Guidelines</h2>
+                    <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                    </svg>
+                                    Do
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 현재 위치를 명확하게 표시하세요</li>
+                                    <li>• 메뉴 항목은 5-7개 이내로 유지하세요</li>
+                                    <li>• 모바일에서는 터치하기 쉬운 크기로 만드세요 (최소 44px)</li>
+                                    <li>• 중요한 항목을 먼저 배치하세요</li>
+                                    <li>• 아이콘과 텍스트를 함께 사용하여 명확성을 높이세요</li>
+                                    <li>• 키보드 네비게이션을 지원하세요</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                    </svg>
+                                    Don't
+                                </h3>
+                                <ul class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                                    <li>• 3단계 이상의 깊은 메뉴 구조를 만들지 마세요</li>
+                                    <li>• 데스크톱 네비게이션을 모바일에 그대로 사용하지 마세요</li>
+                                    <li>• 너무 많은 항목을 한 레벨에 넣지 마세요</li>
+                                    <li>• 아이콘만으로 네비게이션을 구성하지 마세요</li>
+                                    <li>• 스크롤이 필요한 긴 수평 네비게이션을 만들지 마세요</li>
+                                    <li>• 드롭다운 안에 또 드롭다운을 넣지 마세요</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Demo Modal -->
+    <div id="mobileMenuDemo" class="hidden fixed inset-0 z-50">
+        <div class="fixed inset-0 bg-black/50" onclick="closeModal('mobileMenuDemo')"></div>
+        <aside class="fixed left-0 top-0 bottom-0 w-72 bg-white dark:bg-gray-800 shadow-xl">
+            <div class="h-full flex flex-col">
+                <div class="h-14 px-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                    <span class="font-semibold text-gray-900 dark:text-white">Menu</span>
+                    <button onclick="closeModal('mobileMenuDemo')" class="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
+                </div>
+                <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-violet-600 dark:text-violet-400 bg-violet-50 dark:bg-violet-900/30 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+                        </svg>
+                        홈
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                        </svg>
+                        제품
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+                        </svg>
+                        주문
+                    </a>
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                        </svg>
+                        설정
+                    </a>
+                </nav>
+            </div>
+        </aside>
+    </div>
+
+    <script src="../js/menu.js"></script>
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDark);
+        }
+
+        function toggleMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.toggle('hidden');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+        }
+
+        function toggleSubmenu(id) {
+            const submenu = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            submenu.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        function toggleDropdown(id) {
+            const dropdown = document.getElementById(id);
+            dropdown.classList.toggle('hidden');
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(e) {
+            const dropdownNav = document.getElementById('dropdownNav');
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            if (dropdownNav && !dropdownNav.contains(e.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+        });
+
+        // ESC key to close modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal('mobileMenuDemo');
+            }
+        });
+    </script>
+</body>
+</html>
