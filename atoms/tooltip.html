@@ -15,32 +15,6 @@
             font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', Arial, sans-serif;
         }
     </style>
-    <style type="text/tailwindcss">
-        @layer components {
-            /* Tooltip Wrapper */
-            .tooltip-wrapper { @apply relative group; }
-            /* Tooltip Base */
-            .tooltip { @apply absolute px-3 py-1.5 text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10; }
-            /* Tooltip Variants */
-            .tooltip-dark { @apply bg-gray-900 dark:bg-gray-700 text-white; }
-            .tooltip-light { @apply bg-white dark:bg-gray-800 text-gray-900 dark:text-white shadow-lg border border-gray-200 dark:border-gray-600; }
-            .tooltip-primary { @apply bg-violet-600 text-white; }
-            .tooltip-success { @apply bg-emerald-600 text-white; }
-            .tooltip-warning { @apply bg-amber-500 text-white; }
-            .tooltip-danger { @apply bg-red-600 text-white; }
-            /* Tooltip Positions */
-            .tooltip-top { @apply bottom-full left-1/2 -translate-x-1/2 mb-2; }
-            .tooltip-bottom { @apply top-full left-1/2 -translate-x-1/2 mt-2; }
-            .tooltip-left { @apply right-full top-1/2 -translate-y-1/2 mr-2; }
-            .tooltip-right { @apply left-full top-1/2 -translate-y-1/2 ml-2; }
-            /* Tooltip Arrows */
-            .tooltip-arrow { @apply absolute border-4 border-transparent; }
-            .tooltip-arrow-top { @apply top-full left-1/2 -translate-x-1/2 border-t-gray-900 dark:border-t-gray-700; }
-            .tooltip-arrow-bottom { @apply bottom-full left-1/2 -translate-x-1/2 border-b-gray-900 dark:border-b-gray-700; }
-            .tooltip-arrow-left { @apply left-full top-1/2 -translate-y-1/2 border-l-gray-900 dark:border-l-gray-700; }
-            .tooltip-arrow-right { @apply right-full top-1/2 -translate-y-1/2 border-r-gray-900 dark:border-r-gray-700; }
-        }
-    </style>
 
     <script>
         // 다크모드 초기화
@@ -204,28 +178,72 @@
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Basic Tooltip</h2>
                     <p class="text-gray-600 dark:text-gray-400 mb-6">CSS만으로 구현하는 기본 툴팁입니다. 호버 시 표시됩니다.</p>
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
-                        <div class="flex flex-wrap items-center justify-center gap-8">
-                            <!-- Default Tooltip -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
-                                    Hover me
+                        <div class="flex flex-wrap items-center justify-center gap-4">
+                            <!-- Primary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-primary">
+                                    Primary
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
-                                    Default tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Primary button
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
-                            <!-- Icon with Tooltip -->
-                            <div class="relative group">
-                                <button class="h-9 w-9 inline-flex items-center justify-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                            <!-- Secondary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
+                                    Secondary
+                                </button>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Secondary button
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
+                                </div>
+                            </div>
+
+                            <!-- Tertiary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-tertiary">
+                                    Tertiary
+                                </button>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Tertiary button
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
+                                </div>
+                            </div>
+
+                            <!-- Outline -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-outline">
+                                    Outline
+                                </button>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Outline button
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
+                                </div>
+                            </div>
+
+                            <!-- Ghost -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-ghost">
+                                    Ghost
+                                </button>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Ghost button
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
+                                </div>
+                            </div>
+
+                            <!-- Icon Button -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-sm btn-base-ghost">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-top">
                                     More information
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
                         </div>
@@ -239,46 +257,46 @@
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
                         <div class="flex flex-wrap items-center justify-center gap-12">
                             <!-- Top -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-primary">
                                     Top
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-top">
                                     Tooltip on top
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Bottom -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-primary">
                                     Bottom
                                 </button>
-                                <div class="absolute top-full left-1/2 -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-bottom">
                                     Tooltip on bottom
-                                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-b-gray-900 dark:border-b-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-bottom"></div>
                                 </div>
                             </div>
 
                             <!-- Left -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-primary">
                                     Left
                                 </button>
-                                <div class="absolute right-full top-1/2 -translate-y-1/2 mr-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-left">
                                     Tooltip on left
-                                    <div class="absolute left-full top-1/2 -translate-y-1/2 border-4 border-transparent border-l-gray-900 dark:border-l-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-left"></div>
                                 </div>
                             </div>
 
                             <!-- Right -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-violet-600 text-white rounded-lg hover:bg-violet-700 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-primary">
                                     Right
                                 </button>
-                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-right">
                                     Tooltip on right
-                                    <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-right"></div>
                                 </div>
                             </div>
                         </div>
@@ -292,68 +310,68 @@
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
                         <div class="flex flex-wrap items-center justify-center gap-8">
                             <!-- Dark (Default) -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Dark
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-dark tooltip-top">
                                     Dark tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-gray-900 dark:border-t-gray-700"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Light -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Light
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-xs font-medium rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-light tooltip-top">
                                     Light tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-white dark:border-t-gray-800"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Primary -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Primary
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-violet-600 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-primary tooltip-top">
                                     Primary tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-violet-600"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Success -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Success
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-emerald-600 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-success tooltip-top">
                                     Success tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-emerald-600"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Warning -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Warning
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-amber-500 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-warning tooltip-top">
                                     Warning tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-amber-500"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
                             <!-- Error -->
-                            <div class="relative group">
-                                <button class="px-4 py-2 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-md btn-base-secondary">
                                     Error
                                 </button>
-                                <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 bg-red-600 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap">
+                                <div class="tooltip tooltip-error tooltip-top">
                                     Error tooltip
-                                    <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-red-600"></div>
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
                         </div>
@@ -363,59 +381,72 @@
                 <!-- Icon Button Tooltips -->
                 <section class="mb-12">
                     <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Icon Button Tooltips</h2>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6">아이콘 버튼에 적용하는 툴팁 패턴입니다. Compact Sidebar 등에서 활용됩니다.</p>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">아이콘 버튼에 적용하는 툴팁 패턴입니다. 다양한 버튼 스타일과 함께 사용할 수 있습니다.</p>
                     <div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-8">
                         <div class="flex flex-wrap items-center justify-center gap-4">
-                            <!-- Home -->
-                            <div class="relative group">
-                                <button class="p-3 rounded-lg bg-violet-50 dark:bg-violet-900/30 text-violet-600 dark:text-violet-400">
+                            <!-- Primary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-md btn-primary">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
                                     </svg>
                                 </button>
-                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                                    Dashboard
-                                    <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Primary
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
-                            <!-- Team -->
-                            <div class="relative group">
-                                <button class="p-3 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <!-- Secondary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-md btn-base-secondary">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
                                     </svg>
                                 </button>
-                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                                    Team
-                                    <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Secondary
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
-                            <!-- Projects -->
-                            <div class="relative group">
-                                <button class="p-3 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <!-- Tertiary -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-md btn-base-tertiary">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
                                     </svg>
                                 </button>
-                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                                    Projects
-                                    <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Tertiary
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
 
-                            <!-- Settings -->
-                            <div class="relative group">
-                                <button class="p-3 rounded-lg text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                            <!-- Outline -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-md btn-base-outline">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                     </svg>
                                 </button>
-                                <div class="absolute left-full top-1/2 -translate-y-1/2 ml-2 px-3 py-1.5 bg-gray-900 dark:bg-gray-700 text-white text-xs font-medium rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10">
-                                    Settings
-                                    <div class="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-gray-900 dark:border-r-gray-700"></div>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Outline
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
+                                </div>
+                            </div>
+
+                            <!-- Ghost -->
+                            <div class="tooltip-wrapper">
+                                <button class="btn btn-icon-md btn-base-ghost">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </button>
+                                <div class="tooltip tooltip-dark tooltip-top">
+                                    Ghost
+                                    <div class="tooltip-arrow tooltip-arrow-top"></div>
                                 </div>
                             </div>
                         </div>
@@ -436,37 +467,33 @@
                             </div>
                         </div>
                         <pre class="p-4 overflow-x-auto text-sm font-mono leading-relaxed text-gray-800 dark:text-gray-200"><code><span class="text-gray-500 dark:text-gray-400">&lt;!-- Basic Tooltip (Top) --&gt;</span>
-<span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"relative group"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;button</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"px-4 py-2 bg-gray-100 rounded-lg"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-wrapper</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">btn btn-md btn-base-secondary</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
     Hover me
-  <span class="text-violet-600 dark:text-violet-400">&lt;/button&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"absolute bottom-full left-1/2 -translate-x-1/2 mb-2
-       px-3 py-1.5 bg-gray-900 text-white text-xs font-medium
-       rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
-       transition-opacity duration-200 pointer-events-none whitespace-nowrap"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip tooltip-dark tooltip-top</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
     Tooltip text
-    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Arrow --&gt;</span>
-    <span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"absolute top-full left-1/2 -translate-x-1/2
-         border-4 border-transparent border-t-gray-900"</span><span class="text-violet-600 dark:text-violet-400">&gt;&lt;/div&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;/div&gt;</span>
-<span class="text-violet-600 dark:text-violet-400">&lt;/div&gt;</span>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-arrow tooltip-arrow-top</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
 
-<span class="text-gray-500 dark:text-gray-400">&lt;!-- Tooltip (Right) - For Compact Sidebar --&gt;</span>
-<span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"relative group"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;button</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"p-3 rounded-lg text-gray-400 hover:bg-gray-100
-         focus:bg-gray-100 focus:outline-none"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Tooltip (Right) - For Icon Button --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-wrapper</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;button</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">btn btn-icon-md btn-base-ghost</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
     <span class="text-gray-500 dark:text-gray-400">&lt;!-- Icon --&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;/button&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"absolute left-full top-1/2 -translate-y-1/2 ml-2
-       px-3 py-1.5 bg-gray-900 text-white text-xs font-medium
-       rounded-lg opacity-0 group-hover:opacity-100 group-focus-within:opacity-100
-       transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10"</span><span class="text-violet-600 dark:text-violet-400">&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/button&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip tooltip-dark tooltip-right</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>
     Menu name
-    <span class="text-gray-500 dark:text-gray-400">&lt;!-- Arrow --&gt;</span>
-    <span class="text-violet-600 dark:text-violet-400">&lt;div</span> <span class="text-blue-600 dark:text-blue-400">class=</span><span class="text-emerald-600 dark:text-emerald-400">"absolute right-full top-1/2 -translate-y-1/2
-         border-4 border-transparent border-r-gray-900"</span><span class="text-violet-600 dark:text-violet-400">&gt;&lt;/div&gt;</span>
-  <span class="text-violet-600 dark:text-violet-400">&lt;/div&gt;</span>
-<span class="text-violet-600 dark:text-violet-400">&lt;/div&gt;</span></code></pre>
+    <span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"<span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-arrow tooltip-arrow-right</span>"</span><span class="text-blue-600 dark:text-blue-400">&gt;&lt;/div&gt;</span>
+  <span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+
+<span class="text-gray-500 dark:text-gray-400">&lt;!-- Tooltip Variants --&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tooltip <span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-light</span> tooltip-top"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tooltip <span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-primary</span> tooltip-top"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tooltip <span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-success</span> tooltip-top"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tooltip <span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-warning</span> tooltip-top"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span>
+<span class="text-blue-600 dark:text-blue-400">&lt;div</span> <span class="text-violet-600 dark:text-violet-400">class</span>=<span class="text-emerald-600 dark:text-emerald-400">"tooltip <span class="text-amber-600 dark:text-amber-400 font-bold">tooltip-error</span> tooltip-top"</span><span class="text-blue-600 dark:text-blue-400">&gt;</span>...<span class="text-blue-600 dark:text-blue-400">&lt;/div&gt;</span></code></pre>
                     </div>
                 </section>
 
@@ -478,7 +505,7 @@
                             <!-- Do -->
                             <div>
                                 <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     Do
@@ -494,7 +521,7 @@
                             <!-- Don't -->
                             <div>
                                 <h3 class="font-medium text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-5 h-5 text-error" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                     </svg>
                                     Don't

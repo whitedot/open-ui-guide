@@ -132,11 +132,11 @@
 
   /* === Icon Only === */
   .btn-icon { @apply w-10 justify-center px-0; }
-  .btn-icon-xs { @apply h-7 w-7 p-0; }
-  .btn-icon-sm { @apply h-8 w-8 p-0; }
-  .btn-icon-md { @apply h-10 w-10 p-0; }
-  .btn-icon-lg { @apply h-11 w-11 p-0; }
-  .btn-icon-xl { @apply h-12 w-12 p-0; }
+  .btn-icon-xs { @apply h-7 w-7 p-0 rounded; }
+  .btn-icon-sm { @apply h-8 w-8 p-0 rounded-md; }
+  .btn-icon-md { @apply h-10 w-10 p-0 rounded-lg; }
+  .btn-icon-lg { @apply h-11 w-11 p-0 rounded-lg; }
+  .btn-icon-xl { @apply h-12 w-12 p-0 rounded-xl; }
   .btn-icon-circle { @apply rounded-full; }
 
   /* === States === */
@@ -807,6 +807,149 @@
   }
   .card-radio-label input:checked ~ .card-radio-content .card-radio-dot {
     @apply opacity-100;
+  }
+
+  /* ============================================
+     Tooltip Component
+     ============================================ */
+
+  /* === Tooltip Wrapper === */
+  .tooltip-wrapper {
+    @apply relative;
+  }
+
+  /* === Tooltip Base === */
+  .tooltip {
+    @apply absolute px-3 py-1.5 text-xs font-medium rounded-lg opacity-0 transition-opacity duration-200 pointer-events-none whitespace-nowrap z-10;
+  }
+
+  /* === Tooltip Trigger States === */
+  .tooltip-wrapper:hover .tooltip,
+  .tooltip-wrapper:focus-within .tooltip {
+    @apply opacity-100;
+  }
+
+  /* === Tooltip Variants === */
+  .tooltip-dark {
+    @apply bg-base-900 dark:bg-base-700 text-white;
+  }
+  .tooltip-light {
+    @apply bg-white dark:bg-base-800 text-base-900 dark:text-white shadow-lg border border-base-200 dark:border-base-600;
+  }
+  .tooltip-primary {
+    @apply bg-primary-600 text-white;
+  }
+  .tooltip-success {
+    @apply bg-emerald-600 text-white;
+  }
+  .tooltip-warning {
+    @apply bg-amber-500 text-white;
+  }
+  .tooltip-error {
+    @apply bg-red-600 text-white;
+  }
+
+  /* === Tooltip Positions === */
+  .tooltip-top {
+    @apply bottom-full left-1/2 -translate-x-1/2 mb-2;
+  }
+  .tooltip-bottom {
+    @apply top-full left-1/2 -translate-x-1/2 mt-2;
+  }
+  .tooltip-left {
+    @apply right-full top-1/2 -translate-y-1/2 mr-2;
+  }
+  .tooltip-right {
+    @apply left-full top-1/2 -translate-y-1/2 ml-2;
+  }
+
+  /* === Tooltip Arrow === */
+  .tooltip-arrow {
+    @apply absolute border-4 border-transparent;
+  }
+
+  /* Arrow for Dark Tooltip */
+  .tooltip-dark .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-base-900 dark:border-t-base-700;
+  }
+  .tooltip-dark .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-base-900 dark:border-b-base-700;
+  }
+  .tooltip-dark .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-base-900 dark:border-l-base-700;
+  }
+  .tooltip-dark .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-base-900 dark:border-r-base-700;
+  }
+
+  /* Arrow for Light Tooltip */
+  .tooltip-light .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-white dark:border-t-base-800;
+  }
+  .tooltip-light .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-white dark:border-b-base-800;
+  }
+  .tooltip-light .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-white dark:border-l-base-800;
+  }
+  .tooltip-light .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-white dark:border-r-base-800;
+  }
+
+  /* Arrow for Primary Tooltip */
+  .tooltip-primary .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-primary-600;
+  }
+  .tooltip-primary .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-primary-600;
+  }
+  .tooltip-primary .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-primary-600;
+  }
+  .tooltip-primary .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-primary-600;
+  }
+
+  /* Arrow for Success Tooltip */
+  .tooltip-success .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-emerald-600;
+  }
+  .tooltip-success .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-emerald-600;
+  }
+  .tooltip-success .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-emerald-600;
+  }
+  .tooltip-success .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-emerald-600;
+  }
+
+  /* Arrow for Warning Tooltip */
+  .tooltip-warning .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-amber-500;
+  }
+  .tooltip-warning .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-amber-500;
+  }
+  .tooltip-warning .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-amber-500;
+  }
+  .tooltip-warning .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-amber-500;
+  }
+
+  /* Arrow for Error Tooltip */
+  .tooltip-error .tooltip-arrow-top {
+    @apply top-full left-1/2 -translate-x-1/2 border-t-red-600;
+  }
+  .tooltip-error .tooltip-arrow-bottom {
+    @apply bottom-full left-1/2 -translate-x-1/2 border-b-red-600;
+  }
+  .tooltip-error .tooltip-arrow-left {
+    @apply left-full top-1/2 -translate-y-1/2 border-l-red-600;
+  }
+  .tooltip-error .tooltip-arrow-right {
+    @apply right-full top-1/2 -translate-y-1/2 border-r-red-600;
   }
 
 }
