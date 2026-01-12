@@ -629,5 +629,185 @@
   /* === Avatar Wrapper (for status/badge) === */
   .avatar-wrap { @apply relative; }
 
+  /* ============================================
+     Checkbox Component
+     ============================================ */
+
+  /* === Checkbox Base === */
+  .checkbox {
+    appearance: none;
+    -webkit-appearance: none;
+    @apply w-5 h-5 border-2 border-base-300 dark:border-base-600 rounded bg-white dark:bg-base-700 cursor-pointer relative transition-all duration-150;
+  }
+  .checkbox:focus {
+    @apply outline-none ring-3 ring-primary-500/30;
+  }
+  .checkbox:checked {
+    @apply bg-primary-600 border-primary-600;
+  }
+  .checkbox:checked::after {
+    content: '';
+    @apply absolute left-[5px] top-[1px] w-1.5 h-2.5 border-r-2 border-b-2 border-white rotate-45;
+  }
+  .checkbox:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  .checkbox:indeterminate {
+    @apply bg-primary-600 border-primary-600;
+  }
+  .checkbox:indeterminate::after {
+    content: '';
+    @apply absolute left-[3px] top-[7px] w-2.5 h-0.5 bg-white;
+  }
+
+  /* === Checkbox Sizes === */
+  .checkbox-sm {
+    @apply w-4 h-4;
+  }
+  .checkbox-sm:checked::after {
+    @apply left-[3px] top-0 w-[5px] h-2;
+  }
+  .checkbox-sm:indeterminate::after {
+    @apply left-[2px] top-[5px] w-1.5;
+  }
+  .checkbox-lg {
+    @apply w-6 h-6;
+  }
+  .checkbox-lg:checked::after {
+    @apply left-[6px] top-[2px] w-2 h-3;
+  }
+  .checkbox-lg:indeterminate::after {
+    @apply left-[5px] top-[9px] w-2.5;
+  }
+
+  /* === Checkbox Label === */
+  .checkbox-label {
+    @apply flex items-center gap-3 cursor-pointer;
+  }
+  .checkbox-label-text {
+    @apply text-sm text-base-700 dark:text-base-300;
+  }
+  .checkbox-label-title {
+    @apply text-sm font-medium text-base-900 dark:text-white;
+  }
+  .checkbox-label-desc {
+    @apply text-sm text-base-500 dark:text-base-400;
+  }
+
+  /* === Checkbox Group === */
+  .checkbox-group {
+    @apply space-y-3;
+  }
+  .checkbox-group-horizontal {
+    @apply flex flex-wrap gap-6;
+  }
+
+  /* ============================================
+     Radio Component
+     ============================================ */
+
+  /* === Radio Base === */
+  .radio {
+    appearance: none;
+    -webkit-appearance: none;
+    @apply w-5 h-5 border-2 border-base-300 dark:border-base-600 rounded-full bg-white dark:bg-base-700 cursor-pointer relative transition-all duration-150;
+  }
+  .radio:focus {
+    @apply outline-none ring-3 ring-primary-500/30;
+  }
+  .radio:checked {
+    @apply border-primary-600 dark:border-primary-500;
+  }
+  .radio:checked::after {
+    content: '';
+    @apply absolute left-1 top-1 w-2 h-2 rounded-full bg-primary-600 dark:bg-primary-500;
+  }
+  .radio:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* === Radio Sizes === */
+  .radio-sm {
+    @apply w-4 h-4;
+  }
+  .radio-sm:checked::after {
+    @apply left-[2px] top-[2px] w-1.5 h-1.5;
+  }
+  .radio-lg {
+    @apply w-6 h-6;
+  }
+  .radio-lg:checked::after {
+    @apply left-[5px] top-[5px] w-2.5 h-2.5;
+  }
+
+  /* === Radio Label === */
+  .radio-label {
+    @apply flex items-center gap-3 cursor-pointer;
+  }
+  .radio-label-text {
+    @apply text-sm text-base-700 dark:text-base-300;
+  }
+
+  /* === Radio Group === */
+  .radio-group {
+    @apply space-y-3;
+  }
+  .radio-group-horizontal {
+    @apply flex flex-wrap gap-6;
+  }
+
+  /* ============================================
+     Card Selection Component
+     ============================================ */
+
+  /* === Card Checkbox === */
+  .card-checkbox {
+    @apply cursor-pointer relative p-4 rounded-xl border-2 border-base-200 dark:border-base-700 transition-all;
+  }
+  .card-checkbox:focus {
+    @apply outline-none ring-3 ring-primary-500/30;
+  }
+  .card-checkbox.selected {
+    @apply border-primary-500 bg-primary-50 dark:bg-primary-900/20;
+  }
+  .card-checkbox-indicator {
+    @apply absolute top-4 right-4 w-5 h-5 rounded border-2 border-base-300 dark:border-base-600 flex items-center justify-center transition-all;
+  }
+  .card-checkbox.selected .card-checkbox-indicator {
+    @apply border-primary-500 bg-primary-500;
+  }
+  .card-checkbox-icon {
+    @apply w-3 h-3 text-white opacity-0;
+  }
+  .card-checkbox.selected .card-checkbox-icon {
+    @apply opacity-100;
+  }
+
+  /* === Card Radio === */
+  .card-radio-label {
+    @apply relative cursor-pointer block;
+  }
+  .card-radio-content {
+    @apply p-4 rounded-xl border-2 border-base-200 dark:border-base-700 transition-all;
+  }
+  .card-radio-label input:checked ~ .card-radio-content {
+    @apply border-primary-500 bg-primary-50 dark:bg-primary-900/20;
+  }
+  .card-radio-label input:focus ~ .card-radio-content {
+    @apply outline-none ring-3 ring-primary-500/30;
+  }
+  .card-radio-indicator {
+    @apply w-5 h-5 rounded-full border-2 border-base-300 dark:border-base-600 flex items-center justify-center transition-all;
+  }
+  .card-radio-label input:checked ~ .card-radio-content .card-radio-indicator {
+    @apply border-primary-500 bg-primary-500;
+  }
+  .card-radio-dot {
+    @apply w-2.5 h-2.5 rounded-full bg-white opacity-0;
+  }
+  .card-radio-label input:checked ~ .card-radio-content .card-radio-dot {
+    @apply opacity-100;
+  }
+
 }
 
