@@ -551,4 +551,83 @@
   .status-busy { @apply bg-red-500; }
   .status-away { @apply bg-amber-500; }
 
+  /* ============================================
+     Avatar Component
+     ============================================ */
+
+  /* === Avatar Base === */
+  .avatar {
+    @apply relative inline-flex items-center justify-center rounded-full bg-base-200 dark:bg-base-700 overflow-hidden;
+  }
+
+  /* === Avatar Sizes === */
+  .avatar-xs { @apply w-6 h-6 text-[10px]; }
+  .avatar-sm { @apply w-8 h-8 text-xs; }
+  .avatar-md { @apply w-10 h-10 text-sm; }
+  .avatar-lg { @apply w-12 h-12 text-sm; }
+  .avatar-xl { @apply w-16 h-16 text-lg; }
+  .avatar-2xl { @apply w-20 h-20 text-xl; }
+
+  /* === Avatar Image === */
+  .avatar-img { @apply w-full h-full object-cover; }
+
+  /* === Avatar Initials === */
+  .avatar-initials { @apply font-medium text-base-600 dark:text-base-300; }
+  .avatar-initials-primary { @apply font-medium text-primary-600 dark:text-primary-400; }
+  .avatar-initials-accent-01 { @apply font-medium text-blue-600 dark:text-blue-400; }
+  .avatar-initials-accent-02 { @apply font-medium text-emerald-600 dark:text-emerald-400; }
+  .avatar-initials-accent-03 { @apply font-medium text-amber-600 dark:text-amber-400; }
+  .avatar-initials-accent-04 { @apply font-medium text-red-600 dark:text-red-400; }
+  .avatar-initials-accent-05 { @apply font-medium text-pink-600 dark:text-pink-400; }
+  .avatar-initials-accent-06 { @apply font-medium text-cyan-600 dark:text-cyan-400; }
+
+  /* === Avatar Background Colors === */
+  .avatar-bg-base { @apply bg-base-100 dark:bg-base-700; }
+  .avatar-bg-primary { @apply bg-primary-100 dark:bg-primary-900/30; }
+  .avatar-bg-accent-01 { @apply bg-blue-100 dark:bg-blue-900/30; }
+  .avatar-bg-accent-02 { @apply bg-emerald-100 dark:bg-emerald-900/30; }
+  .avatar-bg-accent-03 { @apply bg-amber-100 dark:bg-amber-900/30; }
+  .avatar-bg-accent-04 { @apply bg-red-100 dark:bg-red-900/30; }
+  .avatar-bg-accent-05 { @apply bg-pink-100 dark:bg-pink-900/30; }
+  .avatar-bg-accent-06 { @apply bg-cyan-100 dark:bg-cyan-900/30; }
+
+  /* === Avatar Shapes === */
+  .avatar-circle { @apply rounded-full; }
+  .avatar-rounded { @apply rounded-xl; }
+  .avatar-square { @apply rounded-lg; }
+
+  /* === Avatar Icon === */
+  .avatar-icon { @apply w-6 h-6 text-base-500 dark:text-base-400; }
+
+  /* === Avatar Status === */
+  .avatar-status {
+    @apply absolute bottom-0 right-0 block rounded-full ring-2 ring-white dark:ring-base-800;
+  }
+  .avatar-status-sm { @apply w-2 h-2; }
+  .avatar-status-md { @apply w-3 h-3; }
+  .avatar-status-lg { @apply w-3.5 h-3.5; }
+  .avatar-status-online { @apply bg-emerald-500; }
+  .avatar-status-offline { @apply bg-base-400; }
+  .avatar-status-busy { @apply bg-red-500; }
+  .avatar-status-away { @apply bg-amber-500; }
+
+  /* === Avatar Group === */
+  .avatar-group { @apply flex -space-x-3; }
+  .avatar-group > .avatar { @apply ring-2 ring-white dark:ring-base-800; }
+  .avatar-group-spaced { @apply flex gap-2; }
+
+  /* === Avatar Badge === */
+  .avatar-badge {
+    @apply absolute -top-1 -right-1 inline-flex items-center justify-center text-xs font-bold text-white bg-red-500 rounded-full;
+  }
+  .avatar-badge-number { @apply w-5 h-5; }
+  .avatar-badge-large { @apply px-1.5 h-5; }
+  .avatar-badge-icon {
+    @apply absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 bg-primary-500 rounded-full;
+  }
+
+  /* === Avatar Wrapper (for status/badge) === */
+  .avatar-wrap { @apply relative; }
+
 }
+
